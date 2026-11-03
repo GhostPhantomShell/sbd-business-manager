@@ -572,6 +572,9 @@ input[type=range]{accent-color:var(--accent);width:100%}
 .signin h1{font-size:clamp(40px,8vw,56px)}
 .is-m .sync{font-size:0;letter-spacing:0;gap:0;padding:6px}
 .is-m .sync i{width:9px;height:9px}
+.sn-final{background:var(--y)!important;color:#1a1300!important;display:inline-flex;align-items:center;gap:2px}
+.final-star{flex:none}
+.final-tag{color:var(--y)}
 </style>
 
 <div id="app"><div class="wrap" style="padding-block:40px;color:#888">Loading Strength By Design…</div></div>
@@ -814,25 +817,7 @@ function deriveAll({clients,events,ledger,settings}){
     const led=(ledByClient[c.id]||[]).slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0);
     const charges=led.filter(l=>l.kind==='charge').map(l=>({...l,paid:0}));
     const payments=led.filter(l=>l.kind==='payment');
-    const regPurchased=(Number(c.sessionAdjust)||0)+sum(charges.filter(x=>!x.expires),x=>x.sessions);
-    const wins=[];charges.forEach(ch=>{const cap=Number(ch.perMonth)||0;if(!ch.expires||!cap)return;const m=Math.max(1,Number(ch.months)||1);const s0=ch.periodStart||ch.date;
-      for(let k=0;k<m;k++)wins.push({start:addMonthsYmd(s0,k),end:addMonthsYmd(s0,k+1),cap,used:0,counted:0})});
-    const purchased=regPurchased+sum(wins,w=>w.cap);
-    let n=Number(c.numberOffset)||0,ri=0,regCounted=0,used=0,booked=0,nextEv=null,lastEv=null;
-    for(const e of list){
-      const gst=effStatus(e,now);const ov=e.statusBy&&e.statusBy[c.id];const st=ov||gst;
-      const ei=evInfo[e.id]||(evInfo[e.id]={per:{}});ei.st=gst;
-      if(FREED.has(st)){ei.per[c.id]={st};continue}
-      n++;const counted=COUNTED.has(st);
-      if(counted){used++;lastEv=e}else{booked++;if(!nextEv)nextEv=e}
-      const w=wins.find(w=>e.date>=w.start&&e.date<w.end&&w.used<w.cap);
-      let left,over=false,mo=false;
-      if(w){w.used++;if(counted)w.counted++;left=w.cap-w.used;mo=true}
-      else{ri++;if(counted)regCounted++;left=regPurchased-ri;over=ri>regPurchased}
-      ei.per[c.id]={st,n,left,over,mo};
-      if(over)ei.anyOver=true;
-    }
-    // FIFO payments -> charges
+    // FIFO payments -> charges (oldest charge first)
     let ci=0;
     for(const p of payments){
       let amt=Number(p.amount)||0;
@@ -845,29 +830,77 @@ function deriveAll({clients,events,ledger,settings}){
       }
       if(amt>0.004)segments.push({date:p.date,amount:amt,charge:null,client:c,payId:p.id});
     }
+    const isPaid=ch=>ch.paid>=(Number(ch.amount)||0)-0.004;
+    charges.forEach(ch=>{ch.fullyPaid=isPaid(ch)});
+    // Sessions only count once a purchase is fully paid
+    const pendingCharges=charges.filter(ch=>!ch.fullyPaid&&Number(ch.sessions)>0);
+    const pending=sum(pendingCharges,ch=>ch.expires?(Number(ch.perMonth)||0)*Math.max(1,Number(ch.months)||1):ch.sessions);
+    // Paid session sets ("blocks"); numbering restarts at #1 for each set
+    const adj=Number(c.sessionAdjust)||0;
+    const blocks=[];
+    if(adj>0)blocks.push({size:adj,base:Number(c.numberOffset)||0,pre:0,used:0,counted:0,label:'Starting credit'});
+    charges.forEach(ch=>{if(ch.fullyPaid&&!ch.expires&&Number(ch.sessions)>0)blocks.push({size:Number(ch.sessions),base:0,pre:0,used:0,counted:0,label:ch.desc||'Purchase',charge:ch})});
+    if(adj<0){let x=-adj;for(const b of blocks){const t=Math.min(x,b.size);b.pre+=t;x-=t;if(x<=0)break}}
+    const wins=[];charges.forEach(ch=>{const cap=Number(ch.perMonth)||0;if(!ch.fullyPaid||!ch.expires||!cap)return;const m=Math.max(1,Number(ch.months)||1);const s0=ch.periodStart||ch.date;
+      for(let k=0;k<m;k++)wins.push({start:addMonthsYmd(s0,k),end:addMonthsYmd(s0,k+1),cap,used:0,counted:0})});
+    const regCap=sum(blocks,b=>b.size-b.pre);
+    const purchased=sum(blocks,b=>b.size)+sum(wins,w=>w.cap)+Math.min(0,adj);
+    let bi=0,overflow=0,regUsed=0,regCounted=0,used=0,booked=0,nextEv=null,lastEv=null,lastPaidEv=null;
+    for(const e of list){
+      const gst=effStatus(e,now);const ov=e.statusBy&&e.statusBy[c.id];const st=ov||gst;
+      const ei=evInfo[e.id]||(evInfo[e.id]={per:{}});ei.st=gst;
+      if(FREED.has(st)){ei.per[c.id]={st};continue}
+      const counted=COUNTED.has(st);
+      if(counted){used++;lastEv=e}else{booked++;if(!nextEv)nextEv=e}
+      const w=wins.find(w=>e.date>=w.start&&e.date<w.end&&w.used<w.cap);
+      let n,of=0,left,over=false,mo=false,final=false;
+      if(w){w.used++;if(counted)w.counted++;n=w.used;of=w.cap;left=w.cap-w.used;mo=true;final=w.used===w.cap}
+      else{
+        while(bi<blocks.length&&blocks[bi].pre+blocks[bi].used>=blocks[bi].size)bi++;
+        if(bi<blocks.length){const b=blocks[bi];b.used++;if(counted){b.counted++;regCounted++}regUsed++;
+          n=b.base+b.pre+b.used;of=b.base+b.size;final=b.pre+b.used===b.size;left=regCap-regUsed;
+          if(final&&bi===blocks.length-1)lastPaidEv=e}
+        else{overflow++;if(counted)regCounted++;n=overflow;over=true;left=regCap-regUsed-overflow}
+      }
+      ei.per[c.id]={st,n,of,left,over,mo,final};
+      if(over)ei.anyOver=true;
+    }
     const billed=sum(charges,x=>x.amount),paidTot=sum(payments,x=>x.amount);
     const balance=round2(billed-paidTot);
-    const unpaid=charges.filter(ch=>ch.paid<(Number(ch.amount)||0)-0.004);
+    const unpaid=charges.filter(ch=>!ch.fullyPaid);
     // Next due
     const cyc=plan.billing&&plan.billing!=='pack'?Number(plan.billing):0;
     let paidThrough=null;
-    charges.forEach(ch=>{if(Number(ch.months)>0){const end=addMonthsYmd(ch.periodStart||ch.date,Number(ch.months));if(!paidThrough||end>paidThrough)paidThrough=end}});
+    charges.forEach(ch=>{if(ch.fullyPaid&&Number(ch.months)>0){const end=addMonthsYmd(ch.periodStart||ch.date,Number(ch.months));if(!paidThrough||end>paidThrough)paidThrough=end}});
     const termEnd=plan.startDate&&Number(plan.commitMonths)>0?addMonthsYmd(plan.startDate,Number(plan.commitMonths)):null;
-    let nextDue=null,termDone=false;
-    // Billing set to a cycle but every purchase is a session pack: judge by sessions left, not a renewal date
-    const sessionBilled=!!cyc&&!charges.some(ch=>Number(ch.months)>0)&&charges.some(ch=>Number(ch.sessions)>0);
-    if(cyc&&!sessionBilled){nextDue=paidThrough||plan.startDate||null;if(termEnd&&nextDue&&nextDue>=termEnd){termDone=true;nextDue=null}}
+    // Session-based plans (personal training, any billing cycle): due when the paid sessions run out.
+    // Date-based plans: flat monthly fees with no sessions (online coaching) and monthly-expiring sessions (juniors).
+    const sessionBased=charges.some(ch=>!ch.expires&&Number(ch.sessions)>0)||adj>0||(!charges.length&&plan.rateUnit!=='month');
     const expired=sum(wins.filter(w=>w.end<=today),w=>Math.max(0,w.cap-w.counted));
-    const remaining=(regPurchased-regCounted)+sum(wins.filter(w=>w.end>today),w=>w.cap-w.counted),unbooked=remaining-booked;
+    const remaining=(regCap-regCounted)+sum(wins.filter(w=>w.end>today),w=>w.cap-w.counted),unbooked=remaining-booked;
+    let nextDue=null,termDone=false,runOutEst=false;
+    if(sessionBased){
+      if(remaining<=0)nextDue=today;
+      else if(lastPaidEv&&!COUNTED.has(effStatus(lastPaidEv,now)))nextDue=lastPaidEv.date;
+      else{const pw=Number(plan.perWeek)||1;const after=Math.max(0,remaining-Math.max(0,booked));const lastB=list.filter(e=>!FREED.has(effStatus(e,now))).map(e=>e.date).sort().pop();
+        const from=lastB&&lastB>today?lastB:today;nextDue=ymd(addDays(parseYmd(from),Math.ceil(after/pw*7)));runOutEst=true}
+    }else if(cyc){nextDue=paidThrough||plan.startDate||null;if(termEnd&&nextDue&&nextDue>=termEnd){termDone=true;nextDue=null}}
+    // What the next booked session would be numbered
+    let nextN,nextOf=0;{const k=blocks.findIndex(b=>b.pre+b.used<b.size);if(overflow===0&&k>=0){const b=blocks[k];nextN=b.base+b.pre+b.used+1;nextOf=b.base+b.size}else{nextN=overflow+1}}
     const active=(c.status||'active')==='active';
     let urg=0,reason='Up to date';
     if(active){
-      if(cyc&&nextDue&&!sessionBilled){const d=daysBetween(today,nextDue);const u=urgFromDays(d);if(u>=urg){urg=u;reason=d<0?`Renewal ${-d}d overdue`:d===0?'Renewal due today':`Renewal in ${d}d`}}
-      if(plan.billing==='pack'||sessionBilled){const th=Number(settings&&settings.packThreshold)||2;const u=remaining<=0?3:remaining<=th?2:remaining<=th+3?1:0;if(u>urg||(u&&u===urg)){urg=Math.max(urg,u);reason=remaining<=0?'Out of sessions':`${remaining} session${remaining===1?'':'s'} left`}}
+      if(sessionBased){
+        const d=daysBetween(today,nextDue);const th=Number(settings&&settings.packThreshold)||2;
+        let u=remaining<=0?3:Math.max(urgFromDays(d),remaining<=th?2:0);
+        if(remaining>0&&u===3)u=2;
+        if(pending>0&&u>1)u=1; // a renewal is already recorded, just waiting on payment
+        if(u>urg||u===urg){urg=u;reason=remaining<=0?(pending>0?'Out of sessions · renewal awaiting payment':'Out of sessions'):`${remaining} session${remaining===1?'':'s'} left${u>0?` · run out ${runOutEst?'~':''}${fmtDate(nextDue,{month:'short',day:'numeric'})}`:''}`}
+      }else if(cyc&&nextDue){const d=daysBetween(today,nextDue);const u=urgFromDays(d);if(u>=urg){urg=u;reason=d<0?`Renewal ${-d}d overdue`:d===0?'Renewal due today':`Renewal in ${d}d`}}
       if(unpaid.length){const amt=money(round2(sum(unpaid,ch=>ch.amount-ch.paid)));const d=Math.min(...unpaid.map(ch=>daysBetween(today,ch.dueDate||ch.date)));const u=d<0?3:d<=7?2:1;
         if(u>=urg){urg=u;reason=d<0?`${amt} overdue (${-d}d)`:d===0?`${amt} due today`:`${amt} due in ${d}d`}}
     }
-    cs[c.id]={purchased,used,expired,booked,remaining,unbooked,nextN:n+1,nextLeft:remaining-booked-1,charges,payments,balance,unpaid,paidThrough,nextDue,termEnd,termDone,urg,reason,nextEv,lastEv,list,active};
+    cs[c.id]={purchased,used,expired,booked,remaining,unbooked,pending,nextN,nextOf,nextLeft:remaining-booked-1,charges,payments,balance,unpaid,paidThrough,nextDue,runOutEst,sessionBased,termEnd,termDone,urg,reason,nextEv,lastEv,list,active};
   }
   return {evInfo,cs,segments};
 }
@@ -898,7 +931,7 @@ function finance(derived,clients,settings,year){
     const cs=derived.cs[c.id];const p=c.plan||{};if(!cs||!cs.active)continue;
     const meq=monthlyEq(p);if(!meq)continue;
     let fromYmd;
-    if(p.billing==='pack'){const spm=sessionsPerMonth(p);const cover=spm>0?Math.max(0,cs.remaining)/spm:0;fromYmd=ymd(new Date(now.getFullYear(),now.getMonth()+Math.ceil(cover),1))}
+    if(cs.sessionBased){const spm=sessionsPerMonth(p);const cover=spm>0?Math.max(0,cs.remaining)/spm:0;fromYmd=ymd(new Date(now.getFullYear(),now.getMonth()+Math.ceil(cover),1))}
     else fromYmd=cs.paidThrough||p.startDate||todayYmd();
     const endYmd=cs.termEnd||addMonthsYmd(todayYmd(),12);
     const f=parseYmd(fromYmd);let key=Math.max(f.getFullYear()*12+f.getMonth(),curKey);
@@ -1077,7 +1110,7 @@ function CalendarPage({ctx}){
     const ei=derived.evInfo[e.id]||{};const ids=evCids(e);const cls=ids.map(id=>clients[id]).filter(Boolean);const cl=cls[0]||null;
     const st=ids.length?(ei.st||e.status||'scheduled'):(e.status||'scheduled');
     const per=cls.map(c=>(ei.per||{})[c.id]).filter(p=>p&&p.n);const uq=a=>[...new Set(a)].join('/');
-    const info={n:per.length?uq(per.map(p=>p.n)):'',left:per.length?uq(per.map(p=>p.left)):'',over:!!ei.anyOver,mo:per.some(p=>p.mo)};
+    const info={n:per.length?uq(per.map(p=>p.n)):'',of:per.length===1?per[0].of:0,left:per.length?uq(per.map(p=>p.left)):'',over:!!ei.anyOver,mo:per.some(p=>p.mo),final:per.some(p=>p.final&&!p.over)};
     const exc=cls.length>1?cls.map(c=>{const p=(ei.per||{})[c.id];return p&&p.st!==st&&['late','noshow','cancelled','sick','sickused'].includes(p.st)?`${firstName(c)}: ${STATUS_LABEL[p.st]}`:null}).filter(Boolean):[];
     const icon=st==='sick'||st==='sickused'?'sick':st==='late'?'alert':st==='noshow'?'ghost':cal.icon;
     const stCls=st==='late'||st==='sickused'?' late':st==='noshow'?' noshow':st==='cancelled'||st==='sick'?' cancelled':'';
@@ -1094,7 +1127,7 @@ function CalendarPage({ctx}){
       onPointerDown=${ev=>onDown(ev,e,'grid')} onClick=${ev=>ev.stopPropagation()} onContextMenu=${ev=>ev.preventDefault()} role="button" tabindex="0"
       onKeyDown=${ev=>{if(ev.key==='Enter')openEv(e)}}
       title=${`${label} · ${fmtTime(e.start)}–${fmtTime(e.start+(e.dur||60))}${st!=='scheduled'?' · '+STATUS_LABEL[st]:''}`}>
-      <div class="t1"><span class="ch"><${Icon} n=${icon} s=${11} w=${2.4}/></span>${group.length>1&&html`<${Icon} n="users" s=${12}/>`}<span class="nm">${label}</span><span class="done-ck" title="Completed"><${Icon} n="check" s=${10} w=${3.2}/></span>${diab&&html`<span class="diab" title="Diabetes: check glucose before training"><${Icon} n="drop" s=${11}/></span>`}${cl&&info.n&&html`<span class="sn" style="margin-left:auto;flex:none" title="Session number">#${info.n}</span>`}</div>
+      <div class="t1"><span class="ch"><${Icon} n=${icon} s=${11} w=${2.4}/></span>${group.length>1&&html`<${Icon} n="users" s=${12}/>`}<span class="nm">${label}</span><span class="done-ck" title="Completed"><${Icon} n="check" s=${10} w=${3.2}/></span>${diab&&html`<span class="diab" title="Diabetes: check glucose before training"><${Icon} n="drop" s=${11}/></span>`}${cl&&info.n&&html`<span class=${'sn'+(info.final?' sn-final':'')} style="margin-left:auto;flex:none" title=${info.final?'Final paid session of this set':'Session number'}>${info.final&&html`<svg class="final-star" width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="currentColor"/></svg>`}#${info.n}</span>`}</div>
       ${h>30&&html`<div class="t2"><span>${fmtTime(e.start)}–${fmtTime(e.start+(e.dur||60))}</span>
         ${cl&&info.n&&html`<span title="Paid sessions left after this one">${info.left} left${info.mo?' this mo':''}</span>`}
         ${st==='late'&&html`<b style="color:var(--r)">Late cancel</b>`}${st==='sickused'&&html`<b style="color:var(--r)">Sick · used</b>`}${st==='sick'&&html`<b>Sick · kept</b>`}${st==='noshow'&&html`<b style="color:var(--r)">No-show</b>`}${exc.map(x=>html`<b style="color:var(--r)">${x}</b>`)}
@@ -1150,7 +1183,7 @@ function CalendarPage({ctx}){
   };
 
   const AgendaItem=e=>{const {cal,info,cl,cls:group,exc,st,icon,stCls,label,diab}=evMeta(e);
-    const meta=[cl?null:cal.name,group.length>1?'Partner session':null,cl&&info.n?`Session #${info.n} · ${info.left} left${info.mo?' this month':''}`:null].filter(Boolean).join(' · ');
+    const meta=[cl?null:cal.name,group.length>1?'Partner session':null,cl&&info.n?`Session #${info.n}${info.of?' of '+info.of:''}${info.final?' · ★ final session':''} · ${info.left} left${info.mo?' this month':''}`:null].filter(Boolean).join(' · ');
     return html`<button key=${e.id} class=${'ag-ev'+stCls} style=${`--c:${cal.color}`} onClick=${()=>openEv(e)}>
       <span class="ag-time num">${fmtTime(e.start)}<small>${fmtTime(e.start+(e.dur||60))}</small></span>
       <span class="ag-ic"><${Icon} n=${icon} s=${14} w=${2.3}/></span>
@@ -1301,7 +1334,7 @@ function EventModal({ctx,init,onClose}){
     </div>
     ${ids.map(id=>{const c1=clients[id],cs=derived.cs[id];if(!c1||!cs)return null;const pi=info&&info.per&&info.per[id];const saved=!isNew&&evCids(init).includes(id);
       return html`<div class="callout" key=${id}>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:space-between"><span><b>${c1.name}</b> · ${!saved?html`This will be session <span class="num">#${cs.nextN}</span> · <span class="num">${cs.nextLeft}</span> left after it`:pi&&pi.n?html`Session <span class="num">#${pi.n}</span> · <span class="num">${pi.left}</span> left ${pi.mo?'this month':'after it'}`:'Cancelled, not counted'}</span>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:space-between"><span><b>${c1.name}</b> · ${!saved?html`This will be session <span class="num">#${cs.nextN}${cs.nextOf?' of '+cs.nextOf:''}</span> · <span class="num">${cs.nextLeft}</span> left after it`:pi&&pi.n?html`Session <span class="num">#${pi.n}${pi.of?' of '+pi.of:''}</span>${pi.final&&!pi.over?html` <b class="final-tag">★ Final session</b>`:''} · <span class="num">${pi.left}</span> left ${pi.mo?'this month':'after it'}`:'Cancelled, not counted'}</span>
         ${ids.length>1&&html`<select style="width:auto;padding:4px 8px" aria-label=${'Status for '+c1.name} value=${(f.statusBy||{})[id]||''} onChange=${e=>setPer(id,e.target.value)}><option value="">Same as session</option><option value="completed">Attended</option><option value="late">Late cancel</option><option value="noshow">No-show</option><option value="sick">Sick · session kept</option><option value="sickused">Sick · session used</option><option value="cancelled">Cancelled (credit kept)</option></select>`}</div>
       ${diabRisk(c1).has&&html`<div class="ev-health"><${Icon} n="drop" s=${13}/><span><b>${diabRisk(c1).short}.</b> ${diabRisk(c1).hypo?'Check glucose before starting (aim ~7–10 mmol/L) and have 15 g fast carbs on hand.':'Low hypo risk. Keep fast carbs in the gym.'}${(c1.health||{}).hypoPlan?` Plan: ${c1.health.hypoPlan}`:''}</span></div>`}
       <div class="muted" style="font-size:12.5px;margin-top:3px">${cs.remaining} paid sessions remaining · ${cs.booked} booked ahead${cs.unbooked<0?html` · <b style="color:var(--r)">${-cs.unbooked} booked beyond what's paid</b>`:''}</div></div>`})}
@@ -1490,7 +1523,7 @@ function ClientEditor({ctx,c,onClose,onSaved}){
         <${Field} label="Weight (kg)"><input type="number" inputmode="decimal" min="0" step="0.1" value=${raw.kg} onInput=${e=>setR('kg',e.target.value)}/><//>`}
       <${Field} label="Client since"><input type="date" value=${f.startDate} onInput=${e=>set('startDate',e.target.value)}/><//>
       <${Field} label="Session balance adjustment" hint="Sessions they already have credit for when you add them here (use − to remove)."><input type="number" value=${f.sessionAdjust} onInput=${e=>set('sessionAdjust',Number(e.target.value)||0)}/><//>
-      <${Field} label="Sessions done before this app" hint="Session numbering continues from here."><input type="number" min="0" value=${f.numberOffset} onInput=${e=>set('numberOffset',Number(e.target.value)||0)}/><//>
+      <${Field} label="Sessions done before this app" hint="Numbering for their starting credit continues from here. New purchases start again at #1."><input type="number" min="0" value=${f.numberOffset} onInput=${e=>set('numberOffset',Number(e.target.value)||0)}/><//>
     </div>
   <//>`;
 }
@@ -1544,10 +1577,10 @@ function Overview({ctx,c,s,go,openCharge}){
   const pct=s.purchased>0?clamp(s.used/s.purchased*100,0,100):0;
   return html`
     <div class="stats" style="margin:0">
-      <div class="stat"><span class="l">Sessions left</span><span class="v num" style=${s.remaining<=0?'color:var(--r)':''}>${s.remaining}</span><span class="s">${s.used} used of ${s.purchased} paid${s.expired?` · ${s.expired} expired`:''}</span></div>
+      <div class="stat"><span class="l">Sessions left</span><span class="v num" style=${s.remaining<=0?'color:var(--r)':''}>${s.remaining}</span><span class="s">${s.used} used of ${s.purchased} paid${s.expired?` · ${s.expired} expired`:''}${s.pending?html` · <b style="color:var(--o)">+${s.pending} awaiting payment</b>`:''}</span></div>
       <div class="stat"><span class="l">Booked ahead</span><span class="v num">${s.booked}</span><span class="s">${s.nextEv?`Next: ${fmtDate(s.nextEv.date)} ${fmtTime(s.nextEv.start)}`:'Nothing booked'}</span></div>
       <div class="stat"><span class="l">Balance owing</span><span class="v num" style=${s.balance>0?'color:var(--r)':''}>${money0(s.balance)}</span><span class="s">${METHOD_LABEL[plan.method]||'—'}</span></div>
-      <div class="stat"><span class="l">${plan.billing==='pack'?'Billing':'Next payment'}</span><span class="v" style="font-size:20px">${plan.billing==='pack'?'Per pack':s.termDone?'Term paid':s.nextDue?fmtDate(s.nextDue,{month:'short',day:'numeric'}):'—'}</span><span class="s">${BILLING_LABEL[plan.billing]||''}</span></div>
+      <div class="stat"><span class="l">${s.sessionBased?'Sessions run out':'Next payment'}</span><span class="v" style="font-size:20px">${s.termDone?'Term paid':s.nextDue?(s.runOutEst?'~':'')+fmtDate(s.nextDue,{month:'short',day:'numeric'}):'—'}</span><span class="s">${s.sessionBased?(s.runOutEst?'Estimated from their weekly frequency':'Date of their final booked session'):BILLING_LABEL[plan.billing]||''}</span></div>
     </div>
     <div class="meter" title="Sessions used of paid"><i style=${`width:${pct}%`}></i></div>
     <div class="two">
@@ -1579,7 +1612,7 @@ function SessionsTab({ctx,c,s,openCharge,openBook}){
     <div style="display:flex;gap:8px"><button class="btn primary" style="flex:1;justify-content:center" onClick=${openBook}><${Icon} n="cal"/>Book</button><button class="btn" style="flex:1;justify-content:center" onClick=${openCharge}><${Icon} n="plus"/>Top up</button></div>
     <div class="muted" style="font-size:13.5px"><b class="num" style="color:var(--fg)">${s.remaining}</b> left · <b class="num" style="color:var(--fg)">${s.booked}</b> booked · <b class="num" style="color:var(--fg)">${s.unbooked}</b> not yet booked</div>
     <div class="panel cardlist">${list.length?list.map(e=>{const info=infoOf(e);const st=info.st||'scheduled';return html`<div class="pcard" key=${e.id}>
-      <div class="pc-top"><b>${info.n?'#'+info.n+' · ':''}${fmtDate(e.date)}${info.grp?` · with ${partners(e)}`:''}</b><span class="num" style=${info.over?'color:var(--r);font-weight:700':'font-weight:600'}>${info.n?info.left+(info.mo?' left this mo':' left'):'—'}</span></div>
+      <div class="pc-top"><b>${info.final&&!info.over?'★ ':''}${info.n?'#'+info.n+(info.of?'/'+info.of:'')+' · ':''}${fmtDate(e.date)}${info.grp?` · with ${partners(e)}`:''}</b><span class="num" style=${info.over?'color:var(--r);font-weight:700':'font-weight:600'}>${info.n?info.left+(info.mo?' left this mo':' left'):'—'}</span></div>
       <div class="pc-top"><span class="pc-sub num">${fmtTime(e.start)}–${fmtTime(e.start+(e.dur||60))}</span>
         <select style="width:auto;padding:5px 8px" value=${selVal(e,st)} onChange=${ev=>setStatus(e,ev.target.value)}>${Object.entries(STATUS_LABEL).map(([k,l])=>html`<option value=${k}>${l}</option>`)}</select></div>
       ${e.note&&html`<div class="pc-sub">${e.note}</div>`}</div>`}):html`<div class="empty">No sessions booked yet.</div>`}</div>
@@ -1589,7 +1622,7 @@ function SessionsTab({ctx,c,s,openCharge,openBook}){
       <span class="sp" style="flex:1"></span><span class="muted" style="align-self:center;font-size:13.5px"><b class="num" style="color:var(--fg)">${s.remaining}</b> left · <b class="num" style="color:var(--fg)">${s.booked}</b> booked · <b class="num" style="color:var(--fg)">${s.unbooked}</b> not yet booked</span></div>
     <div class="panel tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Date</th><th>Time</th><th>Status</th><th>Note</th><th class="r">Left after</th></tr></thead><tbody>
       ${list.length?list.map(e=>{const info=infoOf(e);const st=info.st||'scheduled';
-        return html`<tr><td class="num">${info.n?'#'+info.n:'—'}</td><td>${fmtDate(e.date)}${info.grp&&html` <span class="tag">With ${partners(e)}</span>`}</td><td class="num">${fmtTime(e.start)}</td>
+        return html`<tr><td class="num">${info.n?html`${info.final&&!info.over?html`<span class="final-tag" title="Final paid session">★</span> `:''}#${info.n}${info.of?html`<span class="muted">/${info.of}</span>`:''}`:'—'}</td><td>${fmtDate(e.date)}${info.grp&&html` <span class="tag">With ${partners(e)}</span>`}</td><td class="num">${fmtTime(e.start)}</td>
           <td><select style="width:auto;padding:3px 6px;font-size:13px" value=${selVal(e,st)} onChange=${ev=>setStatus(e,ev.target.value)}>${Object.entries(STATUS_LABEL).map(([k,l])=>html`<option value=${k}>${l}</option>`)}</select></td>
           <td style="max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title=${e.note||''}>${e.note||html`<span class="muted">—</span>`}</td>
           <td class="r num" style=${info.over?'color:var(--r);font-weight:700':''}>${info.n?info.left+(info.mo?' (month)':''):'—'}</td></tr>`})
@@ -2344,7 +2377,7 @@ function ChargeModal({ctx,clientId,onClose,edit}){
     api.put('ledger',id,{clientId:cid,kind:'charge',date:f.date,dueDate:f.dueDate||f.date,amount:total,base:round2(Number(f.amount)),gst:!!(settings.gstRegistered&&(f.gst||settings.gstIncluded)),sessions:Number(f.sessions)||0,months:Number(f.months)||0,periodStart:f.periodStart||f.date,desc:f.desc||'',method:f.method,
       packageId:f.pkgId||'',expires:!!f.expires,perMonth:Number(f.perMonth)||0});
     if(f.paidNow)api.put('ledger',uid(),{clientId:cid,kind:'payment',date:f.date,amount:total,method:f.method,note:'Paid in full'});
-    toast(`${Number(f.sessions)?`${Number(f.sessions)} sessions added · `:''}${money(total)} ${f.paidNow?'paid':'billed'}`);onClose()};
+    toast(f.paidNow?`${Number(f.sessions)?`${Number(f.sessions)} sessions added · `:''}${money(total)} paid`:`${money(total)} billed${Number(f.sessions)?` · ${Number(f.sessions)} sessions added once paid in full`:''}`);onClose()};
   const amountLabel=settings.gstRegistered&&!settings.gstIncluded?'Total before GST':'Total';
   return html`<${Modal} title=${edit?'Edit purchase':'Record purchase'} onClose=${onClose} footer=${html`<span class="sp"></span><button class="btn" onClick=${onClose}>Cancel</button><button class="btn primary" onClick=${save}>${edit?'Save changes':'Save'} · ${money(total)}</button>`}>
     ${edit&&html`<div class="callout">${c?c.name:''}${edit.packageId&&pkgOf(settings,edit.packageId)?` · ${pkgOf(settings,edit.packageId).name}`:''}. Changes here update their session balance and what they owe. Payments already logged stay as they are.</div>`}
@@ -2376,7 +2409,7 @@ function ChargeModal({ctx,clientId,onClose,edit}){
     </div>
     ${settings.gstRegistered&&!settings.gstIncluded&&html`<label class="check"><input type="checkbox" checked=${f.gst} onChange=${e=>set('gst',e.target.checked)}/>Add GST (${settings.gstRate}%) — total ${money(total)}</label>`}
     ${!edit&&html`<label class="check"><input type="checkbox" checked=${f.paidNow} onChange=${e=>set('paidNow',e.target.checked)}/>Paid in full now</label>`}
-    <p class="fhint" style="margin:0">Leave "paid" unticked for invoices you're waiting on or cash they'll pay in parts.</p>
+    <p class="fhint" style="margin:0">Sessions are added to their balance once the purchase is paid in full. Leave "paid" unticked for invoices you're waiting on or cash they'll pay in parts.</p>
   <//>`;
 }
 
@@ -2441,7 +2474,7 @@ function LedgerTable({ctx,clientId}){
   return html`<div class="panel tbl-wrap"><table class="tbl"><thead><tr><th>Date</th>${!clientId&&html`<th>Athlete</th>`}<th>Entry</th><th class="r">Sessions</th><th class="r">Amount</th><th>Status</th><th></th></tr></thead><tbody>
     ${rows.length?rows.map(l=>{const ch=chargeState[l.id];const owe=ch?round2(ch.amount-ch.paid):0;const c=clients[l.clientId];
       return html`<tr><td>${fmtDate(l.date,{month:'short',day:'numeric',year:'2-digit'})}</td>${!clientId&&html`<td>${c?c.name:'—'}</td>`}
-        <td>${l.kind==='charge'?html`<b>${l.desc||'Charge'}</b><br/><span class="muted" style="font-size:12.5px">${METHOD_LABEL[l.method]||''}${l.gst?' · incl. GST':''}${Number(l.months)?` · ${l.months} mo from ${fmtDate(l.periodStart,{month:'short',day:'numeric'})}`:''}</span>`:html`<span>Payment received</span><br/><span class="muted" style="font-size:12.5px">${METHOD_LABEL[l.method]||''}${l.note?' · '+l.note:''}</span>`}</td>
+        <td>${l.kind==='charge'?html`<b>${l.desc||'Charge'}</b><br/><span class="muted" style="font-size:12.5px">${ch&&!ch.fullyPaid&&Number(l.sessions)?html`<b style="color:var(--o)">Sessions added once paid in full</b> · `:''}${METHOD_LABEL[l.method]||''}${l.gst?' · incl. GST':''}${Number(l.months)?` · ${l.months} mo from ${fmtDate(l.periodStart,{month:'short',day:'numeric'})}`:''}</span>`:html`<span>Payment received</span><br/><span class="muted" style="font-size:12.5px">${METHOD_LABEL[l.method]||''}${l.note?' · '+l.note:''}</span>`}</td>
         <td class="r num">${l.kind==='charge'&&Number(l.sessions)?'+'+l.sessions:''}</td>
         <td class="r num" style=${l.kind==='payment'?'color:var(--ok)':''}>${l.kind==='payment'?'−':''}${money(l.amount)}</td>
         <td>${l.kind==='charge'?(owe<=0.004?html`<span class="pill u0">Paid</span>`:html`<${Pill} u=${Math.max(1,urgFromDays(daysBetween(todayYmd(),l.dueDate||l.date)))}>${ch.paid>0?`${money(owe)} left`:'Unpaid'}<//>`):''}</td>
@@ -2461,7 +2494,7 @@ function PaymentsPage({ctx,openAthlete}){
   const payCards=()=>html`<div class="cardlist">${rows.length?rows.map(({c,s})=>{const p=c.plan||{};return html`<button class="pcard" key=${c.id} onClick=${()=>openAthlete(c.id)}>
     <div class="pc-top"><b>${c.name}</b>${s.active?html`<${Pill} u=${s.urg}>${s.reason}<//>`:html`<span class="pill un">${c.status}</span>`}</div>
     <div class="pc-sub">${[pkgOf(settings,p.packageId)?pkgOf(settings,p.packageId).name:null,p.commitMonths?`${p.commitMonths} mo`:null,`${p.perWeek||'?'}×/wk`,BILLING_LABEL[p.billing],p.rate?`${money(p.rate)}/${p.rateUnit==='month'?'mo':'sess'}`:null,p.rateType&&p.rateType!=='standard'?RATE_TYPE_LABEL[p.rateType]:null,METHOD_LABEL[p.method],p.noGst?'No GST':null].filter(Boolean).join(' · ')}</div>
-    <div class="pc-meta"><span><b class="num" style=${s.remaining<=0?'color:var(--r)':''}>${s.remaining}</b> sessions left</span><span>Owes <b class="num" style=${s.balance>0?'color:var(--r)':''}>${money(s.balance)}</b></span><span>${p.billing==='pack'?'Bills per pack':s.termDone?'Term paid':s.nextDue?'Due '+fmtDate(s.nextDue,{month:'short',day:'numeric'}):''}</span></div></button>`})
+    <div class="pc-meta"><span><b class="num" style=${s.remaining<=0?'color:var(--r)':''}>${s.remaining}</b> sessions left</span><span>Owes <b class="num" style=${s.balance>0?'color:var(--r)':''}>${money(s.balance)}</b></span><span>${s.termDone?'Term paid':s.nextDue?(s.sessionBased?'Runs out '+(s.runOutEst?'~':''):'Due ')+fmtDate(s.nextDue,{month:'short',day:'numeric'}):''}${s.pending?html` · <b style="color:var(--o)">+${s.pending} awaiting payment</b>`:''}</span></div></button>`})
     :html`<div class="empty">Add athletes to start tracking payments.</div>`}</div>`;
   return html`<div>
     <div class="page-h"><div><div class="eyebrow">Who owes what, and when</div><h1>Payments</h1></div><span class="sp"></span>
@@ -2480,7 +2513,7 @@ function PaymentsPage({ctx,openAthlete}){
         <td class="num">${p.rate?money(p.rate):'—'}<span class="muted">/${p.rateUnit==='month'?'mo':'sess'}</span>${p.noGst?html` <span class="tag">No GST</span>`:''}${p.rateType&&p.rateType!=='standard'?html`<br/><span class="tag">${p.rateType}</span>`:''}</td>
         <td class="r num" style=${s.remaining<=0?'color:var(--r);font-weight:700':''}>${s.remaining}</td>
         <td class="r num" style=${s.balance>0?'color:var(--r);font-weight:700':''}>${money(s.balance)}</td>
-        <td>${p.billing==='pack'?html`<span class="muted">When pack runs out</span>`:s.termDone?'Term paid':s.nextDue?fmtDate(s.nextDue):'—'}</td>
+        <td>${s.termDone?'Term paid':s.nextDue?html`${s.runOutEst?'~':''}${fmtDate(s.nextDue)}${s.sessionBased?html`<br/><span class="muted" style="font-size:12.5px">when sessions run out</span>`:''}`:'—'}${s.pending?html`<br/><span style="color:var(--o);font-size:12.5px;font-weight:700">+${s.pending} awaiting payment</span>`:''}</td>
         <td>${s.active?html`<${Pill} u=${s.urg}>${s.reason}<//>`:html`<span class="pill un">${c.status}</span>`}</td></tr>`})
        :html`<tr><td colspan="7"><div class="empty">Add athletes to start tracking payments.</div></td></tr>`}
       </tbody></table>`}
