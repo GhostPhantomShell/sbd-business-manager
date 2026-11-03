@@ -1,7 +1,7 @@
 {
   "name": "sbd-business-manager",
   "productName": "SBD Business Manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Strength By Design Business Manager",
   "main": "main.js",
   "author": "Strength By Design",
@@ -22,12 +22,56 @@
   "build": {
     "appId": "com.strengthbydesign.businessmanager",
     "productName": "SBD Business Manager",
-    "directories": { "buildResources": "build", "output": "release" },
-    "files": ["main.js", "app/**/*", "package.json"],
-    "publish": [{ "provider": "github", "owner": "GhostPhantomShell", "repo": "sbd-business-manager", "releaseType": "release" }],
-    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "icon": "build/icon.png" },
-    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true, "shortcutName": "SBD Business Manager" },
-    "mac": { "target": [{ "target": "dmg", "arch": ["universal"] }], "icon": "build/icon.png", "category": "public.app-category.business", "identity": null },
-    "dmg": { "title": "SBD Business Manager" }
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "app/**/*",
+      "package.json"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "GhostPhantomShell",
+        "repo": "sbd-business-manager",
+        "releaseType": "release"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SBD Business Manager"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "category": "public.app-category.business",
+      "identity": null
+    },
+    "dmg": {
+      "title": "SBD Business Manager"
+    }
   }
 }

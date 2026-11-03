@@ -579,8 +579,8 @@ input[type=range]{accent-color:var(--accent);width:100%}
 
 <div id="app"><div class="wrap" style="padding-block:40px;color:#888">Loading Strength By Design…</div></div>
 
-<script src="vendor/htm-preact.js"></script>
-<script>
+<script>window.__sbdLoad=function(srcs,cb){var i=0;(function next(){if(window.htmPreact)return cb();if(i>=srcs.length){document.getElementById("app").innerHTML="<div style=\"padding:40px;font-family:system-ui\">Could not load the app. Check your internet connection, then reopen it.</div>";return}var s=document.createElement("script");s.src=srcs[i++];s.onload=function(){window.htmPreact?cb():next()};s.onerror=function(){s.remove();next()};document.head.appendChild(s)})()};</script>
+<script>window.__sbdLoad(["vendor/htm-preact.js","https://cdn.jsdelivr.net/npm/htm@3.1.1/preact/standalone.umd.js"],function(){
 const {html,render,useState,useEffect,useMemo,useRef} = htmPreact;
 
 /* ================= Utilities ================= */
@@ -689,9 +689,10 @@ const strip=o=>{const {id,...r}=o||{};return JSON.parse(JSON.stringify(r))};
 const SBD_SUPABASE={url:'https://onzqiclfpyqqrdufgknb.supabase.co',key:'sb_publishable_VWMzNDd_BAZOx6lNXD9ptA_D0oAd7Ta'};
 const SB_TABLE='sbd_docs';
 let sbClient=null;
+const SB_SRCS=['vendor/supabase.js','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js'];
 const loadSupabase=()=>new Promise((res,rej)=>{if(window.supabase&&window.supabase.createClient)return res(window.supabase);
-  const s=document.createElement('script');s.src='vendor/supabase.js';
-  s.onload=()=>window.supabase?res(window.supabase):rej(new Error('load'));s.onerror=()=>rej(new Error('load'));document.head.appendChild(s)});
+  const next=i=>{if(i>=SB_SRCS.length)return rej(new Error('load'));const s=document.createElement('script');s.src=SB_SRCS[i];
+    s.onload=()=>window.supabase?res(window.supabase):next(i+1);s.onerror=()=>{s.remove();next(i+1)};document.head.appendChild(s)};next(0)});
 const inClaude=()=>!!(window.claude&&window.claude.use);
 const sbErr=e=>{const m=String(e&&e.message||e||'');if(/JWT|auth|401|403/i.test(m))return 'You were signed out. Sign in again to keep saving.';if(/fetch|network|Failed/i.test(m))return 'No connection. Changes will need to be redone once you’re back online.';return 'Could not save: '+m.slice(0,120)};
 
@@ -2857,5 +2858,6 @@ function App(){
 }
 render(html`<${App}/>`,document.getElementById('app'));
 
-</script>
+
+});</script>
 </body></html>

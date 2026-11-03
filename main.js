@@ -13,6 +13,16 @@ const cacheDir = () => path.join(app.getPath('userData'), 'app-cache');
 const readVer = dir => { try { return JSON.parse(fs.readFileSync(path.join(dir, 'version.json'), 'utf8')).version || '0.0.0'; } catch { return '0.0.0'; } };
 const newer = (a, b) => { const pa = a.split('.').map(Number), pb = b.split('.').map(Number); for (let i = 0; i < 3; i++) { if ((pa[i] || 0) > (pb[i] || 0)) return true; if ((pa[i] || 0) < (pb[i] || 0)) return false; } return false; };
 
+function ensureVendor(dir) {
+  // Updated pages live in the cache folder; give them the bundled libraries too.
+  try {
+    const src = path.join(bundledDir, 'vendor'), dst = path.join(dir, 'vendor');
+    if (dir === bundledDir || !fs.existsSync(src)) return;
+    fs.mkdirSync(dst, { recursive: true });
+    for (const f of fs.readdirSync(src)) { const t = path.join(dst, f); if (!fs.existsSync(t)) fs.copyFileSync(path.join(src, f), t); }
+  } catch (_) {}
+}
+
 function currentDir() {
   const c = cacheDir();
   if (fs.existsSync(path.join(c, 'index.html')) && newer(readVer(c), readVer(bundledDir))) return c;
@@ -27,7 +37,8 @@ function createWindow() {
     icon: path.join(__dirname, 'build', 'icon.png'),
     webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: true }
   });
-  win.loadFile(path.join(currentDir(), 'index.html'));
+  const dir = currentDir(); ensureVendor(dir);
+  win.loadFile(path.join(dir, 'index.html'));
   // Open web links in the normal browser, keep the app window on the app
   win.webContents.setWindowOpenHandler(({ url }) => { if (/^https?:/i.test(url)) shell.openExternal(url); return { action: 'deny' }; });
   win.webContents.on('will-navigate', (e, url) => { if (!url.startsWith('file:')) { e.preventDefault(); if (/^https?:/i.test(url)) shell.openExternal(url); } });
@@ -52,6 +63,7 @@ async function checkContentUpdate() {
     const c = cacheDir(); fs.mkdirSync(c, { recursive: true });
     fs.writeFileSync(path.join(c, 'index.html'), html);
     fs.writeFileSync(path.join(c, 'version.json'), JSON.stringify({ version: remote }));
+    ensureVendor(c);
     const { response } = await dialog.showMessageBox(win, {
       type: 'info', buttons: ['Restart now', 'Later'], defaultId: 0, cancelId: 1,
       title: 'Update ready', message: `SBD Business Manager ${remote} is ready.`, detail: 'Restart now to use it, or it will load the next time you open the app.'
