@@ -123,6 +123,38 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--fg)}
 .u2{background:var(--o-bg);color:var(--o)}
 .u3{background:var(--r-bg);color:var(--r)}
 .un{background:var(--surface-2);color:var(--muted)}
+.pq-badges{display:inline-flex;gap:4px;flex-wrap:wrap}.pq-mini{display:block;margin-top:3px}.pq-mini .pill{font-size:10.5px;padding:0 6px}
+.pq{display:flex;flex-direction:column;gap:12px}.pq-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pq-top .pill svg{margin-right:2px}
+.pq-consent{display:flex;gap:8px;align-items:flex-start}.pq-consent svg{flex:none;margin-top:2px}
+.pq-doc{border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.pq-mast{text-align:center}.pq-mast p{text-align:left;margin:8px 0 0;font-size:13.5px}.pq-logo{font-weight:900;font-size:34px;letter-spacing:-.02em;line-height:1;color:var(--fg)}.pq-sub{font-weight:700;font-size:15px;margin-top:4px}
+.pq-h{margin:10px 0 0;font-size:14px;letter-spacing:.06em;text-transform:uppercase;border-bottom:2px solid var(--fg);padding-bottom:4px}
+.pq-lead{display:flex;gap:10px;align-items:flex-end;justify-content:space-between}.pq-cols{display:flex;gap:6px;font-weight:800;font-size:12px}.pq-cols span{width:52px;text-align:center}
+.pq-q{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line-2)}.pq-q.sub{padding-left:14px}
+.pq-q.miss,.pq-sec.miss{background:var(--r-bg);border-radius:6px;padding-inline:8px}
+.pq-qt{display:flex;flex-direction:column;gap:4px;min-width:0;font-size:14px}.pq-qt small{color:var(--muted);font-size:12px}
+.pq-yn{display:flex;gap:6px;flex:none}.pq-opt{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:52px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;background:var(--surface)}
+.pq-opt input{position:absolute;opacity:0;pointer-events:none}.pq-opt:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.pq-opt.on.yes{background:var(--fg);color:var(--bg);border-color:var(--fg)}.pq-opt.on.no{background:var(--surface-2);border-color:var(--fg)}
+.pq-inl{display:inline-flex;vertical-align:middle}.pq-inl input{width:17px;height:17px}
+.pq-list{display:flex;flex-direction:column;gap:4px;margin-top:4px}.pq-list span{font-size:11px;font-weight:800;letter-spacing:.03em}
+.pq-box{border:2px solid;border-radius:12px;padding:12px 14px;font-size:13.5px}.pq-box p{margin:6px 0 0}.pq-box-h{display:block}
+.pq-box.green{border-color:var(--ok);background:var(--ok-bg)}.pq-box.red{border-color:var(--r);background:var(--r-bg)}.pq-box.amber{border-color:var(--y);background:var(--y-bg)}
+.pq-ul{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}
+.pq-p2{display:flex;flex-direction:column;gap:10px}.pq-sec{border:1px solid var(--line);border-radius:8px;padding:10px 12px}.pq-sec-h{display:flex;gap:6px;font-weight:600;font-size:14px}
+.pq-gate{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 2px}.pq-gate .pq-opt{font-weight:600;font-size:12.5px;text-align:left;justify-content:flex-start}
+.pq-go{font-weight:800;margin:4px 0}
+.pq-decl{display:flex;flex-direction:column;gap:10px;font-size:13.5px}.pq-decl p{margin:0}
+.pq-sig{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:8px;padding:10px}
+.pq-pad{width:100%;max-width:600px;aspect-ratio:600/160;background:#fff;border:1px dashed var(--muted);border-radius:6px;touch-action:none;cursor:crosshair}
+.pq-sig-img{background:#fff;border-radius:6px;max-width:320px;border:1px solid var(--line)}.pq-sig-img img{display:block;width:100%}
+.pq-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted);border-top:1px solid var(--line-2);padding-top:8px}
+.pq-actions{display:flex;flex-direction:column;gap:8px}
+.pq-sum{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.pq-hist{display:flex;flex-direction:column}.pq-hrow{display:flex;gap:8px;align-items:center;padding:8px 14px;border-top:1px solid var(--line-2)}
+.pq-hbtn{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;background:none;border:0;padding:4px 0;color:inherit;font:inherit;cursor:pointer;text-align:left}.pq-hbtn small{color:var(--muted)}
+@media (max-width:760px){.pq-doc{padding:12px}.pq-q{flex-direction:column;gap:8px}.pq-cols{display:none}}
+.tz-now{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
 .tag{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--surface-2);color:var(--muted)}
 .tag.ex{background:transparent;border:1px dashed var(--muted)}
 
@@ -256,7 +288,8 @@ table.tbl{width:100%;border-collapse:collapse;font-size:14px}
 .arow:hover{background:var(--surface-2)}
 .arow[aria-current="true"]{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--accent)}
 .av{flex:none;width:36px;height:36px;border-radius:8px;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:16px;letter-spacing:.03em}
-.arow .who{flex:1;min-width:0}
+.arow .who{flex:1;min-width:96px}
+.arow>span:last-child{max-width:52%}.arow>span:last-child .pill{white-space:normal;text-align:right;line-height:1.25}
 .arow .who b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14.5px}
 .arow .who small{color:var(--muted);font-size:12.5px}
 .prof-h{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:16px;border-bottom:1px solid var(--line-2)}
@@ -589,7 +622,7 @@ const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 const parseYmd=s=>{const [y,m,d]=(s||'').split('-').map(Number);return new Date(y||1970,(m||1)-1,d||1)};
 const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
 const addMonthsYmd=(s,n)=>{const d=parseYmd(s);const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+n);const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();d.setDate(Math.min(day,last));return ymd(d)};
-const todayYmd=()=>ymd(new Date());
+const todayYmd=()=>ymd(appNow());
 const daysBetween=(a,b)=>Math.round((parseYmd(b)-parseYmd(a))/864e5);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-5);
@@ -608,11 +641,43 @@ const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov',
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const DOWL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const initials=n=>(n||'?').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('');
-const ageFrom=dob=>{if(!dob)return null;const d=parseYmd(dob),t=new Date();let a=t.getFullYear()-d.getFullYear();if(t.getMonth()<d.getMonth()||(t.getMonth()===d.getMonth()&&t.getDate()<d.getDate()))a--;return a};
+const ageFrom=dob=>{if(!dob)return null;const d=parseYmd(dob),t=appNow();let a=t.getFullYear()-d.getFullYear();if(t.getMonth()<d.getMonth()||(t.getMonth()===d.getMonth()&&t.getDate()<d.getDate()))a--;return a};
 const ls={get(k,d){try{const v=localStorage.getItem('sbd:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('sbd:'+k,JSON.stringify(v))}catch(e){}}};
+/* ================= Time zone (Canada 2026 rules, independent of the device's tz data) ================= */
+const TZ_ZONES=[
+  {id:'bc',label:'British Columbia (Pacific)',off:-420,fixed:true,iana:['America/Vancouver','America/Fort_Nelson','America/Creston','America/Dawson_Creek']},
+  {id:'yt',label:'Yukon',off:-420,fixed:true,iana:['America/Whitehorse','America/Dawson']},
+  {id:'ab',label:'Alberta (incl. Lloydminster)',off:-360,fixed:true,iana:['America/Edmonton','America/Calgary']},
+  {id:'sk',label:'Saskatchewan',off:-360,fixed:true,iana:['America/Regina','America/Swift_Current']},
+  {id:'mb',label:'Manitoba',off:-300,fixed:true,iana:['America/Winnipeg']},
+  {id:'nwo',label:'Northwestern Ontario · Kenora area (follows Manitoba)',off:-300,fixed:true,iana:['America/Rainy_River'],verify:true},
+  {id:'nt',label:'Northwest Territories (Mountain)',off:-420,iana:['America/Yellowknife','America/Inuvik']},
+  {id:'nu-w',label:'Nunavut · Cambridge Bay (Mountain)',off:-420,iana:['America/Cambridge_Bay']},
+  {id:'nu-c',label:'Nunavut · Rankin Inlet (Central)',off:-360,iana:['America/Rankin_Inlet','America/Resolute']},
+  {id:'nu-s',label:'Nunavut · Southampton Island',off:-300,fixed:true,iana:['America/Atikokan','America/Coral_Harbour']},
+  {id:'on',label:'Ontario / Quebec / Nunavut East (Eastern)',off:-300,iana:['America/Toronto','America/Montreal','America/Nipigon','America/Thunder_Bay','America/Iqaluit','America/Pangnirtung']},
+  {id:'qc-e',label:'Quebec · east of 63°W (Atlantic, no change)',off:-240,fixed:true,iana:['America/Blanc-Sablon']},
+  {id:'atl',label:'Nova Scotia / New Brunswick / PEI (Atlantic)',off:-240,iana:['America/Halifax','America/Moncton','America/Glace_Bay','America/Goose_Bay']},
+  {id:'nl',label:'Newfoundland',off:-210,iana:['America/St_Johns']}];
+const TZ_DEVICE=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(_){return ''}})();
+let TZ_PREF='auto'; // set from Setup
+const tzZone=id=>TZ_ZONES.find(z=>z.id===id);
+const tzAuto=()=>TZ_ZONES.find(z=>z.iana.includes(TZ_DEVICE))||null;
+const tzActive=()=>TZ_PREF&&TZ_PREF!=='auto'?tzZone(TZ_PREF)||null:tzAuto();
+// North American DST: 2nd Sunday of March 2:00 standard → 1st Sunday of November 2:00 daylight
+const nthSunUTC=(y,m,n)=>{const d=new Date(Date.UTC(y,m,1));return Date.UTC(y,m,1+((7-d.getUTCDay())%7)+7*(n-1))};
+const tzOffsetAt=(z,ms)=>{if(z.fixed)return z.off;const y=new Date(ms+z.off*6e4).getUTCFullYear();
+  const start=nthSunUTC(y,2,2)+2*36e5-z.off*6e4,end=nthSunUTC(y,10,1)+2*36e5-(z.off+60)*6e4;return ms>=start&&ms<end?z.off+60:z.off};
+// A Date whose local getters (getHours, getDate…) read as the wall clock in the chosen zone
+const appNow=()=>{const ms=Date.now();const z=tzActive();if(!z)return new Date(ms);const dev=-new Date(ms).getTimezoneOffset();return new Date(ms+(tzOffsetAt(z,ms)-dev)*6e4)};
+const nowMs=()=>appNow().getTime();
+const fmtOff=m=>{const s=m<0?'−':'+';const a=Math.abs(m);return `UTC${s}${Math.floor(a/60)}${a%60?':'+pad(a%60):''}`};
 
 /* ================= Icons ================= */
 const ICONS={
+  lock:'M6 11h12v10H6zM8 11V7a4 4 0 0 1 8 0v4',
+  shield:'M12 3l8 3v6c0 5-3.5 8-8 9c-4.5-1-8-4-8-9V6z',
+  clock:'M12 21a9 9 0 1 0 0-18a9 9 0 1 0 0 18M12 7v5l3 2',
   barbell:'M2 12h20M5 8v8M8 6v12M16 6v12M19 8v8',
   dumbbell:'M6 7v10M3 9.5v5M18 7v10M21 9.5v5M6 12h12',
   kettlebell:'M7.5 14.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0-9 0M9 10.2V7.5a3 3 0 0 1 6 0v2.7',
@@ -680,7 +745,7 @@ const DEFAULT_CALENDARS=[
   {id:'personal',name:'Personal',color:'#2E9E5B',icon:'heart',order:3}];
 
 /* ================= Store (private per-user cloud storage) ================= */
-const COLS=['calendars','clients','events','ledger','travel'];
+const COLS=['calendars','clients','events','ledger','travel','parq'];
 let toastFn=()=>{};
 const toast=m=>toastFn(m);
 const errMsg=e=>{const c=e&&e.code;if(c==='quota_exceeded')return 'Storage is full. Remove old data, then try again.';if(c==='invalid_argument')return 'That change could not be saved.';if(c==='revoked')return 'Saving was switched off for this view.';return 'Could not save. Check your connection and try again.'};
@@ -696,8 +761,17 @@ const loadSupabase=()=>new Promise((res,rej)=>{if(window.supabase&&window.supaba
 const inClaude=()=>!!(window.claude&&window.claude.use);
 const sbErr=e=>{const m=String(e&&e.message||e||'');if(/JWT|auth|401|403/i.test(m))return 'You were signed out. Sign in again to keep saving.';if(/fetch|network|Failed/i.test(m))return 'No connection. Changes will need to be redone once you’re back online.';return 'Could not save: '+m.slice(0,120)};
 
+const PQ_TABLE='parq_forms',PQ_BUCKET='parq-private';
+const pqFromRow=r=>{const d=r.data||{};const o={...d,id:r.id,clientId:r.client_id,status:r.status,formVersion:r.form_version,date:r.completed_on||d.date,signedAt:r.signed_at||d.signedAt,expiresOn:r.expires_on||d.expiresOn,needsClearance:!!r.needs_clearance};
+  if(r.clearance)o.clearance=r.clearance;else delete o.clearance;if(r.pdf_path)o.pdfPath=r.pdf_path;return o};
+const blobToDataUrl=b=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(b)});
+const pqCache={};
+const pqFileBlob=path=>{if(!sbClient)return Promise.reject(new Error('offline'));return sbClient.storage.from(PQ_BUCKET).download(path).then(({data,error})=>{if(error)throw error;return data})};
+const pqFile=path=>pqCache[path]||(pqCache[path]=pqFileBlob(path).then(blobToDataUrl).catch(e=>{delete pqCache[path];throw e}));
+const pqSigSrc=async s=>s?(s.img||(s.path?await pqFile(s.path):null)):null;
+const pqMissingTable=e=>/PGRST205|42P01|parq_forms|schema cache|does not exist/i.test(String((e&&(e.code+' '+e.message))||e));
 function useStore(){
-  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{}});
+  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{}});
   const R=useRef({mode:'loading',root:null,q:{},uid:null,recent:{}});
   const [authTick,setAuthTick]=useState(0);
   useEffect(()=>{
@@ -741,7 +815,18 @@ function useStore(){
           if(!data||data.length<page)break;from+=page}
       }catch(e){if(!dead){toast(sbErr(e));setSt(s=>({...s,ready:true}))}return}
       if(dead)return;
-      setSt(s=>({...s,...all,ready:true}));
+      // PAR-Q+ forms live in their own locked table
+      let parqOk=true;R.current.pqSigned={};
+      try{const {data,error}=await sb.from(PQ_TABLE).select('*');if(error)throw error;
+        (data||[]).forEach(r=>{all.parq[r.id]=pqFromRow(r);if(r.status==='signed')R.current.pqSigned[r.id]=true})}
+      catch(e){parqOk=false}
+      if(dead)return;
+      setSt(s=>({...s,...all,parqOk,ready:true}));
+      if(parqOk){const pch=sb.channel('sbd-parq-'+uidv).on('postgres_changes',{event:'*',schema:'public',table:PQ_TABLE,filter:`user_id=eq.${uidv}`},p=>{
+          const row=p.eventType==='DELETE'?p.old:p.new;if(!row||!row.id)return;const t=R.current.recent['parq/'+row.id];if(t&&Date.now()-t<4000)return;
+          if(p.eventType!=='DELETE'&&row.status==='signed')R.current.pqSigned[row.id]=true;
+          setSt(s=>{const m={...s.parq};if(p.eventType==='DELETE')delete m[row.id];else m[row.id]=pqFromRow(row);return {...s,parq:m}})}).subscribe();
+        unsubs.push(()=>{try{sb.removeChannel(pch)}catch(_){}})}
       // live updates from other devices
       const ch=sb.channel('sbd-'+uidv).on('postgres_changes',{event:'*',schema:'public',table:SB_TABLE,filter:`user_id=eq.${uidv}`},p=>{
         const row=p.eventType==='DELETE'?p.old:p.new;if(!row||!row.col)return;const key=row.col+'/'+row.id;
@@ -758,11 +843,27 @@ function useStore(){
     const queue=(path,fn)=>{const q=R.current.q;const p=(q[path]||Promise.resolve()).then(fn).catch(e=>{toast(R.current.mode==='supabase'?sbErr(e):errMsg(e))});q[path]=p;return p};
     const sbPut=(col,id,data)=>()=>{R.current.recent[col+'/'+id]=Date.now();return sbClient.from(SB_TABLE).upsert({user_id:R.current.uid,col,id,data,updated_at:new Date().toISOString()},{onConflict:'user_id,col,id'}).then(({error})=>{if(error)throw error})};
     const sbDel=(col,id)=>()=>{R.current.recent[col+'/'+id]=Date.now();return sbClient.from(SB_TABLE).delete().eq('user_id',R.current.uid).eq('col',col).eq('id',id).then(({error})=>{if(error)throw error})};
+    const pqPut=(id,body)=>async()=>{const uidv=R.current.uid;const sg=R.current.pqSigned||(R.current.pqSigned={});R.current.recent['parq/'+id]=Date.now();
+      if(sg[id]){const {error}=await sbClient.from(PQ_TABLE).update({clearance:body.clearance||null}).eq('id',id);if(error)throw error;return}
+      const doc={...body};
+      if(doc.status==='signed'){for(const k of ['sig','witness','guardian']){const sv=doc[k];if(!sv||!sv.img)continue;const path=`${uidv}/${id}/${k}.png`;
+          const blob=await (await fetch(sv.img)).blob();const {error}=await sbClient.storage.from(PQ_BUCKET).upload(path,blob,{contentType:'image/png',upsert:false});
+          if(error&&!/exist|duplicate/i.test(error.message||''))throw error;pqCache[path]=Promise.resolve(sv.img);const {img,...rest}=sv;doc[k]={...rest,path}}}
+      const {clearance,pdfPath,id:_i,...data}=doc;
+      const row={id,user_id:uidv,client_id:doc.clientId,status:doc.status||'draft',form_version:doc.formVersion||PQ_VER,data,completed_on:doc.date||null,signed_at:doc.signedAt||null,expires_on:doc.expiresOn||null,needs_clearance:!!doc.needsClearance,clearance:clearance||null};
+      const {error}=await sbClient.from(PQ_TABLE).upsert(row,{onConflict:'id'});if(error)throw error;
+      if(doc.status==='signed'){sg[id]=true;
+        try{const pdf=await buildParqPdf(doc);const path=`${uidv}/${id}/parq.pdf`;R.current.recent['parq/'+id]=Date.now();
+          const up=await sbClient.storage.from(PQ_BUCKET).upload(path,pdf,{contentType:'application/pdf',upsert:false});if(up.error&&!/exist|duplicate/i.test(up.error.message||''))throw up.error;
+          const u=await sbClient.from(PQ_TABLE).update({pdf_path:path}).eq('id',id);if(u.error)throw u.error;
+          setSt(s=>s.parq[id]?{...s,parq:{...s.parq,[id]:{...s.parq[id],pdfPath:path}}}:s)}catch(e){toast('Signed and locked. The PDF copy could not be saved yet; you can still download it.')}}};
     return {
       put(col,id,data){const body=strip(data);setSt(s=>({...s,[col]:{...s[col],[id]:{...body,id}}}));const m=R.current.mode;
+        if(m==='supabase'&&col==='parq')return queue('parq/'+id,pqPut(id,body));
         if(m==='supabase')return queue(col+'/'+id,sbPut(col,id,body));
         if(m!=='cloud')return Promise.resolve();return queue(col+'/'+id,()=>R.current.root.collection(col).doc(id).set(body))},
       del(col,id){setSt(s=>{const m={...s[col]};delete m[id];return {...s,[col]:m}});const m=R.current.mode;
+        if(m==='supabase'&&col==='parq')return queue('parq/'+id,()=>{R.current.recent['parq/'+id]=Date.now();return sbClient.from(PQ_TABLE).delete().eq('id',id).then(({error})=>{if(error)throw error})});
         if(m==='supabase')return queue(col+'/'+id,sbDel(col,id));
         if(m!=='cloud')return Promise.resolve();return queue(col+'/'+id,()=>R.current.root.collection(col).doc(id).delete())},
       setSettings(next){const body=JSON.parse(JSON.stringify(next));setSt(s=>({...s,settings:body}));const m=R.current.mode;
@@ -772,7 +873,7 @@ function useStore(){
         const t=new Promise((_,rej)=>setTimeout(()=>rej(new Error('No answer from the server after 15 seconds. Check your internet, and make sure you opened this file in a normal browser window.')),15000));
         const {error}=await Promise.race([sbClient.auth.signInWithPassword({email,password}),t]);if(error)throw error},
       async resetPassword(email){const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:location.href.split('#')[0]});if(error)throw error},
-      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{}});setAuthTick(t=>t+1)}
+      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{}});setAuthTick(t=>t+1)}
     };
   },[]);
   return {...st,api};
@@ -806,7 +907,7 @@ const urgFromDays=d=>d==null?0:d<=0?3:d<=7?2:d<=30?1:0;
 const URG_WORD=['On track','Due within a month','Due this week','Due / overdue'];
 
 function deriveAll({clients,events,ledger,settings}){
-  const now=Date.now(),today=todayYmd();
+  const now=nowMs(),today=todayYmd();
   const evInfo={},cs={};
   const byClient={},ledByClient={};
   Object.values(events).forEach(e=>{evCids(e).forEach(cid=>{(byClient[cid]=byClient[cid]||[]).push(e)})});
@@ -927,7 +1028,7 @@ function finance(derived,clients,settings,year){
       M.spread+=seg.amount/n;M.spreadGst+=g/n;M.spreadTax+=tax/n;M.spreadKeep+=(net-tax)/n}
   }
   // Projection: active plans beyond what's been charged
-  const now=new Date(),curKey=now.getFullYear()*12+now.getMonth();
+  const now=appNow(),curKey=now.getFullYear()*12+now.getMonth();
   for(const c of Object.values(clients)){
     const cs=derived.cs[c.id];const p=c.plan||{};if(!cs||!cs.active)continue;
     const meq=monthlyEq(p);if(!meq)continue;
@@ -1019,7 +1120,7 @@ function CalendarPage({ctx}){
   const sH=Number(settings.dayStartHour)||5,eH=Number(settings.dayEndHour)||22;
   const HOUR=isM?56:52;
   const timed=view==='day'||view==='week'||view==='3day';
-  useEffect(()=>{if(bodyRef.current&&timed){const n=new Date();const h=clamp(n.getHours()-2,sH,eH);bodyRef.current.scrollTop=(Math.max(h,7)-sH)*HOUR}},[view,isM]);
+  useEffect(()=>{if(bodyRef.current&&timed){const n=appNow();const h=clamp(n.getHours()-2,sH,eH);bodyRef.current.scrollTop=(Math.max(h,7)-sH)*HOUR}},[view,isM]);
 
   const cals=Object.values(calendars).sort((a,b)=>(a.order||0)-(b.order||0));
   const calById=calendars;
@@ -1082,7 +1183,7 @@ function CalendarPage({ctx}){
   };
   const newAt=(date,start)=>{if(Date.now()-lastDragEnd.current<350)return;setModal({type:'event',ev:{date,start,dur:60}})};
   const newEvent=(date,start)=>{setSideOpen(false);setModal({type:'event',ev:{date,start,dur:60}})};
-  const defStart=()=>cursor===todayYmd()?clamp((new Date().getHours()+1)*60,sH*60,eH*60-60):9*60;
+  const defStart=()=>cursor===todayYmd()?clamp((appNow().getHours()+1)*60,sH*60,eH*60-60):9*60;
   const swStart=e=>{if(!isM)return;const t=e.touches[0];swipe.current={x:t.clientX,y:t.clientY,t:Date.now()}};
   const swEnd=e=>{const s=swipe.current;swipe.current=null;if(!s||dragActive||Date.now()-lastDragEnd.current<500)return;const t=e.changedTouches[0];const dx=t.clientX-s.x,dy=t.clientY-s.y;if(Math.abs(dx)>70&&Math.abs(dy)<45&&Date.now()-s.t<700)step(dx<0?1:-1)};
 
@@ -1101,7 +1202,7 @@ function CalendarPage({ctx}){
   },[events,travel,settings,cursor,view]);
 
   const today=todayYmd();
-  const nowD=new Date();const nowMin=nowD.getHours()*60+nowD.getMinutes();
+  const nowD=appNow();const nowMin=nowD.getHours()*60+nowD.getMinutes();
 
   const TravelChip=(date)=>{const t=travel[date];const k=t?dayKm(t,locs):0;
     const names=t?(t.stops||[]).map(id=>locs[id]?locs[id].name:null).filter(Boolean):[];
@@ -1299,7 +1400,7 @@ function EventModal({ctx,init,onClose}){
   const removeClient=id=>setF(s=>{const sb={...(s.statusBy||{})};delete sb[id];return {...s,clientIds:s.clientIds.filter(x=>x!==id),statusBy:sb}});
   const setPer=(id,v)=>setF(s=>{const sb={...(s.statusBy||{})};if(v)sb[id]=v;else delete sb[id];return {...s,statusBy:sb}});
   const info=!isNew?derived.evInfo[init.id]:null;
-  const hrsAway=(evStartMs(f)-Date.now())/36e5;
+  const hrsAway=(evStartMs(f)-nowMs())/36e5;
   const lch=Number(settings.lateCancelHours)||24;
   const effective=ids.length&&info?info.st:f.status;
   const save=async()=>{
@@ -1386,7 +1487,7 @@ function BaselineModal({ctx,onClose}){
   const defCal=(cals.find(c=>c.icon==='barbell')||cals[0]||{}).id||'training';
   const [q,setQ]=useState('');const [onlyMissing,setOnlyMissing]=useState(false);const [more,setMore]=useState(null);
   const ws=Number(settings.weekStart)||0;const order=Array.from({length:7},(_,i)=>(ws+i)%7);
-  const weekStart=ymd(weekStartOf(new Date(),ws));
+  const weekStart=ymd(weekStartOf(appNow(),ws));
   const commit=next=>api.setSettings({...settings,baseline:next});
   const active=Object.values(clients).filter(c=>(c.status||'active')==='active').sort((a,b)=>a.name.localeCompare(b.name));
   // one row per client, partners share a row
@@ -1465,6 +1566,286 @@ function CalendarsModal({ctx,onClose}){
 }
 
 /* ================= Athletes ================= */
+/* ================= PAR-Q+ (wording copied exactly from PAR-Q+ 2025, version 01-11-2024) ================= */
+const PQ_VER='PAR-Q+ 2025 · 01-11-2024';
+const PQ_DIFF=['Do you have difficulty controlling your condition with medications or other physician-prescribed therapies?','(Answer NO if you are not currently taking medications or other treatments)'];
+const PQ_P1=[
+  {k:'q1',n:1},
+  {k:'q2',n:2,t:'Do you feel pain in your chest at rest, during your daily activities of living, OR when you do physical activity?'},
+  {k:'q3',n:3,t:'Do you lose balance because of dizziness OR have you lost consciousness in the last 12 months?',note:'Please answer NO if your dizziness was associated with over-breathing (including during vigorous exercise).'},
+  {k:'q4',n:4,t:'Have you ever been diagnosed with another chronic medical condition (other than heart disease or high blood pressure)?',list:'PLEASE LIST CONDITION(S) HERE:'},
+  {k:'q5',n:5,t:'Are you currently taking prescribed medications for a chronic medical condition?',list:'PLEASE LIST CONDITION(S) AND MEDICATIONS HERE:'},
+  {k:'q6',n:6,t:'Do you currently have (or have had within the past 12 months) a bone, joint, or soft tissue (muscle, ligament, or tendon) problem that could be made worse by becoming more physically active?',note:'Please answer NO if you had a problem in the past, but it does not limit your current ability to be physically active.',list:'PLEASE LIST CONDITION(S) HERE:'},
+  {k:'q7',n:7,t:'Has your doctor ever said that you should only do medically supervised physical activity?'}];
+const PQ_P2=[
+  {n:1,t:'Do you have Arthritis, Osteoporosis, or Back Problems?',go:'go to question 2',subs:[['1a',...PQ_DIFF],
+    ['1b','Do you have joint problems causing pain, a recent fracture or fracture caused by osteoporosis or cancer, displaced vertebra (e.g., spondylolisthesis), and/or spondylolysis/pars defect (a crack in the bony ring on the back of the spinal column)?'],
+    ['1c','Have you had steroid injections or taken steroid tablets regularly for more than 3 months?']]},
+  {n:2,t:'Do you currently have Cancer of any kind?',go:'go to question 3',subs:[
+    ['2a','Does your cancer diagnosis include any of the following types: lung/bronchogenic, multiple myeloma (cancer of plasma cells), head, and/or neck?'],
+    ['2b','Are you currently receiving cancer therapy (such as chemotheraphy or radiotherapy)?']]},
+  {n:3,t:'Do you have a Heart or Cardiovascular Condition? This includes Coronary Artery Disease, Heart Failure, Diagnosed Abnormality of Heart Rhythm',go:'go to question 4',subs:[['3a',...PQ_DIFF],
+    ['3b','Do you have an irregular heart beat that requires medical management?','(e.g., atrial fibrillation, premature ventricular contraction)'],
+    ['3c','Do you have chronic heart failure?'],
+    ['3d','Do you have diagnosed coronary artery (cardiovascular) disease and have not participated in regular physical activity in the last 2 months?']]},
+  {n:4,t:'Do you currently have High Blood Pressure?',go:'go to question 5',subs:[['4a',...PQ_DIFF],
+    ['4b','Do you have a resting blood pressure equal to or greater than 160/90 mmHg with or without medication?','(Answer YES if you do not know your resting blood pressure)']]},
+  {n:5,t:'Do you have any Metabolic Conditions? This includes Type 1 Diabetes, Type 2 Diabetes, Pre-Diabetes',go:'go to question 6',subs:[
+    ['5a','Do you often have difficulty controlling your blood sugar levels with foods, medications, or other physician-prescribed therapies?'],
+    ['5b','Do you often suffer from signs and symptoms of low blood sugar (hypoglycemia) following exercise and/or during activities of daily living? Signs of hypoglycemia may include shakiness, nervousness, unusual irritability, abnormal sweating, dizziness or light-headedness, mental confusion, difficulty speaking, weakness, or sleepiness.'],
+    ['5c','Do you have any signs or symptoms of diabetes complications such as heart or vascular disease and/or complications affecting your eyes, kidneys, OR the sensation in your toes and feet?'],
+    ['5d','Do you have other metabolic conditions (such as current pregnancy-related diabetes, chronic kidney disease, or liver problems)?'],
+    ['5e','Are you planning to engage in what for you is unusually high (or vigorous) intensity exercise in the near future?']]},
+  {n:6,t:'Do you have any Mental Health Problems or Learning Difficulties? This includes Alzheimer’s, Dementia, Depression, Anxiety Disorder, Eating Disorder, Psychotic Disorder, Intellectual Disability, Down Syndrome',go:'go to question 7',subs:[['6a',...PQ_DIFF],
+    ['6b','Do you have Down Syndrome AND back problems affecting nerves or muscles?']]},
+  {n:7,t:'Do you have a Respiratory Disease? This includes Chronic Obstructive Pulmonary Disease, Asthma, Pulmonary High Blood Pressure',go:'go to question 8',subs:[['7a',...PQ_DIFF],
+    ['7b','Has your doctor ever said your blood oxygen level is low at rest or during exercise and/or that you require supplemental oxygen therapy?'],
+    ['7c','If asthmatic, do you currently have symptoms of chest tightness, wheezing, laboured breathing, consistent cough (more than 2 days/week), or have you used your rescue medication more than twice in the last week?'],
+    ['7d','Has your doctor ever said you have high blood pressure in the blood vessels of your lungs?']]},
+  {n:8,t:'Do you have a Spinal Cord Injury? This includes Tetraplegia and Paraplegia',go:'go to question 9',subs:[['8a',...PQ_DIFF],
+    ['8b','Do you commonly exhibit low resting blood pressure significant enough to cause dizziness, light-headedness, and/or fainting?'],
+    ['8c','Has your physician indicated that you exhibit sudden bouts of high blood pressure (known as Autonomic Dysreflexia)?']]},
+  {n:9,t:'Have you had a Stroke? This includes Transient Ischemic Attack (TIA) or Cerebrovascular Event',go:'go to question 10',subs:[['9a',...PQ_DIFF],
+    ['9b','Do you have any impairment in walking or mobility?'],
+    ['9c','Have you experienced a stroke or impairment in nerves or muscles in the past 6 months?']]},
+  {n:10,t:'Do you have any other medical condition not listed above or do you have two or more medical conditions?',present:'If you have other medical conditions, answer questions 10a-10c',go:'read the Page 4 recommendations',subs:[
+    ['10a','Have you experienced a blackout, fainted, or lost consciousness as a result of a head injury within the last 12 months OR have you had a diagnosed concussion within the last 12 months?'],
+    ['10b','Do you have a medical condition that is not listed (such as epilepsy, neurological conditions, kidney problems)?'],
+    ['10c','Do you currently live with two or more medical conditions?']],list:'PLEASE LIST YOUR MEDICAL CONDITION(S) AND ANY RELATED MEDICATIONS HERE:'}];
+const pqRange=s=>`If the above condition(s) is/are present, answer questions ${s.subs[0][0]}-${s.subs[s.subs.length-1][0]}`;
+const PQ_TXT={
+  title:'The Physical Activity Readiness Questionnaire for Everyone',
+  intro:'The health benefits of regular physical activity are clear; more people should engage in physical activity every day of the week. Participating in physical activity is very safe for MOST people. This questionnaire will tell you whether it is necessary for you to seek further advice from your doctor OR a qualified exercise professional before becoming more physically active.',
+  ghq:'GENERAL HEALTH QUESTIONS',ghqLead:'Please read the 7 questions below carefully and answer each one honestly: check YES or NO.',
+  p1Green:'If you answered NO to all of the questions above, you are cleared for physical activity.',p1Green2:'Please sign the PARTICIPANT DECLARATION. You do not need to complete Pages 2 and 3.',
+  p1GreenB:['Start becoming much more physically active – start slowly and build up gradually.','Follow Global Physical Activity Guidelines for your age (https://www.who.int/publications/i/item/9789240015128).','You may take part in a health and fitness appraisal.','If you are over the age of 45 yr and NOT accustomed to regular vigorous to maximal effort exercise, consult a qualified exercise professional before engaging in this intensity of exercise.','If you have any further questions, contact a qualified exercise professional.'],
+  p1Red:'If you answered YES to one or more of the questions above, COMPLETE PAGES 2 AND 3.',
+  delay:'Delay becoming more active if:',
+  p1Delay:['You are currently experiencing a temporary illness, such as a cold or fever. It is best to wait until you feel better.','You are pregnant. In this case, talk with your health care practitioner, physician, qualified exercise professional, and/or complete the ePARmed-X+ at www.eparmedx.com before becoming more physically active.','Your health changes. Answer the questions on Pages 2 and 3 of this document and/or talk to your health care practitioner, physician, or qualified exercise professional before proceeding with any physical activity program.'],
+  p2Head:'FOLLOW-UP QUESTIONS ABOUT YOUR MEDICAL CONDITION(S)',
+  p2End:'GO to Page 4 for recommendations about your current medical condition(s) and sign the PARTICIPANT DECLARATION.',
+  p4Green:'If you answered NO to all of the FOLLOW-UP questions (pgs. 2-3) about your medical condition, you are ready to become more physically active - sign the PARTICIPANT DECLARATION below:',
+  p4GreenB:['It is advised that you consult a qualified exercise professional to help you develop a safe and effective physical activity plan to meet your health needs.','You are encouraged to start slowly and build up gradually - 20 to 60 minutes of low to moderate intensity exercise, 3-5 days per week including aerobic and muscle strengthening exercises.','As you progress, you should aim to accumulate 150 minutes or more of moderate intensity physical activity per week.','If you are over the age of 45 yr and NOT accustomed to regular vigorous to maximal effort exercise, consult a qualified exercise professional before engaging in this intensity of exercise.'],
+  p4Red:'If you answered YES to one or more of the follow-up questions about your medical condition:',
+  p4Red2:'You should seek further information before becoming more physically active or engaging in a fitness appraisal. You should complete the specially designed online screening and exercise recommendations program - the ePARmed-X+ at www.eparmedx.com and/or visit a qualified exercise professional to work through the ePARmed-X+ and for further information.',
+  p4Delay:['You are currently experiencing a temporary illness, such as a cold or fever. It is best to wait until you feel better.','You are pregnant. In this case, talk to your health care practitioner, physician, qualified exercise professional, and/or complete the ePARmed-X+ at www.eparmedx.com before becoming more physically active.','Your health changes. Talk to your health care practitioner, physician, or qualified exercise professional before continuing with any physical activity program.'],
+  p4Notes:['You are encouraged to photocopy the PAR-Q+. You must use the entire questionnaire and NO changes are permitted.','The authors, the PAR-Q+ Collaboration, partner organizations, and their agents assume no liability for persons who undertake physical activity and/or make use of the PAR-Q+ or ePARmed-X+. If in doubt after completing the questionnaire, consult your doctor prior to physical activity.'],
+  decl:'PARTICIPANT DECLARATION',
+  declAll:'All persons who have completed the PAR-Q+ please read and sign the declaration below.',
+  declMinor:'If you are less than the legal age required for consent or require the assent of a care provider, your parent, guardian or care provider must also sign this form.',
+  declP1:'I, the undersigned, have read, understood to my full satisfaction and completed this questionnaire. I acknowledge that this physical activity clearance is valid for a maximum of 12 months from the date it is completed and becomes invalid if my condition changes. I also acknowledge that the community/fitness center may retain a copy of this form for its records. In these instances, it will maintain the confidentiality of the same, complying with applicable law.',
+  declP4:'I, the undersigned, have read, understood to my full satisfaction and completed this questionnaire. I acknowledge that this physical activity clearance is valid for a maximum of 12 months from the date it is completed and becomes invalid if my condition changes. I also acknowledge that the community/fitness center may retain a copy of this form for records. In these instances, it will maintain the confidentiality of the same, complying with applicable law.',
+  contact:'For more information, please contact www.eparmedx.com Email: eparmedx@gmail.com',
+  cite:'Citation for PAR-Q+: Warburton DER, Jamnik VK, Bredin SSD, and Gledhill N on behalf of the PAR-Q+ Collaboration. The Physical Activity Readiness Questionnaire for Everyone (PAR-Q+) and Electronic Physical Activity Readiness Medical Examination (ePARmed-X+). Health & Fitness Journal of Canada 4(2):3-23, 2011.',
+  credit:'The PAR-Q+ was created using the evidence-based AGREE process (1) by the PAR-Q+ Collaboration chaired by Dr. Darren E. R. Warburton with Dr. Norman Gledhill, Dr. Veronica Jamnik, and Dr. Donald C. McKenzie (2). Production of this document has been made possible through financial contributions from the Public Health Agency of Canada and the BC Ministry of Health Services. The views expressed herein do not necessarily represent the views of the Public Health Agency of Canada or the BC Ministry of Health Services.',
+  refs:['1. Jamnik VK, Warburton DER, Makarski J, McKenzie DC, Shephard RJ, Stone J, and Gledhill N. Enhancing the effectiveness of clearance for physical activity participation; background and overall process. APNM 36(S1):S3-S13, 2011.','2. Warburton DER, Gledhill N, Jamnik VK, Bredin SSD, McKenzie DC, Stone J, Charlesworth S, and Shephard RJ. Evidence-based risk assessment and recommendations for physical activity clearance; Consensus Document. APNM 36(S1):S266-s298, 2011.','3. Chisholm DM, Collis ML, Kulak LL, Davenport W, and Gruber N. Physical activity readiness. British Columbia Medical Journal. 1975;17:375-378.','4. Thomas S, Reading J, and Shephard RJ. Revision of the Physical Activity Readiness Questionnaire (PAR-Q). Canadian Journal of Sport Science 1992;17:4 338-345.'],
+  copy:'Copyright © 2025 PAR-Q+ Collaboration · 01-11-2024'};
+const PQ_CONSENT='Privacy: answers and signatures on this form are health information. They are saved only to Strength By Design’s private, signed-in account, are visible only to your coach, and are used only to keep your training safe.';
+
+/* ---------- logic ---------- */
+const pqP1Yes=a=>PQ_P1.some(q=>a[q.k]==='yes');
+const pqFollowYes=a=>PQ_P2.some(s=>a['c'+s.n]==='yes'&&s.subs.some(([k])=>a[k]==='yes'));
+const pqMissing=(f)=>{const a=f.answers||{};const miss=[];
+  PQ_P1.forEach(q=>{if(!a[q.k])miss.push(`Question ${q.n}`)});
+  if(pqP1Yes(a))PQ_P2.forEach(s=>{if(!a['c'+s.n])miss.push(`Follow-up ${s.n}`);else if(a['c'+s.n]==='yes')s.subs.forEach(([k])=>{if(!a[k])miss.push(`Follow-up ${k}`)})});
+  if(!(f.name||'').trim())miss.push('Name');if(!f.date)miss.push('Date');if(!(f.sig&&f.sig.img))miss.push('Signature');return miss};
+function parqStatus(parq,cid){const today=todayYmd();const mine=Object.values(parq||{}).filter(f=>f.clientId===cid);
+  const signed=mine.filter(f=>f.status==='signed').sort((a,b)=>(b.date||'').localeCompare(a.date||''));const last=signed[0]||null;
+  const draft=mine.some(f=>f.status!=='signed');
+  if(!last)return {state:'missing',last:null,draft,flag:false};
+  const flag=!!last.needsClearance&&!(last.clearance&&last.clearance.on);
+  return {state:(last.expiresOn||'')<today?'expired':'complete',last,draft,flag}}
+function ParqBadge({st,onClick}){if(!st)return null;
+  const m={complete:['u0','PAR-Q+ complete'],expired:['u3','PAR-Q+ expired'],missing:['un','PAR-Q+ missing']}[st.state];
+  return html`<span class="pq-badges" onClick=${onClick} style=${onClick?'cursor:pointer':''}><span class=${'pill '+m[0]} title=${st.last?`Last completed ${fmtDateY(st.last.date)}`:'No signed PAR-Q+ on file'}>${m[1]}</span>${st.flag&&html`<span class="pill u2" title="A follow-up answer was YES. Mark doctor clearance on the PAR-Q+ tab.">Needs clearance</span>`}</span>`}
+
+/* ---------- signature pad ---------- */
+function PqSigImg({sig,alt}){const [src,setSrc]=useState(sig.img||null);const [bad,setBad]=useState(false);
+  useEffect(()=>{let live=true;if(!sig.img&&sig.path)pqFile(sig.path).then(u=>live&&setSrc(u)).catch(()=>live&&setBad(true));return()=>{live=false}},[sig.path,sig.img]);
+  return src?html`<img src=${src} alt=${alt}/>`:html`<div class="fhint" style="padding:12px">${bad?'Signature stored privately · could not load right now':'Loading signature…'}</div>`}
+function SignaturePad({label,value,onChange,disabled,typedDefault}){
+  const cv=useRef(null);const drawing=useRef(false);const dirty=useRef(false);
+  const [mode,setMode]=useState(value&&value.mode||'draw');const [typed,setTyped]=useState(value&&value.typed||typedDefault||'');
+  const W=600,H=160;
+  const ink=()=>getComputedStyle(document.documentElement).getPropertyValue('--fg').trim()||'#111';
+  const setup=()=>{const c=cv.current;if(!c)return null;const x=c.getContext('2d');x.lineWidth=2.6;x.lineCap='round';x.lineJoin='round';x.strokeStyle='#111';return x};
+  const pos=e=>{const r=cv.current.getBoundingClientRect();return [(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height]};
+  const down=e=>{if(disabled)return;e.preventDefault();cv.current.setPointerCapture&&cv.current.setPointerCapture(e.pointerId);const x=setup();const [a,b]=pos(e);x.beginPath();x.moveTo(a,b);x.lineTo(a+.1,b+.1);x.stroke();drawing.current=true;dirty.current=true};
+  const move=e=>{if(!drawing.current)return;e.preventDefault();const x=cv.current.getContext('2d');const [a,b]=pos(e);x.lineTo(a,b);x.stroke()};
+  const up=()=>{if(!drawing.current)return;drawing.current=false;onChange({mode:'draw',img:cv.current.toDataURL('image/png'),at:new Date().toISOString()})};
+  const clear=()=>{const c=cv.current;if(c)c.getContext('2d').clearRect(0,0,W,H);dirty.current=false;onChange(null)};
+  const typedImg=t=>{const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#111';x.textBaseline='middle';
+    let fs=56;x.font=`italic ${fs}px "Segoe Script","Brush Script MT","Snell Roundhand","Apple Chancery",cursive`;while(x.measureText(t).width>W-30&&fs>20){fs-=4;x.font=`italic ${fs}px "Segoe Script","Brush Script MT","Snell Roundhand","Apple Chancery",cursive`}
+    x.fillText(t,15,H/2);return c.toDataURL('image/png')};
+  const applyTyped=t=>{setTyped(t);if(!t.trim()){onChange(null);return}onChange({mode:'type',typed:t,img:typedImg(t),at:new Date().toISOString()})};
+  useEffect(()=>{if(mode!=='draw'||!cv.current)return;const c=cv.current;const x=c.getContext('2d');x.clearRect(0,0,W,H);
+    if(value&&value.img&&value.mode==='draw'){const im=new Image();im.onload=()=>x.drawImage(im,0,0,W,H);im.src=value.img}},[mode]);
+  if(disabled)return html`<div class="pq-sig"><span class="flabel">${label}</span>${value&&(value.img||value.path)?html`<div class="pq-sig-img"><${PqSigImg} sig=${value} alt=${label}/></div><small class="muted">Signed ${new Date(value.at).toLocaleString('en-CA',{dateStyle:'medium',timeStyle:'short'})}${value.mode==='type'?' · typed':''}</small>`:html`<div class="muted">Not signed</div>`}</div>`;
+  return html`<div class="pq-sig"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="flabel">${label}</span><span class="sp"></span>
+      <div class="seg" role="group" aria-label="Signature method">${[['draw','Draw'],['type','Type']].map(([k,l])=>html`<button type="button" aria-pressed=${mode===k} onClick=${()=>{setMode(k);onChange(null)}}>${l}</button>`)}</div>
+      <button type="button" class="btn sm ghost" onClick=${()=>{clear();setTyped('')}}>Clear</button></div>
+    ${mode==='draw'?html`<canvas ref=${cv} width=${W} height=${H} class="pq-pad" aria-label=${label+' pad'} onPointerDown=${down} onPointerMove=${move} onPointerUp=${up} onPointerLeave=${up}></canvas><small class="muted">${value&&value.img?'Signed · draw again to add, or Clear to redo':'Sign with your finger, pen or mouse'}</small>`
+      :html`<input type="text" placeholder="Type full name" value=${typed} onInput=${e=>applyTyped(e.target.value)}/>${value&&value.img&&html`<div class="pq-sig-img"><img src=${value.img} alt="Typed signature preview"/></div>`}`}
+  </div>`;
+}
+
+/* ---------- form ---------- */
+function PqYN({name,val,set,disabled}){return html`<span class="pq-yn" role="radiogroup" aria-label=${name}>
+  ${['yes','no'].map(v=>html`<label class=${'pq-opt'+(val===v?' on '+v:'')}><input type="radio" name=${name} checked=${val===v} disabled=${disabled} onChange=${()=>set(v)}/>${v.toUpperCase()}</label>`)}</span>`}
+const PqBox=({kind,head,children})=>html`<div class=${'pq-box '+kind}>${head&&html`<b class="pq-box-h">${head}</b>`}${children}</div>`;
+const PqList=({items})=>html`<ul class="pq-ul">${items.map(t=>html`<li>${t}</li>`)}</ul>`;
+
+function ParqForm({ctx,c,form,onClose}){
+  const {api}=ctx;const locked=form.status==='signed';
+  const [f,setF]=useState(()=>({answers:{},...form}));const [err,setErr]=useState([]);const [confirm,setConfirm]=useState(false);
+  const tmr=useRef(null);
+  const save=next=>{clearTimeout(tmr.current);tmr.current=setTimeout(()=>api.put('parq',next.id,{...next,updated:Date.now()}),700)};
+  useEffect(()=>()=>clearTimeout(tmr.current),[]);
+  const patch=p=>setF(s=>{const n={...s,...p};if(!locked)save(n);return n});
+  const a=f.answers||{};const setA=(k,v)=>patch({answers:{...a,[k]:v}});
+  const p1Yes=pqP1Yes(a);const p1Done=PQ_P1.every(q=>a[q.k]);const fYes=pqFollowYes(a);
+  const p2Done=PQ_P2.every(s=>a['c'+s.n]&&(a['c'+s.n]==='no'||s.subs.every(([k])=>a[k])));
+  const showDecl=p1Done&&(!p1Yes||p2Done);
+  const sign=()=>{const miss=pqMissing(f);setErr(miss);if(miss.length){setConfirm(false);return}
+    const signedAt=new Date().toISOString();
+    const out={...f,status:'signed',signedAt,part1Yes:p1Yes,followupYes:p1Yes&&fYes,needsClearance:p1Yes&&fYes,expiresOn:addMonthsYmd(f.date,12),formVersion:PQ_VER,path:p1Yes?'p4':'p1',updated:Date.now()};
+    clearTimeout(tmr.current);api.put('parq',f.id,out);setF(out);setConfirm(false);toast('PAR-Q+ signed and locked')};
+  const dis=locked;
+  const Q1=html`Has your doctor ever said that you have a heart condition <label class="pq-inl"><input type="checkbox" disabled=${dis} checked=${!!a.q1h} onChange=${e=>setA('q1h',e.target.checked)}/></label> <b>OR</b> high blood pressure <label class="pq-inl"><input type="checkbox" disabled=${dis} checked=${!!a.q1b} onChange=${e=>setA('q1b',e.target.checked)}/></label>?`;
+  const declTxt=p1Yes?PQ_TXT.declP4:PQ_TXT.declP1;
+  return html`<div class="pq">
+    <div class="pq-top"><button class="btn ghost sm" onClick=${onClose}><${Icon} n="left" s=${14}/>All PAR-Q+ forms</button><span class="sp"></span>
+      ${locked?html`<span class="pill u0"><${Icon} n="lock" s=${12}/>Signed & locked · ${fmtDateY(f.date)}</span><button class="btn sm" onClick=${()=>parqPdf(f,c)}><${Icon} n="download" s=${14}/>PDF</button>`:html`<span class="pill un">Draft · saves as you go</span>`}</div>
+    <div class="callout pq-consent"><${Icon} n="shield" s=${16}/><span>${PQ_CONSENT}</span></div>
+    <div class="pq-doc">
+      <div class="pq-mast"><div class="pq-logo">PAR-Q+</div><div class="pq-sub">${PQ_TXT.title}</div><p>${PQ_TXT.intro}</p></div>
+      <h4 class="pq-h">${PQ_TXT.ghq}</h4>
+      <div class="pq-lead"><b>${PQ_TXT.ghqLead}</b><span class="pq-cols"><span>YES</span><span>NO</span></span></div>
+      ${PQ_P1.map(q=>html`<div class=${'pq-q'+(!a[q.k]&&err.length?' miss':'')} key=${q.k}>
+        <div class="pq-qt"><span>${q.n}) ${q.k==='q1'?Q1:q.t}</span>${q.note&&html`<small>${q.note}</small>`}
+          ${q.list&&html`<label class="pq-list"><span>${q.list}</span><input type="text" disabled=${dis} value=${a[q.k+'l']||''} onInput=${e=>setA(q.k+'l',e.target.value)}/></label>`}</div>
+        <${PqYN} name=${q.k} val=${a[q.k]} set=${v=>setA(q.k,v)} disabled=${dis}/></div>`)}
+      ${p1Done&&!p1Yes&&html`<${PqBox} kind="green" head=${html`${PQ_TXT.p1Green}<br/>${PQ_TXT.p1Green2}`}><${PqList} items=${PQ_TXT.p1GreenB}/><//>`}
+      ${p1Yes&&html`<${PqBox} kind="red" head=${PQ_TXT.p1Red}/>`}
+      <${PqBox} kind="amber" head=${PQ_TXT.delay}><${PqList} items=${PQ_TXT.p1Delay}/><//>
+      ${p1Yes&&html`<div class="pq-p2">
+        <h4 class="pq-h">${PQ_TXT.p2Head}</h4>
+        ${PQ_P2.map(s=>{const on=a['c'+s.n]==='yes';return html`<div class=${'pq-sec'+(!a['c'+s.n]&&err.length?' miss':'')} key=${s.n}>
+          <div class="pq-sec-h"><b>${s.n}.</b><span>${s.t}</span></div>
+          <div class="pq-gate">
+            <label class=${'pq-opt'+(on?' on yes':'')}><input type="radio" name=${'c'+s.n} disabled=${dis} checked=${on} onChange=${()=>setA('c'+s.n,'yes')}/>${s.present||pqRange(s)}</label>
+            <label class=${'pq-opt'+(a['c'+s.n]==='no'?' on no':'')}><input type="radio" name=${'c'+s.n} disabled=${dis} checked=${a['c'+s.n]==='no'} onChange=${()=>setA('c'+s.n,'no')}/>If NO ${s.go}</label></div>
+          ${on&&s.subs.map(([k,t,note])=>html`<div class=${'pq-q sub'+(!a[k]&&err.length?' miss':'')} key=${k}><div class="pq-qt"><span><b>${k}.</b> ${t}</span>${note&&html`<small>${note}</small>`}</div><${PqYN} name=${k} val=${a[k]} set=${v=>setA(k,v)} disabled=${dis}/></div>`)}
+          ${on&&s.list&&html`<label class="pq-list"><span>${s.list}</span><textarea rows="2" disabled=${dis} value=${a['c'+s.n+'l']||''} onInput=${e=>setA('c'+s.n+'l',e.target.value)}></textarea></label>`}
+        </div>`})}
+        <p class="pq-go">${PQ_TXT.p2End}</p>
+        ${p2Done&&(fYes?html`<${PqBox} kind="red" head=${PQ_TXT.p4Red}><p>${PQ_TXT.p4Red2}</p><//>`:html`<${PqBox} kind="green" head=${PQ_TXT.p4Green}><${PqList} items=${PQ_TXT.p4GreenB}/><//>`)}
+        <${PqBox} kind="amber" head=${PQ_TXT.delay}><${PqList} items=${PQ_TXT.p4Delay}/><//>
+        <${PqList} items=${PQ_TXT.p4Notes}/>
+      </div>`}
+      ${showDecl||locked?html`<div class="pq-decl">
+        <h4 class="pq-h">${PQ_TXT.decl}</h4>
+        ${p1Yes?html`<${PqList} items=${[PQ_TXT.declAll,PQ_TXT.declMinor]}/>`:html`<p>${PQ_TXT.declMinor}</p>`}
+        <p>${declTxt}</p>
+        <div class="fgrid">
+          <label class="field"><span class="flabel">Name</span><input type="text" disabled=${dis} value=${f.name||''} onInput=${e=>patch({name:e.target.value})}/></label>
+          <label class="field"><span class="flabel">Date</span><input type="date" disabled=${dis} value=${f.date||''} onChange=${e=>patch({date:e.target.value})}/></label></div>
+        <${SignaturePad} label="Signature" value=${f.sig} disabled=${dis} typedDefault=${f.name} onChange=${v=>patch({sig:v})}/>
+        <${SignaturePad} label="Witness" value=${f.witness} disabled=${dis} onChange=${v=>patch({witness:v})}/>
+        <${SignaturePad} label="Signature of parent/guardian/care provider" value=${f.guardian} disabled=${dis} onChange=${v=>patch({guardian:v})}/>
+      </div>`:html`<p class="fhint">${p1Done?'Finish the follow-up questions to reach the Participant Declaration.':'Answer all 7 questions to continue.'}</p>`}
+      <div class="pq-foot"><span>${PQ_TXT.contact}</span><span>${PQ_TXT.copy}</span></div>
+    </div>
+    ${!locked&&html`<div class="pq-actions">
+      ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}
+      ${confirm?html`<div class="callout"><b>Sign and lock this PAR-Q+?</b> Once signed it can't be changed. A new form can be started any time.<div style="display:flex;gap:8px;margin-top:8px"><button class="btn primary" onClick=${sign}><${Icon} n="lock" s=${14}/>Sign & lock</button><button class="btn" onClick=${()=>setConfirm(false)}>Keep editing</button></div></div>`
+        :html`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onClick=${()=>{const m=pqMissing(f);setErr(m);if(!m.length)setConfirm(true)}}><${Icon} n="lock" s=${14}/>Finish & sign</button><button class="btn" onClick=${onClose}>Save draft & close</button></div>`}
+    </div>`}
+  </div>`;
+}
+
+function ParqTab({ctx,c}){
+  const {api}=ctx;const [open,setOpen]=useState(null);
+  const mine=Object.values(ctx.parq||{}).filter(f=>f.clientId===c.id).sort((a,b)=>(b.created||0)-(a.created||0));
+  const st=parqStatus(ctx.parq,c.id);
+  const cur=open&&ctx.parq&&ctx.parq[open];
+  if(cur)return html`<${ParqForm} key=${cur.id} ctx=${ctx} c=${c} form=${cur} onClose=${()=>setOpen(null)}/>`;
+  const start=()=>{const draft=mine.find(f=>f.status!=='signed');if(draft){setOpen(draft.id);return}
+    const id=uid();api.put('parq',id,{clientId:c.id,status:'draft',formVersion:PQ_VER,answers:{},name:c.name,date:todayYmd(),source:'coach',created:Date.now()});setOpen(id)};
+  const setClear=(f,p)=>api.put('parq',f.id,{...f,clearance:{...(f.clearance||{}),...p}});
+  const last=st.last;
+  if(ctx.parqOk===false)return html`<div class="callout u2" style="display:flex;flex-direction:column;gap:6px"><b>PAR-Q+ needs a one-time database setup</b><span>Open Supabase → SQL Editor, paste the PAR-Q+ setup script (parq-setup.sql), click Run, then restart the app. Nothing else in your data changes.</span></div>`;
+  return html`<div style="display:flex;flex-direction:column;gap:14px">
+    <div class="pq-sum">
+      <div><div class="eyebrow">Physical Activity Readiness</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px"><${ParqBadge} st=${st}/>
+          <span class="muted">${last?`Last completed ${fmtDateY(last.date)} · ${st.state==='expired'?'expired':'valid until'} ${fmtDateY(last.expiresOn)}`:'No signed PAR-Q+ on file'}</span></div></div>
+      <span class="sp"></span><button class="btn primary" onClick=${start}><${Icon} n="clipboard" s=${15}/>${st.draft?'Continue draft':last?'Start a new PAR-Q+':'Fill in PAR-Q+'}</button></div>
+    ${last&&last.needsClearance&&html`<div class=${'callout'+(st.flag?' u2':'')}>
+      <b>${st.flag?'Follow-up answered YES · doctor clearance needed':'Doctor clearance received'}</b>
+      <div class="fhint" style="margin:2px 0 8px">Your coaching record, kept separate from the signed form.</div>
+      <div class="fgrid"><label class="field"><span class="flabel">Clearance date</span><input type="date" value=${last.clearance&&last.clearance.on||''} onChange=${e=>setClear(last,{on:e.target.value})}/></label>
+        <label class="field"><span class="flabel">Note</span><input type="text" placeholder="e.g. Dr. note on file, cleared for full training" value=${last.clearance&&last.clearance.note||''} onChange=${e=>setClear(last,{note:e.target.value})}/></label></div></div>`}
+    <div class="panel" style="box-shadow:none"><div class="panel-h"><h3>History</h3><span class="sp"></span><span class="fhint">${mine.filter(f=>f.status==='signed').length} signed</span></div>
+      ${mine.length?html`<div class="pq-hist">${mine.map(f=>{const exp=f.status==='signed'&&(f.expiresOn||'')<todayYmd();return html`<div class="pq-hrow" key=${f.id}>
+        <button class="pq-hbtn" onClick=${()=>setOpen(f.id)}><b>${fmtDateY(f.date)}</b><small>${f.status==='signed'?`Signed ${new Date(f.signedAt).toLocaleString('en-CA',{dateStyle:'medium',timeStyle:'short'})}${f.needsClearance?' · follow-up YES':f.part1Yes?' · follow-ups all NO':' · all NO'}`:'Draft, not signed'}</small></button>
+        ${f.status==='signed'?html`<span class=${'pill '+(exp?'u3':'u0')}>${exp?'Expired':'Valid'}</span><button class="iconbtn" aria-label="Download PDF" title="Download PDF" onClick=${()=>parqPdf(f,c)}><${Icon} n="download" s=${15}/></button>`
+          :html`<span class="pill un">Draft</span><${IconDel} onConfirm=${()=>api.del('parq',f.id)}/>`}</div>`})}</div>`
+        :html`<div class="empty">No PAR-Q+ yet. Fill one in during intake.</div>`}</div>
+  </div>`;
+}
+
+/* ---------- PDF ---------- */
+let jsPdfP=null;
+const loadJsPdf=()=>jsPdfP||(jsPdfP=new Promise((res,rej)=>{if(window.jspdf)return res(window.jspdf);let i=0;
+  const srcs=['vendor/jspdf.umd.min.js','https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'].filter(u=>!/^vendor/.test(u)||location.protocol==='file:');
+  const next=()=>{if(i>=srcs.length){jsPdfP=null;return rej(new Error('load'))}const s=document.createElement('script');s.src=srcs[i++];s.onload=()=>window.jspdf?res(window.jspdf):next();s.onerror=next;document.head.appendChild(s)};next()}));
+async function buildParqPdf(f){
+  const lib=await loadJsPdf();
+  const SG={};for(const k of ['sig','witness','guardian']){try{SG[k]=await pqSigSrc(f[k])}catch(_){SG[k]=null}}
+  const doc=new lib.jsPDF({unit:'pt',format:'letter'});const PW=612,PH=792,M=44,CW=PW-M*2;let y=M;const a=f.answers||{};
+  const foot=()=>{doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(110);doc.text(PQ_TXT.copy,PW-M,PH-24,{align:'right'});doc.text(`${f.name||''} · ${fmtDateY(f.date)}`,M,PH-24);doc.setTextColor(0)};
+  const need=h=>{if(y+h>PH-44){foot();doc.addPage();y=M}};
+  const para=(t,{size=9.5,bold=false,indent=0,gap=4,w=CW-indent}={})=>{doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);const ls=doc.splitTextToSize(t,w);const lh=size*1.28;need(ls.length*lh);ls.forEach(l=>{doc.text(l,M+indent,y+size);y+=lh});y+=gap};
+  const yn=(t,v,{indent=0,note}={})=>{doc.setFontSize(9.5);doc.setFont('helvetica','normal');const ls=doc.splitTextToSize(t,CW-indent-60);const lh=12.2;const nl=note?doc.splitTextToSize(note,CW-indent-60):[];need((ls.length+nl.length)*lh+4);
+    const y0=y;ls.forEach(l=>{doc.text(l,M+indent,y+9.5);y+=lh});if(nl.length){doc.setFontSize(8);doc.setTextColor(90);nl.forEach(l=>{doc.text(l,M+indent,y+8);y+=10.5});doc.setTextColor(0)}
+    doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.text(v?v.toUpperCase():'—',PW-M,y0+9.5,{align:'right'});y+=5;doc.setDrawColor(225);doc.line(M+indent,y-2,PW-M,y-2)};
+  const box=(head,items,col,plain)=>{doc.setDrawColor(...col);doc.setLineWidth(1.2);const y0=y;y+=6;para(head,{bold:true,indent:8,w:CW-16});(items||[]).forEach(t=>para((plain?'':'•  ')+t,{indent:plain?8:14,w:CW-24,gap:2}));y+=4;doc.roundedRect(M,y0,CW,y-y0,5,5);doc.setLineWidth(.5);y+=8};
+  doc.setFont('helvetica','bold');doc.setFontSize(26);doc.setTextColor(28,36,84);doc.text('PAR-Q+',PW/2,y+22,{align:'center'});y+=32;doc.setFontSize(11);doc.text(PQ_TXT.title,PW/2,y+8,{align:'center'});doc.setTextColor(0);y+=18;
+  para(PQ_TXT.intro,{size:9});para(PQ_TXT.ghq,{bold:true,size:11});para(PQ_TXT.ghqLead,{bold:true});
+  PQ_P1.forEach(q=>{let t=q.k==='q1'?`${q.n}) Has your doctor ever said that you have a heart condition [${a.q1h?'X':' '}] OR high blood pressure [${a.q1b?'X':' '}]?`:`${q.n}) ${q.t}`;
+    yn(t,a[q.k],{note:[q.note,q.list?`${q.list} ${a[q.k+'l']||''}`:null].filter(Boolean).join('  ')||null})});
+  y+=6;const p1Yes=pqP1Yes(a);
+  if(!p1Yes)box(PQ_TXT.p1Green+' '+PQ_TXT.p1Green2,PQ_TXT.p1GreenB,[43,150,86]);else box(PQ_TXT.p1Red,[],[215,38,61]);
+  box(PQ_TXT.delay,PQ_TXT.p1Delay,[226,160,12]);
+  if(p1Yes){para(PQ_TXT.p2Head,{bold:true,size:11});
+    PQ_P2.forEach(s=>{const on=a['c'+s.n]==='yes';yn(`${s.n}. ${s.t}`,a['c'+s.n],{note:on?(s.present||pqRange(s)):`If NO ${s.go}`});
+      if(on){s.subs.forEach(([k,t,note])=>yn(`${k}. ${t}`,a[k],{indent:16,note}));if(s.list)para(`${s.list} ${a['c'+s.n+'l']||''}`,{size:8.5,indent:16})}});
+    para(PQ_TXT.p2End,{bold:true});
+    if(pqFollowYes(a))box(PQ_TXT.p4Red,[PQ_TXT.p4Red2],[215,38,61],true);else box(PQ_TXT.p4Green,PQ_TXT.p4GreenB,[43,150,86]);
+    box(PQ_TXT.delay,PQ_TXT.p4Delay,[226,160,12]);PQ_TXT.p4Notes.forEach(t=>para('•  '+t,{size:8.5,gap:2}))}
+  need(260);para(PQ_TXT.decl,{bold:true,size:11});
+  if(p1Yes){para('•  '+PQ_TXT.declAll);para('•  '+PQ_TXT.declMinor)}else para(PQ_TXT.declMinor);
+  para(p1Yes?PQ_TXT.declP4:PQ_TXT.declP1);
+  para(`NAME: ${f.name||''}`,{bold:true,gap:2});para(`DATE: ${fmtDateY(f.date)}`,{bold:true,gap:8});
+  const sig=(lab,s)=>{need(78);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(lab,M,y+8);y+=12;
+    if(s&&s.src){try{doc.addImage(s.src,'PNG',M,y,180,48)}catch(_){}doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(100);doc.text(`Signed ${new Date(s.at).toLocaleString('en-CA')}${s.mode==='type'?' (typed)':''}`,M+190,y+40);doc.setTextColor(0)}
+    doc.setDrawColor(150);doc.line(M,y+50,M+300,y+50);y+=62};
+  const S2=k=>f[k]?{...f[k],src:SG[k]}:null;sig('SIGNATURE',S2('sig'));sig('WITNESS',S2('witness'));sig('SIGNATURE OF PARENT/GUARDIAN/CARE PROVIDER',S2('guardian'));
+  need(40);para(`Locked ${f.signedAt?new Date(f.signedAt).toLocaleString('en-CA'):''} · valid until ${fmtDateY(f.expiresOn)} · ${PQ_VER}`,{size:7.5});
+  para(PQ_TXT.contact,{size:7.5,bold:true});para(PQ_TXT.cite,{size:7});para(PQ_TXT.credit,{size:7});PQ_TXT.refs.forEach(r=>para(r,{size:6.5,gap:1}));
+  foot();
+  return doc.output('blob')}
+async function parqPdf(f,c){
+  let blob;try{blob=f.pdfPath&&sbClient?await pqFileBlob(f.pdfPath):null}catch(_){blob=null}
+  if(!blob){try{blob=await buildParqPdf(f)}catch(_){toast('Could not make the PDF. Check your connection.');return}}
+  const filename=`PAR-Q+ ${(c&&c.name)||f.name||'athlete'} ${f.date}.pdf`;
+  try{const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
+    if(dl){await dl.save({filename,data:blob});toast('PDF saved');return}
+    const url=URL.createObjectURL(blob);const el=document.createElement('a');el.href=url;el.download=filename;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);toast('PDF downloaded')}
+  catch(e){if(e&&e.code!=='declined')toast('Could not save the PDF.')}
+}
+
 function AthletesPage({ctx,selId,setSelId}){
   const {clients,derived}=ctx;
   const [q,setQ]=useState('');const [filter,setFilter]=useState('active');const [modal,setModal]=useState(null);
@@ -1477,7 +1858,7 @@ function AthletesPage({ctx,selId,setSelId}){
         <div style="display:flex;gap:6px;width:100%"><input type="text" placeholder="Search" value=${q} onInput=${e=>setQ(e.target.value)} aria-label="Search athletes"/>
           <select style="width:auto" value=${filter} onChange=${e=>setFilter(e.target.value)} aria-label="Filter"><option value="active">Active</option><option value="paused">Paused</option><option value="former">Former</option><option value="all">All</option></select></div></div>
       <div class="scroll">${list.length?list.map(c=>{const s=derived.cs[c.id]||{};return html`<button class="arow" aria-current=${selId===c.id} onClick=${()=>{setSelId(c.id);try{scrollTo(0,0)}catch(_){}}}>
-        <span class="av">${initials(c.name)}</span><span class="who"><b>${c.name}</b><small>${c.athleteType==='Custom'?(c.athleteCustom||'Custom'):(c.athleteType||'—')}${c.example?' · example':''}</small></span>
+        <span class="av">${initials(c.name)}</span><span class="who"><b>${c.name}</b><small>${c.athleteType==='Custom'?(c.athleteCustom||'Custom'):(c.athleteType||'—')}${c.example?' · example':''}</small>${(()=>{const q=parqStatus(ctx.parq,c.id);return q.state!=='complete'||q.flag?html`<span class="pq-mini"><${ParqBadge} st=${q}/></span>`:null})()}</span>
         <span style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><span class="num" style="font-size:13px;font-weight:600">${s.remaining??0} left</span>${s.active&&s.urg>0?html`<span title=${s.reason}><${Pill} u=${s.urg}>${s.reason}<//></span>`:null}</span></button>`})
         :html`<div class="empty">${Object.keys(clients).length?'No athletes match.':'No athletes yet. Add your first one to start tracking sessions.'}</div>`}</div>
     </div>
@@ -1537,7 +1918,7 @@ function Profile({ctx,c,onBack}){
   const [tab,setTab]=useState('overview');const [modal,setModal]=useState(null);
   const s=derived.cs[c.id]||{};
   const upd=patch=>api.put('clients',c.id,{...c,...patch});
-  const TABS=[['overview','Overview'],['sessions','Sessions'],['chart','Chart notes'],['prs','PRs'],['goals','Goals'],['limits','Limitations'],['health','Health'],['equipment','Equipment'],['macros','Macros'],['plan','Plan & billing']];
+  const TABS=[['overview','Overview'],['sessions','Sessions'],['chart','Chart notes'],['prs','PRs'],['goals','Goals'],['limits','Limitations'],['health','Health'],['parq','PAR-Q+'],['equipment','Equipment'],['macros','Macros'],['plan','Plan & billing']];
   const type=c.athleteType==='Custom'?(c.athleteCustom||'Custom'):c.athleteType;
   return html`<div class="panel">
     <div class="prof-h">
@@ -1547,6 +1928,7 @@ function Profile({ctx,c,onBack}){
         <div class="meta">${type&&html`<span class="tag">${type}</span>`}${c.example&&html`<span class="tag ex">Example</span>`}${diabRisk(c).has&&html`<button class="tag tag-health" style="cursor:pointer" onClick=${()=>setTab('health')}><${Icon} n="drop" s=${12}/>${diabRisk(c).label}</button>`}${c.partnerId&&ctx.clients[c.partnerId]&&html`<span class="tag">Trains with ${ctx.clients[c.partnerId].name}</span>`}${(c.status||'active')!=='active'&&html`<span class="tag">${c.status}</span>`}
           ${[ageFrom(c.dob)!=null?`${ageFrom(c.dob)} yrs`:null,fmtH(c),fmtW(c)].filter(Boolean).join(' · ')}</div></div>
       <span class="sp"></span>
+      <${ParqBadge} st=${parqStatus(ctx.parq,c.id)} onClick=${()=>setTab('parq')}/>
       ${s.active&&html`<${Pill} u=${s.urg}>${s.reason}<//>`}
       <button class="btn sm" onClick=${()=>setModal('edit')}><${Icon} n="edit" s=${14}/>Edit</button>
     </div>
@@ -1559,6 +1941,7 @@ function Profile({ctx,c,onBack}){
       ${tab==='goals'&&html`<${GoalsTab} c=${c} upd=${upd}/>`}
       ${tab==='limits'&&html`<${LimitsTab} c=${c} upd=${upd}/>`}
       ${tab==='health'&&html`<${HealthTab} c=${c} upd=${upd}/>`}
+      ${tab==='parq'&&html`<${ParqTab} ctx=${ctx} c=${c}/>`}
       ${tab==='equipment'&&html`<${EquipTab} c=${c} upd=${upd}/>`}
       ${tab==='macros'&&html`<${MacrosTab} c=${c} upd=${upd}/>`}
       ${tab==='plan'&&html`<${PlanTab} ctx=${ctx} c=${c} s=${s} upd=${upd} openCharge=${()=>setModal('charge')} openPay=${()=>setModal('pay')}/>`}
@@ -2109,7 +2492,7 @@ const balanceCycle=(days,baseC,baseF)=>{const tot=sum(days,d=>CYCLE_TYPES[d].r)|
 const dayKcal=(p,t)=>Math.round((Number(p)||0)*4+(Number(t.c)||0)*4+(Number(t.f)||0)*9);
 const cycleAvg=(p,cy)=>{const ds=cy.days.map(d=>cy.types[d]||{c:0,f:0});return {kcal:Math.round(sum(ds,t=>dayKcal(p,t))/7),c:Math.round(sum(ds,t=>Number(t.c)||0)/7),f:Math.round(sum(ds,t=>Number(t.f)||0)/7)}};
 const curMacro=pl=>{if(!pl)return null;if(Array.isArray(pl.schedule)&&pl.schedule.length){const t=todayYmd();let i=0;pl.schedule.forEach((r,j)=>{if(r.date<=t)i=j});return {...pl,...pl.schedule[i],stepIdx:i,steps:pl.schedule.length}}
-  if(pl.cycle&&pl.cycle.days){const di=(new Date().getDay()+6)%7;const type=pl.cycle.days[di];const t=pl.cycle.types[type]||{c:pl.c,f:pl.f};return {...pl,c:Number(t.c)||0,f:Number(t.f)||0,kcal:dayKcal(pl.p,t),dayType:type,dayIdx:di}}
+  if(pl.cycle&&pl.cycle.days){const di=(appNow().getDay()+6)%7;const type=pl.cycle.days[di];const t=pl.cycle.types[type]||{c:pl.c,f:pl.f};return {...pl,c:Number(t.c)||0,f:Number(t.f)||0,kcal:dayKcal(pl.p,t),dayType:type,dayIdx:di}}
   return pl};
 const CycleWeek=({p,cy,today})=>html`<div class="cy-week">${cy.days.map((d,i)=>{const t=cy.types[d]||{};return html`<div class=${'cy-day cy-'+d+(i===today?' now':'')}>
   <span class="cy-dn">${WEEK_LBL[i]}</span><b>${CYCLE_TYPES[d]?CYCLE_TYPES[d].l:d}</b><span class="num">${dayKcal(p,t)}</span><small class="num">C${t.c} · F${t.f}</small><small class="num">${ratioText({p,c:t.c,f:t.f})}</small></div>`})}</div>`;
@@ -2491,7 +2874,7 @@ function PaymentsPage({ctx,openAthlete}){
     .sort((a,b)=>(b.s.urg-a.s.urg)||((a.s.nextDue||'9')<(b.s.nextDue||'9')?-1:1)||a.c.name.localeCompare(b.c.name));
   const owing=sum(rows,r=>Math.max(0,r.s.balance||0));
   const dueWeek=rows.filter(r=>r.s.urg>=2).length;
-  const now=new Date();const fm=finance(derived,clients,settings,now.getFullYear());const M=fm[now.getMonth()];
+  const now=appNow();const fm=finance(derived,clients,settings,now.getFullYear());const M=fm[now.getMonth()];
   const payCards=()=>html`<div class="cardlist">${rows.length?rows.map(({c,s})=>{const p=c.plan||{};return html`<button class="pcard" key=${c.id} onClick=${()=>openAthlete(c.id)}>
     <div class="pc-top"><b>${c.name}</b>${s.active?html`<${Pill} u=${s.urg}>${s.reason}<//>`:html`<span class="pill un">${c.status}</span>`}</div>
     <div class="pc-sub">${[pkgOf(settings,p.packageId)?pkgOf(settings,p.packageId).name:null,p.commitMonths?`${p.commitMonths} mo`:null,`${p.perWeek||'?'}×/wk`,BILLING_LABEL[p.billing],p.rate?`${money(p.rate)}/${p.rateUnit==='month'?'mo':'sess'}`:null,p.rateType&&p.rateType!=='standard'?RATE_TYPE_LABEL[p.rateType]:null,METHOD_LABEL[p.method],p.noGst?'No GST':null].filter(Boolean).join(' · ')}</div>
@@ -2528,12 +2911,12 @@ function PaymentsPage({ctx,openAthlete}){
 /* ================= Finances ================= */
 function FinancesPage({ctx}){
   const {clients,derived,settings,travel}=ctx;
-  const [year,setYear]=useState(new Date().getFullYear());
+  const [year,setYear]=useState(appNow().getFullYear());
   const [calc,setCalc]=useState('');
   const months=useMemo(()=>finance(derived,clients,settings,year),[derived,clients,settings,year]);
   const mi=mileage(travel,settings,year);
   const T=k=>sum(months,m=>m[k]);
-  const now=new Date();const curM=year===now.getFullYear()?now.getMonth():-1;
+  const now=appNow();const curM=year===now.getFullYear()?now.getMonth():-1;
   const r=(Number(settings.gstRate)||0)/100,tr=(Number(settings.taxRate)||0)/100;
   const a=Number(calc)||0;const g=settings.gstRegistered?a*r/(1+r):0;const t=(a-g)*tr;
   // chart
@@ -2644,8 +3027,8 @@ function ThemePicker({pref,setPref}){
 function useTheme(){const [pref,setP]=useState(themePref);
   const setPref=p=>{themePref=p;ls.set('theme',p);applyTheme(p);setP(p)};return {pref,setPref}}
 
-const BK_COLS=['calendars','clients','events','ledger','travel'];
-const BK_LABEL={calendars:'calendars',clients:'athletes',events:'calendar entries',ledger:'purchases & payments',travel:'travel days'};
+const BK_COLS=['calendars','clients','events','ledger','travel','parq'];
+const BK_LABEL={calendars:'calendars',clients:'athletes',events:'calendar entries',ledger:'purchases & payments',travel:'travel days',parq:'PAR-Q+ forms'};
 function ImportBackup({api,ctx,compact}){
   const [bk,setBk]=useState(null);const [err,setErr]=useState('');const [mode,setMode]=useState('merge');const [prog,setProg]=useState(null);
   const fileRef=useRef(null);
@@ -2679,6 +3062,20 @@ function ImportBackup({api,ctx,compact}){
   </div>`;
 }
 
+function TimeZonePanel({S,set}){
+  const [,tick]=useState(0);useEffect(()=>{const t=setInterval(()=>tick(x=>x+1),30000);return()=>clearInterval(t)},[]);
+  const pref=S.timeZone||'auto';const auto=tzAuto();const z=tzActive();const n=appNow();
+  const off=z?tzOffsetAt(z,Date.now()):-new Date().getTimezoneOffset();
+  return html`<div class="panel"><div class="panel-h"><h3>Time zone</h3><span class="sp"></span><span class="fhint">Uses Canada's 2026 rules</span></div><div class="panel-b" style="display:flex;flex-direction:column;gap:12px">
+    <div class="fgrid"><${Field} label="Time zone" hint=${pref==='auto'?(auto?`Detected: ${auto.label}`:`Detected ${TZ_DEVICE||'unknown'} · using your device clock`):''}>
+      <select value=${pref} onChange=${e=>set('timeZone',e.target.value)}>
+        <option value="auto">Automatic${auto?` · ${auto.label}`:''}</option>
+        ${TZ_ZONES.map(x=>html`<option value=${x.id}>${x.label} · ${x.fixed?fmtOff(x.off)+' year-round':fmtOff(x.off)+' / '+fmtOff(x.off+60)+' with DST'}</option>`)}
+      </select><//></div>
+    <div class="tz-now"><${Icon} n="clock" s=${16}/><span>App time: <b class="num">${fmtTime(n.getHours()*60+n.getMinutes())}</b> · ${n.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'})} · ${fmtOff(off)}</span></div>
+    <span class="fhint">BC, Alberta and Manitoba stopped changing clocks on November 1, 2026 (Saskatchewan and Yukon already had). Automatic reads your device's region and applies these rules itself, so the calendar is right even if the computer's built-in time data is out of date. If the app time doesn't match your clock, pick your province above.${z&&z.verify?' Northwestern Ontario’s change was announced in October 2026; double-check your local clock.':''}</span>
+  </div></div>`;
+}
 function SetupPage({ctx}){
   const {settings,api}=ctx;
   const S=settings;const set=(k,v)=>api.setSettings({...S,[k]:v});
@@ -2687,10 +3084,10 @@ function SetupPage({ctx}){
   const [busy,setBusy]=useState(false);
   const order=Array.from({length:7},(_,i)=>(Number(S.weekStart)+i)%7);
   const exportData=async()=>{try{const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
-    if(!dl&&!inClaude()){const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel};
+    if(!dl&&!inClaude()){const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel,parq:ctx.parq};
       const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`sbd-backup-${todayYmd()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('Backup downloaded');return}
     if(!dl){toast('Downloads are not available in this view.');return}
-    const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel};
+    const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel,parq:ctx.parq};
     await dl.save({filename:`sbd-backup-${todayYmd()}.json`,data:JSON.stringify(data,null,2)});toast('Backup saved')}catch(e){if(e&&e.code!=='declined')toast('Could not save the backup.')}};
   const removeExamples=async()=>{setBusy(true);
     for(const col of ['clients','events','ledger','travel']){for(const x of Object.values(ctx[col])){if(x.example)await api.del(col,x.id)}}
@@ -2708,6 +3105,7 @@ function SetupPage({ctx}){
         <b style="width:96px">${DOWL[d]}</b>
         ${arr.length?arr.map((w,i)=>html`<span style="display:inline-flex;gap:4px;align-items:center"><input type="time" step="900" style="width:118px" value=${toHHMM(w.s)} onChange=${e=>{const a=arr.slice();a[i]={...w,s:fromHHMM(e.target.value)};setDay(d,a)}}/>–<input type="time" step="900" style="width:118px" value=${toHHMM(w.e)} onChange=${e=>{const a=arr.slice();a[i]={...w,e:fromHHMM(e.target.value)};setDay(d,a)}}/><button class="iconbtn" aria-label="Remove window" onClick=${()=>setDay(d,arr.filter((_,j)=>j!==i))}><${Icon} n="x" s=${14}/></button></span>`):html`<span class="muted">Not training</span>`}
         <button class="btn sm" onClick=${()=>setDay(d,[...arr,{s:arr.length?arr[arr.length-1].e+60:360,e:arr.length?Math.min(1380,arr[arr.length-1].e+180):600}])}><${Icon} n="plus" s=${13}/>Window</button></div>`})}</div></div>
+    <${TimeZonePanel} S=${S} set=${set}/>
     <div class="panel"><div class="panel-h"><h3>Calendar & policy</h3></div><div class="panel-b"><div class="fgrid">
       <${Field} label="Week starts on"><select value=${String(S.weekStart)} onChange=${e=>set('weekStart',Number(e.target.value))}><option value="0">Sunday</option><option value="1">Monday</option></select><//>
       <${Field} label="Day view starts"><select value=${String(S.dayStartHour)} onChange=${e=>set('dayStartHour',Number(e.target.value))}>${Array.from({length:12},(_,h)=>html`<option value=${h}>${fmtTime(h*60)}</option>`)}</select><//>
@@ -2742,7 +3140,7 @@ async function seed(api,withExamples){
   if(withExamples)S.locations.push({id:'ex-home',name:'Client home visit (example)',km:24,example:true});
   for(const c of DEFAULT_CALENDARS)await api.put('calendars',c.id,c);
   if(withExamples){
-    const t=new Date();const T=todayYmd();
+    const t=appNow();const T=todayYmd();
     const ws=weekStartOf(t,1);const d=(w,dow)=>ymd(addDays(ws,w*7+dow));
     const C=[
       {id:'ex-jordan',name:'Jordan Reyes',athleteType:'Powerlifter',dob:'1996-04-12',sex:'male',units:'imperial',heightCm:180.3,weightKg:97.5,phone:'204-555-0182',email:'jordan@example.com',status:'active',startDate:'2025-02-10',sessionAdjust:3,numberOffset:58,
@@ -2825,7 +3223,7 @@ function App(){
   useEffect(()=>{toastFn=m=>{setMsg(m);clearTimeout(toastFn._t);toastFn._t=setTimeout(()=>setMsg(null),3200)}},[]);
   useEffect(()=>{const f=()=>{const h=(location.hash||'').slice(1);if(ROUTES.some(r=>r[0]===h))setRoute(h)};addEventListener('hashchange',f);return()=>removeEventListener('hashchange',f)},[]);
   const settings=store.settings?{...DEFAULT_SETTINGS,...store.settings}:null;
-  WPM=Number((settings||DEFAULT_SETTINGS).weeksPerMonth)||4;
+  WPM=Number((settings||DEFAULT_SETTINGS).weeksPerMonth)||4;TZ_PREF=(settings||DEFAULT_SETTINGS).timeZone||'auto';
   if(settings&&Array.isArray(settings.packages)&&settings.packages.length&&settings.packages.every(k=>!Number(k.price)&&['pkg-pt','pkg-online','pkg-junior'].includes(k.id)))settings.packages=DEFAULT_SETTINGS.packages;
   const derived=useMemo(()=>deriveAll({clients:store.clients,events:store.events,ledger:store.ledger,settings:settings||DEFAULT_SETTINGS}),[store.clients,store.events,store.ledger,store.settings]);
   const ctx={...store,settings,derived,isM:layout.isM,layout,theme};
