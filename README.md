@@ -12,3 +12,9 @@ The PAR-Q+ forms use their own locked table and a private file folder in Supabas
 Open Supabase → SQL Editor → New query, paste everything in `parq-setup.sql`, and click Run.
 It creates the `parq_forms` table (owner-only access, signed forms can't be edited or deleted)
 and the private `parq-private` storage bucket for signatures and PDFs. Existing data isn't touched.
+
+## Contracts setup (one time)
+
+Open Supabase → SQL Editor → New query, paste everything in `contracts-setup.sql`, and click Run.
+It creates the `contracts` table (owner-only, signed contracts locked), the add-only `contract_events`
+history, and the private `contracts-private` storage bucket for signatures and PDFs.

@@ -4,6 +4,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="SBD">
 <meta name="theme-color" content="#0F0E0E">
 <link rel="apple-touch-icon" href="icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23E21E28'/%3E%3Ctext x='32' y='42' font-family='Arial Narrow,Arial' font-weight='900' font-size='26' text-anchor='middle' fill='white'%3ESBD%3C/text%3E%3C/svg%3E">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head><body><title>SBD Business Manager</title>
@@ -155,6 +156,57 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--fg)}
 .pq-hist{display:flex;flex-direction:column}.pq-hrow{display:flex;gap:8px;align-items:center;padding:8px 14px;border-top:1px solid var(--line-2)}
 .pq-hbtn{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;background:none;border:0;padding:4px 0;color:inherit;font:inherit;cursor:pointer;text-align:left}.pq-hbtn small{color:var(--muted)}
 @media (max-width:760px){.pq-doc{padding:12px}.pq-q{flex-direction:column;gap:8px}.pq-cols{display:none}}
+/* Contracts */
+.ct{display:flex;flex-direction:column;gap:12px}
+.ct-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ct-meta{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px 14px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.ct-meta>div{display:flex;flex-direction:column;gap:2px;min-width:0}.ct-meta .wide{grid-column:1/-1}
+.ct-hash{font-family:var(--f-mono);font-size:12px;overflow-wrap:anywhere;color:var(--muted)}
+.ct-doc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 24px;font-size:15px;line-height:1.55;min-width:0}
+.ct-doc p{margin:0 0 9px}.ct-gap{height:6px}
+.ct-hdr{text-align:center;font-size:16px;margin-bottom:16px!important}
+.ct-sec{display:flex;gap:8px;margin-top:16px!important;font-size:15.5px}
+.ct-cl{display:flex;gap:8px;padding-left:16px}.ct-sub{display:flex;gap:8px;align-items:flex-start;padding-left:34px}
+.ct-n{flex:none;min-width:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.ct-tx{min-width:0;white-space:pre-wrap;overflow-wrap:anywhere;flex:1}
+.ct-doc .red{color:var(--r)}
+.ct-raw{color:var(--muted);word-break:break-all}
+.ct-val{background:var(--y-bg);border-bottom:1.5px solid var(--fg);padding:0 4px;border-radius:2px;white-space:pre-wrap}
+.ct-in{display:inline-block;width:12ch;min-height:40px;padding:6px 8px;background:var(--y-bg)!important;border:1.5px solid var(--y)!important;border-radius:6px;font-size:16px!important;vertical-align:middle;margin:2px 0}
+.ct-in.ct-num{width:9ch;text-align:right}.ct-in.ct-mid{width:min(100%,30ch)}.ct-in.ct-date{width:auto}
+.ct-in.ct-wide{display:block;width:100%;min-height:64px;margin-top:4px}
+.ct-tick{flex:none;width:34px;height:34px;border-radius:7px;border:2px solid var(--fg);background:var(--surface);font-weight:900;font-size:18px;display:grid;place-items:center;margin-top:-4px;color:var(--fg)}
+.ct-tick.on{background:var(--fg);color:var(--bg)}.ct-tick:disabled{opacity:1;cursor:default}
+.ct-tw{overflow-x:auto;margin:4px 0 12px}
+table.ct-parties{border-collapse:collapse;width:100%;font-size:14px}
+table.ct-parties td{vertical-align:top;padding:1px 6px}table.ct-parties td:last-child{width:55%}table.ct-parties p{margin:0 0 3px}
+.ct-sigrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.6fr);gap:14px;align-items:end;margin:14px 0 6px}
+.ct-sigcell{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ct-siglab{border-top:1.5px solid var(--fg);padding-top:3px;font-size:13.5px}
+.ct-sigv .pq-sig-img{max-width:260px}.ct-sigempty{height:56px}
+.ct-dateval{min-height:28px;font-weight:600}
+.ct-sigcell .pq-sig{border:0;padding:0}
+@media (max-width:820px){.ct-sigrow{grid-template-columns:minmax(0,1fr)}.ct-datecell{max-width:260px}}
+.is-m .ct-doc{padding:14px;font-size:14.5px}.is-m .ct-sub{padding-left:8px}.is-m .ct-cl{padding-left:0}
+/* Client signing mode (full screen, no app navigation) */
+.cs{position:fixed;inset:0;z-index:300;background:var(--bg);display:flex;flex-direction:column;touch-action:manipulation;overscroll-behavior:none}
+.cs-bar{display:flex;align-items:center;gap:10px;background:var(--band);color:var(--band-fg);padding:calc(8px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));flex-wrap:wrap}
+.cs-title{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:18px}
+.cs-steps{display:flex;gap:6px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--band-muted)}.cs-steps .on{color:var(--band-fg)}
+.cs-hold{position:relative;overflow:hidden;background:transparent;color:var(--band-fg);border-color:rgba(255,255,255,.3);min-height:40px;user-select:none;-webkit-user-select:none;touch-action:none}
+.cs-hold-bar{position:absolute;inset:0;background:var(--accent);transform-origin:left;transform:scaleX(0)}
+.cs-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:16px max(16px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.cs-wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.cs .pq-pad{max-width:100%;height:auto;min-height:150px}
+.cs .btn{min-height:48px}.cs-big{font-size:17px;padding:12px 22px;justify-content:center;flex:1}
+.cs-acts{display:flex;gap:10px;flex-wrap:wrap}
+.cs-done{max-width:560px;margin:12vh auto 0;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.cs-done h2{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:34px;margin:0}.cs-done p{color:var(--muted);font-size:17px;margin:0}
+.cs-ok{width:72px;height:72px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:38px;font-weight:900}
+.cs .mark-sq{flex:none}
+@media (orientation:portrait){.cs-steps{order:3;width:100%}}
+.pdfv{width:min(960px,100%)}.pdfv-body{padding:12px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--surface-2);max-height:75vh;overflow:auto}
+.pdfv-page{display:block;max-width:100%;height:auto;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .tz-now{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
 .tag{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--surface-2);color:var(--muted)}
 .tag.ex{background:transparent;border:1px dashed var(--muted)}
@@ -746,7 +798,7 @@ const DEFAULT_CALENDARS=[
   {id:'personal',name:'Personal',color:'#2E9E5B',icon:'heart',order:3}];
 
 /* ================= Store (private per-user cloud storage) ================= */
-const COLS=['calendars','clients','events','ledger','travel','parq'];
+const COLS=['calendars','clients','events','ledger','travel','parq','contracts'];
 let toastFn=()=>{};
 const toast=m=>toastFn(m);
 const errMsg=e=>{const c=e&&e.code;if(c==='quota_exceeded')return 'Storage is full. Remove old data, then try again.';if(c==='invalid_argument')return 'That change could not be saved.';if(c==='revoked')return 'Saving was switched off for this view.';return 'Could not save. Check your connection and try again.'};
@@ -770,9 +822,20 @@ const pqCache={};
 const pqFileBlob=path=>{if(!sbClient)return Promise.reject(new Error('offline'));return sbClient.storage.from(PQ_BUCKET).download(path).then(({data,error})=>{if(error)throw error;return data})};
 const pqFile=path=>pqCache[path]||(pqCache[path]=pqFileBlob(path).then(blobToDataUrl).catch(e=>{delete pqCache[path];throw e}));
 const pqSigSrc=async s=>s?(s.img||(s.path?await pqFile(s.path):null)):null;
+const CT_TABLE='contracts',CT_BUCKET='contracts-private',CT_EVENTS='contract_events';
+const ctFromRow=r=>{const d=r.data||{};const o={...d,id:r.id,clientId:r.client_id,status:r.status,templateId:r.template_id,templateVersion:r.template_version,templateSha:r.template_sha,term:r.term||d.term,
+  startDate:r.start_date||d.startDate,endDate:r.end_date||undefined,remindDays:r.remind_days??30,signedAt:r.signed_at||undefined,supersedes:r.supersedes_id||undefined,supersededBy:r.superseded_by_id||undefined,
+  cancelledAt:r.cancelled_at||undefined,cancelReason:r.cancel_reason||undefined,pdfPath:r.pdf_path||undefined,pdfSha256:r.pdf_sha256||undefined};Object.keys(o).forEach(k=>o[k]===undefined&&delete o[k]);return o};
+const ctRow=(uidv,d)=>{const {id,clientId,status,templateId,templateVersion,templateSha,term,startDate,endDate,remindDays,signedAt,supersedes,supersededBy,cancelledAt,cancelReason,pdfPath,pdfSha256,...data}=d;
+  return {id,user_id:uidv,client_id:clientId,status:status||'draft',template_id:templateId||'pta-v1',template_version:templateVersion||1,template_sha:templateSha||null,term:term||null,data,
+    start_date:startDate||(d.fields&&d.fields.eff_date)||null,end_date:endDate||null,remind_days:remindDays??30,signed_at:signedAt||null,supersedes_id:supersedes||null,superseded_by_id:supersededBy||null,
+    cancelled_at:cancelledAt||null,cancel_reason:cancelReason||null,pdf_path:pdfPath||null,pdf_sha256:pdfSha256||null}};
+const ctPdfMem={};
+const ctFile=path=>{if(!sbClient)return Promise.reject(new Error('offline'));return sbClient.storage.from(CT_BUCKET).download(path).then(({data,error})=>{if(error)throw error;return data})};
+const dataUrlToBlob=async u=>(await fetch(u)).blob();
 const pqMissingTable=e=>/PGRST205|42P01|parq_forms|schema cache|does not exist/i.test(String((e&&(e.code+' '+e.message))||e));
 function useStore(){
-  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{}});
+  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{}});
   const R=useRef({mode:'loading',root:null,q:{},uid:null,recent:{}});
   const [authTick,setAuthTick]=useState(0);
   useEffect(()=>{
@@ -821,8 +884,17 @@ function useStore(){
       try{const {data,error}=await sb.from(PQ_TABLE).select('*');if(error)throw error;
         (data||[]).forEach(r=>{all.parq[r.id]=pqFromRow(r);if(r.status==='signed')R.current.pqSigned[r.id]=true})}
       catch(e){parqOk=false}
+      let contractsOk=true;R.current.ctLocked={};
+      try{const {data,error}=await sb.from(CT_TABLE).select('*');if(error)throw error;
+        (data||[]).forEach(r=>{all.contracts[r.id]=ctFromRow(r);if(r.status!=='draft')R.current.ctLocked[r.id]=true})}
+      catch(e){contractsOk=false}
       if(dead)return;
-      setSt(s=>({...s,...all,parqOk,ready:true}));
+      setSt(s=>({...s,...all,parqOk,contractsOk,ready:true}));
+      if(contractsOk){const cch=sb.channel('sbd-ct-'+uidv).on('postgres_changes',{event:'*',schema:'public',table:CT_TABLE,filter:`user_id=eq.${uidv}`},p=>{
+          const row=p.eventType==='DELETE'?p.old:p.new;if(!row||!row.id)return;const t=R.current.recent['contracts/'+row.id];if(t&&Date.now()-t<4000)return;
+          if(p.eventType!=='DELETE'&&row.status!=='draft')R.current.ctLocked[row.id]=true;
+          setSt(s=>{const m={...s.contracts};if(p.eventType==='DELETE')delete m[row.id];else m[row.id]=ctFromRow(row);return {...s,contracts:m}})}).subscribe();
+        unsubs.push(()=>{try{sb.removeChannel(cch)}catch(_){}})}
       if(parqOk){const pch=sb.channel('sbd-parq-'+uidv).on('postgres_changes',{event:'*',schema:'public',table:PQ_TABLE,filter:`user_id=eq.${uidv}`},p=>{
           const row=p.eventType==='DELETE'?p.old:p.new;if(!row||!row.id)return;const t=R.current.recent['parq/'+row.id];if(t&&Date.now()-t<4000)return;
           if(p.eventType!=='DELETE'&&row.status==='signed')R.current.pqSigned[row.id]=true;
@@ -858,12 +930,33 @@ function useStore(){
           const up=await sbClient.storage.from(PQ_BUCKET).upload(path,pdf,{contentType:'application/pdf',upsert:false});if(up.error&&!/exist|duplicate/i.test(up.error.message||''))throw up.error;
           const u=await sbClient.from(PQ_TABLE).update({pdf_path:path}).eq('id',id);if(u.error)throw u.error;
           setSt(s=>s.parq[id]?{...s,parq:{...s.parq,[id]:{...s.parq[id],pdfPath:path}}}:s)}catch(e){toast('Signed and locked. The PDF copy could not be saved yet; you can still download it.')}}};
+    const ctPut=(id,body)=>async()=>{const lk=R.current.ctLocked||(R.current.ctLocked={});R.current.recent['contracts/'+id]=Date.now();
+      if(lk[id]){const r=ctRow(R.current.uid,{...body,id});const {error}=await sbClient.from(CT_TABLE).update({status:r.status,superseded_by_id:r.superseded_by_id,cancelled_at:r.cancelled_at,cancel_reason:r.cancel_reason,end_date:r.end_date,remind_days:r.remind_days}).eq('id',id);if(error)throw error;return}
+      if(body.status&&body.status!=='draft')return; // signed contracts are only written by contractFinalize
+      const {error}=await sbClient.from(CT_TABLE).upsert(ctRow(R.current.uid,{...body,id}),{onConflict:'id'});if(error)throw error};
     return {
+      async contractFinalize(final,pdf){const id=final.id;const m=R.current.mode;ctPdfMem[id]=pdf;
+        if(m==='supabase'){await (R.current.q['contracts/'+id]||Promise.resolve());const uidv=R.current.uid;const doc={...final,sigs:{...final.sigs}};
+          for(const k of Object.keys(doc.sigs)){const sv=doc.sigs[k];if(!sv||!sv.img)continue;const path=`${uidv}/${id}/${k}.png`;
+            const up=await sbClient.storage.from(CT_BUCKET).upload(path,await dataUrlToBlob(sv.img),{contentType:'image/png',upsert:false});if(up.error&&!/exist|duplicate/i.test(up.error.message||''))throw up.error;const {img,...rest}=sv;doc.sigs[k]={...rest,path}}
+          const pp=`${uidv}/${id}/contract.pdf`;const up=await sbClient.storage.from(CT_BUCKET).upload(pp,pdf,{contentType:'application/pdf',upsert:false});if(up.error&&!/exist|duplicate/i.test(up.error.message||''))throw up.error;
+          doc.pdfPath=pp;R.current.recent['contracts/'+id]=Date.now();const {error}=await sbClient.from(CT_TABLE).upsert(ctRow(uidv,doc),{onConflict:'id'});if(error)throw error;
+          R.current.ctLocked[id]=true;setSt(s=>({...s,contracts:{...s.contracts,[id]:{...final,pdfPath:pp}}}));return}
+        if(m==='cloud'){await (R.current.q['contracts/'+id]||Promise.resolve());const u=await blobToDataUrl(pdf);await R.current.root.collection('cfiles').doc(id).set({pdf:u});await R.current.root.collection('contracts').doc(id).set(strip(final))}
+        setSt(s=>({...s,contracts:{...s.contracts,[id]:{...final}}}))},
+      async contractPdf(d){if(ctPdfMem[d.id])return ctPdfMem[d.id];const m=R.current.mode;let b=null;
+        if(m==='supabase'&&d.pdfPath)b=await ctFile(d.pdfPath);
+        else if(m==='cloud'){const sn=await R.current.root.collection('cfiles').doc(d.id).get();const v=sn&&sn.exists?sn.data():null;if(v&&v.pdf)b=await dataUrlToBlob(v.pdf)}
+        if(!b)throw new Error('PDF not found');ctPdfMem[d.id]=b;return b},
+      logEvent(cid,event,detail){const m=R.current.mode;const row={contract_id:cid,event,detail:detail||{},at:new Date().toISOString()};
+        try{if(m==='supabase')sbClient.from(CT_EVENTS).insert({...row,user_id:R.current.uid}).then(()=>{},()=>{});else if(m==='cloud')R.current.root.collection('cevents').doc(uid()).set(row).catch(()=>{})}catch(_){}},
       put(col,id,data){const body=strip(data);setSt(s=>({...s,[col]:{...s[col],[id]:{...body,id}}}));const m=R.current.mode;
+        if(m==='supabase'&&col==='contracts')return queue('contracts/'+id,ctPut(id,body));
         if(m==='supabase'&&col==='parq')return queue('parq/'+id,pqPut(id,body));
         if(m==='supabase')return queue(col+'/'+id,sbPut(col,id,body));
         if(m!=='cloud')return Promise.resolve();return queue(col+'/'+id,()=>R.current.root.collection(col).doc(id).set(body))},
       del(col,id){setSt(s=>{const m={...s[col]};delete m[id];return {...s,[col]:m}});const m=R.current.mode;
+        if(m==='supabase'&&col==='contracts')return queue('contracts/'+id,()=>{R.current.recent['contracts/'+id]=Date.now();return sbClient.from(CT_TABLE).delete().eq('id',id).then(({error})=>{if(error)throw error})});
         if(m==='supabase'&&col==='parq')return queue('parq/'+id,()=>{R.current.recent['parq/'+id]=Date.now();return sbClient.from(PQ_TABLE).delete().eq('id',id).then(({error})=>{if(error)throw error})});
         if(m==='supabase')return queue(col+'/'+id,sbDel(col,id));
         if(m!=='cloud')return Promise.resolve();return queue(col+'/'+id,()=>R.current.root.collection(col).doc(id).delete())},
@@ -874,7 +967,7 @@ function useStore(){
         const t=new Promise((_,rej)=>setTimeout(()=>rej(new Error('No answer from the server after 15 seconds. Check your internet, and make sure you opened this file in a normal browser window.')),15000));
         const {error}=await Promise.race([sbClient.auth.signInWithPassword({email,password}),t]);if(error)throw error},
       async resetPassword(email){const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:location.href.split('#')[0]});if(error)throw error},
-      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{}});setAuthTick(t=>t+1)}
+      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{}});setAuthTick(t=>t+1)}
     };
   },[]);
   return {...st,api};
@@ -1807,7 +1900,7 @@ const sigJpeg=src=>!src?Promise.resolve(null):new Promise(res=>{const im=new Ima
 async function buildParqPdf(f){
   const lib=await loadJsPdf();
   const SG={};for(const k of ['sig','witness','guardian']){try{SG[k]=await sigJpeg(await pqSigSrc(f[k]))}catch(_){SG[k]=null}}
-  const doc=new lib.jsPDF({unit:'pt',format:'letter'});const PW=612,PH=792,M=44,CW=PW-M*2;let y=M;const a=f.answers||{};
+  const doc=new lib.jsPDF({unit:'pt',format:'letter',compress:true});const PW=612,PH=792,M=44,CW=PW-M*2;let y=M;const a=f.answers||{};
   const foot=()=>{doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(110);doc.text(PQ_TXT.copy,PW-M,PH-24,{align:'right'});doc.text(`${f.name||''} · ${fmtDateY(f.date)}`,M,PH-24);doc.setTextColor(0)};
   const need=h=>{if(y+h>PH-44){foot();doc.addPage();y=M}};
   const para=(t,{size=9.5,bold=false,indent=0,gap=4,w=CW-indent}={})=>{doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);const ls=doc.splitTextToSize(t,w);const lh=size*1.28;need(ls.length*lh);ls.forEach(l=>{doc.text(l,M+indent,y+size);y+=lh});y+=gap};
@@ -1850,6 +1943,304 @@ async function parqPdf(f,c){
   catch(e){if(e&&e.code!=='declined')toast('Could not save the PDF.')}
 }
 
+/* Contract templates. Each version is frozen forever; new versions are added, never edited. Text imported word-for-word from the .docx */
+const CT_TEMPLATES={"pta-v1":{"id":"pta-v1","version":1,"name":"Personal Training Agreement","source":"PERSONAL_TRAINING_AGREEMENT_10.26.26.docx","header":"PERSONAL TRAINING AGREEMENT","sha256":"b5152179a22f78ddea784f8c717e9e8af9f9beb36bf9831592349703e7c89e8d","blocks":[{"s":[{"t":"This Agreement is effective "},{"k":"eff_month","r":"____________"},{"t":" "},{"k":"eff_day","r":"_____"},{"t":", 20"},{"k":"eff_year","r":"_____"}]},{"s":[{"t":"\t\t\t\t           (month)\t  (day)                    (year)","b":1}]},{"s":[{"t":"Between: "}]},{"s":[]},{"s":[]},{"s":[],"w":"t0.0"},{"s":[],"w":"t0.1"},{"s":[],"w":"t0.2"},{"s":[{"k":"client_name","r":"____________________________"}],"w":"t0.3"},{"s":[],"w":"t1.0"},{"s":[],"w":"t1.1"},{"s":[],"w":"t1.2"},{"s":[{"t":"(print name","b":1},{"t":"/name of Parent/Guardian","b":1,"red":1},{"t":") ","b":1}],"w":"t1.3"},{"s":[],"w":"t1.3"},{"s":[{"k":"minor_name","r":"___________________________________________________","b":1}],"w":"t1.3"},{"s":[{"t":"(print name of minor child)","b":1,"red":1}],"w":"t1.3"},{"s":[{"t":"ANTOINE GRENIER-TOGNERI"}],"w":"t2.0"},{"s":[],"w":"t2.1"},{"s":[],"w":"t2.2"},{"s":[],"w":"t2.3"},{"s":[{"k":"address","r":"____________________________"}],"w":"t2.3"},{"s":[],"w":"t3.0"},{"s":[],"w":"t3.1"},{"s":[],"w":"t3.2"},{"s":[{"t":"(address)","b":1}],"w":"t3.3"},{"s":[{"t":"APCC Certified"}],"w":"t4.0"},{"s":[],"w":"t4.1"},{"s":[{"t":"- and -"}],"w":"t4.2"},{"s":[{"k":"phone","r":"____________________________"}],"w":"t4.3"},{"s":[],"w":"t5.0"},{"s":[],"w":"t5.1"},{"s":[],"w":"t5.2"},{"s":[{"t":"(phone number)","b":1}],"w":"t5.3"},{"s":[],"w":"t6.0"},{"s":[],"w":"t6.1"},{"s":[],"w":"t6.2"},{"s":[{"k":"email","r":"____________________________"}],"w":"t6.3"},{"s":[],"w":"t7.0"},{"s":[],"w":"t7.1"},{"s":[],"w":"t7.2"},{"s":[{"t":"(email address)","b":1}],"w":"t7.3"},{"s":[],"w":"t8.0"},{"s":[],"w":"t8.1"},{"s":[],"w":"t8.2"},{"s":[],"w":"t8.3"},{"s":[{"t":"(the “Trainer”)"}],"w":"t9.0"},{"s":[],"w":"t9.1"},{"s":[],"w":"t9.2"},{"s":[{"t":"(the “"},{"t":"Client","b":1},{"t":"”)"}],"w":"t9.3"},{"s":[]},{"s":[{"t":"The Client"},{"t":"/their child ","red":1},{"t":"wishes to participate in the Personal Training Program offered by the Trainer, which includes all Personal Training Sessions. The Client and Trainer relationship will be governed as set out below in this Agreement. "}]},{"s":[{"t":"In consideration of the Client"},{"t":"/their child ","red":1},{"t":"being able to participate in the Personal Training Program, the Client and the Trainer agree as follows:"}]},{"s":[{"t":"SERVICES","b":1}],"n":"A."},{"s":[{"t":"This Agreement is for "},{"t":"Personal Training Sessions","b":1},{"t":", which all together constitute the "},{"t":"Personal Training Program","b":1},{"t":", provided by the Trainer.  "}],"n":"1."},{"s":[{"t":"The Personal Training Program is being offered by "},{"t":"Antoine (Tony) Grenier-Togneri","b":1},{"t":", and all Personal Training Sessions will be provided by Tony."}],"n":"2."},{"s":[{"t":"The Trainer will create an exercise program specifically designed for the Client"},{"t":"/their child ","red":1},{"t":"and will deliver the Personal Training Program through Personal Training Sessions tailored to the Client’s"},{"t":"/their child’s","red":1},{"t":" needs and goals. "}],"n":"3."},{"s":[{"t":"In the case of a minor child participating in the Personal Training Program, this Agreement has been signed by their Parent or Legal Guardian and the Personal Training Program will be provided to the minor child. This Agreement will be interpreted accordingly, with references to the Client’s "},{"t":"child","red":1},{"t":"."}],"n":"4."},{"s":[{"t":"The Trainer may, at his sole discretion, provide the details of the Personal Training Program to the Client"},{"t":"/their child ","red":1},{"t":"by way of correspondence, a document, or mobile application. "}],"n":"5."},{"s":[{"t":"There may be part(s) of the Personal Training Program whereby the Client"},{"t":"/their child ","red":1},{"t":"can engage in physical activity on their own time at BH or another fitness facility without the supervision or instruction by the Trainer."}],"n":"6."},{"s":[{"t":"Each Personal Training Session","b":1},{"t":" will last "},{"t":"one (1) hour","b":1},{"t":" unless the Client"},{"t":"/their child","red":1},{"t":" is late, in which case, the duration of the Session will be the remaining time left in the scheduled hour unless other arrangements have been previously made with the Trainer."}],"n":"7."},{"s":[{"t":"Each Personal Training Session will be "},{"t":"held at Brickhouse Gym 24/7","b":1},{"t":" "},{"t":"(\"BH\")","b":1},{"t":", and the "},{"t":"Client acknowledges and agrees","b":1},{"t":" that they will follow all policies in effect while they are using BH facilities. The Client "},{"t":"does not","b":1,"u":1},{"t":" need to purchase a BH gym membership "},{"t":"[for their child] ","red":1},{"t":"in order to participate in the Personal Training Program with the Trainer. If the Client wishes to attend BH on their own/without the Trainer, they must purchase a BH membership."}],"n":"8."},{"s":[{"t":"During each Personal Training Session, the Trainer will show and/or explain to the Client"},{"t":"/their child ","red":1},{"t":"how to engage in the various exercises and/or stretches, will supervise the Client’s"},{"t":"/their child’s","red":1},{"t":" technique, and may provide feedback, where appropriate."}],"n":"9."},{"s":[{"t":"PAYMENT / SESSIONS","b":1}],"n":"B."},{"s":[{"t":"Cost","b":1,"i":1},{"t":" – The cost for Personal Training Session(s) will be as outlined in this section."}],"n":"10."},{"s":[{"t":"Sessions/Terms ","b":1,"i":1},{"t":"– The Client will pay for the Personal Training Session(s) as follows which payment will be due before any Personal Training Session(s) will take place (check one):"}],"n":"11."},{"s":[{"t":"Monthly Term","b":1},{"t":": "},{"k":"a_sessions","r":"___"},{"t":" Personal Training Sessions @ $"},{"k":"a_rate","r":"___.___"},{"t":" for a total of $"},{"k":"a_total","r":"___.___"},{"t":" + GST "}],"n":"a."},{"s":[{"t":"3 Month Term","b":1},{"t":": "},{"k":"b_sessions","r":"___"},{"t":" Personal Training Sessions @ $"},{"k":"b_rate","r":"___.___"},{"t":" for a total of $"},{"k":"b_total","r":"___.___"},{"t":" + GST "}],"n":"b."},{"s":[{"t":"6 Month Term","b":1},{"t":": "},{"k":"c_sessions","r":"___"},{"t":" Personal Training Sessions @ $"},{"k":"c_rate","r":"___.___"},{"t":" for a total of $"},{"k":"c_total","r":"___.___"},{"t":" + GST "}],"n":"c."},{"s":[{"t":"Custom Term","b":1},{"t":": "},{"k":"custom_term","r":"____________________________________________________"}],"n":"d."},{"s":[{"k":"custom_term","r":"________________________________________________________________","p":2}]},{"s":[{"t":"Payment ","b":1,"i":1},{"t":"– The Client will pre-pay for all Personal Training Sessions (for the terms selected above) once they receive an invoice and payment will be made by way of an e-transfer to "},{"t":"antoine.grenier.togneri@outlook.com","b":1},{"t":". "}],"n":"12."},{"s":[{"t":"No Refunds ","b":1,"i":1},{"t":"– No refunds for Personal Training Session(s) will be made for any reason, including but not limited to relocation, illness, and unused sessions. Personal Training Session(s) are not transferable and have no cash value after purchase."}],"n":"13."},{"s":[{"t":"Training Schedule ","b":1,"i":1},{"t":"– The Client and Trainer agree that the Personal Training Session(s) will take place on the following days/times unless otherwise agreed to in writing by the Trainer and Client:"}],"n":"14."},{"s":[{"k":"schedule","r":"______________________________________________________________________"}]},{"s":[{"k":"schedule","r":"______________________________________________________________________","p":2}]},{"s":[{"t":"CLIENT OBLIGATIONS / ACKNOWLEDGEMENT","b":1}],"n":"C."},{"s":[{"t":"Required Forms","b":1,"i":1},{"t":" ","i":1},{"t":"– The Client will fill out the PAR-Q+ Form (a medical form) attached to this Agreement "},{"t":"[for their child]","red":1},{"t":". The PAR-Q+ form is required to be filled out before beginning the Personal Training Program and forms part of this Agreement. "}],"n":"15."},{"s":[{"t":"Doctor’s Clearance ","b":1,"i":1},{"t":"– The Client acknowledges and agrees that they have"},{"t":"/their child has","red":1},{"t":" been cleared by a physician to engage in physical activity and will inform the Trainer of any changes in their"},{"t":"/their child’s ","red":1},{"t":"medical condition during the Personal Training Program. The Client agrees that they will tell the Trainer of any medical history or conditions which could impact the Client’s"},{"t":"/their child’s","red":1},{"t":" health and/or participation in the Personal Training Program. The obligation of the Client to advise the Trainer of any medical conditions will continue for the duration of this Agreement."}],"n":"16."},{"s":[{"t":"Results Not Guaranteed ","b":1,"i":1},{"t":"– The Client understands that the results of the Personal Training Program cannot be guaranteed, and that the Client’s"},{"t":"/their child’s","red":1},{"t":" progress depends on their"},{"t":"/their child’s","red":1},{"t":" individual effort and cooperation in following the Personal Training Program and communicating appropriately any concerns the Client may have. "}],"n":"17."},{"s":[{"t":"Use of Steroids ","b":1,"i":1},{"t":"– The Client acknowledges and agrees that they"},{"t":"/their child ","red":1},{"t":"will "},{"t":"not take any steroid(s)","b":1,"u":1},{"t":" during the Personal Training Program and for the duration of this Agreement. The Client agrees that they will hold the Trainer harmless from any and all repercussions, claims, and action(s) taken against the Trainer if it is found that the Client"},{"t":"/their child","red":1},{"t":" was taking any steroid(s) during the Personal Training Program and the term of this Agreement. "}],"n":"18."},{"s":[{"t":"Arrive On Time ","b":1,"i":1},{"t":"– The Client acknowledges and agrees that they"},{"t":"/their child","red":1},{"t":" will arrive on time for each Personal Training Session. The Client"},{"t":"/their child","red":1},{"t":" will make efforts to arrive at least 15 minutes before a scheduled Personal Training Session to change/warm up adequately as each session is scheduled for exactly one hour. "}],"n":"19."},{"s":[{"t":"ASSUMPTION OF RISK / LIABILITY / INDEMNIFICATION / WAIVER/RELEASE","b":1}],"n":"D."},{"s":[{"t":"Assumption of Risk","b":1,"i":1},{"t":" ","i":1},{"t":"– The Client understands that there are inherent risks in participating in strenuous exercise(s) and the Personal Training Program, which includes each individual Personal Training Session. The Client acknowledges that they are"},{"t":"/their child is","red":1},{"t":" participating in the Personal Training Program and the Personal Training Sessions voluntarily. The Client understands and acknowledges that they are"},{"t":"/their child is","red":1},{"t":" participating at their own risk and assume the risk of any and all injury, illness, loss, and/or damage the Client"},{"t":"/their child","red":1},{"t":" may suffer while engaging in the Personal Training Program, or thereafter. Furthermore, if, as part of the Personal Training Program, the Client"},{"t":"/their child","red":1},{"t":" chooses to engage in physical activity on their own time at BH or another fitness facility, the Client acknowledges and agrees that they are"},{"t":"/their child is","red":1},{"t":" doing so at their own risk and that this time and these activities are not being supervised by the Trainer. "}],"n":"1."},{"s":[{"t":"Liability","b":1,"i":1},{"t":" ","i":1},{"t":"– The Client understands and agrees that they will not hold the Trainer liable or responsible for any injuries to them"},{"t":"/their child","red":1},{"t":" (including death) resulting from their"},{"t":"/their child’s","red":1},{"t":" participation in the Personal Training Program (whether at home, indoors, outdoors, at BH, or in any other fitness facility). This includes but is not limited to as a result of the use of equipment by the Client"},{"t":"/their child","red":1},{"t":", whether they have"},{"t":"/their child has","red":1},{"t":" used the equipment properly or are engaging in negligent or improper use, and the use of any BH facilities or equipment."}],"n":"2."},{"s":[{"t":"Indemnification","b":1,"i":1},{"t":" ","i":1},{"t":"– The Client understands that by signing this Agreement, they agree that they will indemnify and hold harmless the Trainer from any loss, liability, damage, or cost the Trainer may incur at BH as a result of their"},{"t":"/their child’s","red":1},{"t":" engagement in the Personal Training Program. "}],"n":"3."},{"s":[{"t":"Waiver/Release ","b":1,"i":1},{"t":"– The Client expressly releases the Trainer from all claims, actions, and judgements which the Client"},{"t":" [and their child] ","red":1},{"t":"or their representatives, heirs, executors, administrators, agents, or assigns may have or claim to have as a result of any injury or other damage which may occur in connection with the Client’s"},{"t":"/their child’s","red":1},{"t":"  participation in the Personal Training Program, excepting only an injury caused by the gross negligence of the Trainer. This Release will be binding on all the Client’s "},{"t":"[and their child’s]","red":1},{"t":" heirs, executors, administrators and assigns. "}],"n":"4."},{"s":[{"t":"Acknowledgements ","b":1,"i":1},{"t":"– The Client expressly agrees that the foregoing in Section D is intended to be as broad and inclusive as permitted by the law. If any portion of this Section D is found to be invalid, it is agreed that the remaining provisions will continue to be in full force and effect. The Client acknowledges that they have carefully read this waiver and release and fully understand that it is a release of liability, express assumption of risk and indemnity agreement. The Client is aware and agrees that by signing this Agreement, they are giving up their"},{"t":"/their child’s","red":1},{"t":" right to bring a legal action or assert a claim against the Trainer except as stated above, including for any defective product(s) used while participating in the Personal Training Program."}],"n":"5."},{"s":[{"t":"CANCELLATION / EXPIRATION / SUSPENSION","b":1}],"n":"E."},{"s":[{"t":"Notice","b":1,"i":1},{"t":" ","i":1},{"t":"– Cancellation or rescheduling of a Personal Training Session requires a minimum of 24 hours notice, no exceptions. Personal Training Sessions that are not rescheduled or cancelled 24 hours in advance will result in the forfeiture of the session and a loss of the financial investment at the rate of one (1) session. "}],"n":"6."},{"s":[{"t":"Makeup Sessions ","b":1,"i":1},{"t":"– Any makeup session(s), should they be allowed, will be made based on the availability of the Trainer. Any cancelled or rescheduled Personal Training Sessions must be made up within one (1) month unless otherwise agreed to by the Trainer. "}],"n":"7."},{"s":[{"t":"Expiration of Sessions","b":1,"i":1},{"t":" ","i":1},{"t":"– All Personal Training Sessions must take place within the Term selected in Section B 10. above unless other arrangements are made with the Trainer. "}],"n":"8."},{"s":[{"t":"Suspension of Sessions","b":1,"i":1},{"t":" – If the Client"},{"t":"/their child","red":1},{"t":" is going to be away for a period of 7 – 30 days during the Term selected in Section B 10. of this Agreement, the Client and the Trainer may agree to suspend the Personal Training Sessions and defer the sessions to a later date. In these circumstances and any other circumstances not covered by this Agreement, both parties must agree to the change in writing."}],"n":"9."},{"s":[{"t":"TERMINATION OF AGREEMENT","b":1}],"n":"F."},{"s":[{"t":"The Client may terminate this Agreement by providing written notice to the Trainer 30 days before the end of the Term selected in Section B 10. of this Agreement. "}],"n":"10."},{"s":[{"t":"The Trainer may terminate this Agreement by providing 30 days written notice to the Client. The Trainer may terminate this Agreement immediately if the Client"},{"t":"/their child","red":1},{"t":" is found to have taken any steroid(s).  "}],"n":"11."},{"s":[{"t":"GENERAL","b":1}],"n":"G."},{"s":[{"t":"Survival of Terms","b":1,"i":1},{"t":" – Sections B, C, D, and G will survive the expiry or termination of this Agreement."}],"n":"12."},{"s":[{"t":"Term","b":1,"i":1},{"t":" – This Agreement will be for the term of one (1) year and is renewable by the agreement of both parties in writing confirming their desire for this Agreement to continue for another year."}],"n":"13."},{"s":[{"t":"No Assignment ","b":1,"i":1},{"t":"– This Agreement cannot be assigned to any other person."}],"n":"14."},{"s":[{"t":"Time of Essence","b":1,"i":1},{"t":" – Time will be of the essence of this Agreement."}],"n":"15."},{"s":[{"t":"Entire Agreement ","b":1,"i":1},{"t":"–"},{"t":" ","b":1,"i":1},{"t":"This Agreement is the entire agreement between the Client and the Trainer and supersedes any pre-existing agreement(s) whether written or oral."}],"n":"16."},{"s":[{"t":"Amendment","b":1,"i":1},{"t":" – This Agreement may be amended by the written agreement of both parties. "}],"n":"17."},{"s":[{"t":"Severability","b":1,"i":1},{"t":" – If any provision of this Agreement is found to be invalid, that provision will be considered separate and severable from this Agreement and the other provisions will remain in full force and effect. "}],"n":"18."},{"s":[{"t":"Applicable Law","b":1,"i":1},{"t":" – This Agreement will be interpreted, performed, and enforced in accordance with the laws of Manitoba and Canada. The parties attorn to the exclusive jurisdiction of the courts of Manitoba. "}],"n":"19."},{"s":[{"t":"This Agreement has been signed by the Client and the Trainer on the dates noted below."}]},{"s":[{"t":"*I, "},{"k":"ack_name","r":"________________________________"},{"t":", acknowledge that I had the opportunity and have"}]},{"s":[{"t":"                                      (print name"},{"t":"/name of Parent/Guardian","red":1},{"t":")"}]},{"s":[{"t":"carefully read this Agreement before signing."}]},{"s":[]},{"s":[]},{"s":[{"k":"client_sig","r":"___________________________"},{"t":"\t"},{"k":"client_witness_sig","r":"___________________________"},{"t":"     "},{"k":"client_date","r":"_________________"}]},{"s":[{"t":"Client’s Signature\t\t\tWitness Signature \t\t\tDate","b":1}]},{"s":[{"t":"(Parent/Guardian signature in the case of a minor child)","red":1}]},{"s":[]},{"s":[]},{"s":[{"k":"trainer_sig","r":"___________________________"},{"t":"\t"},{"k":"trainer_witness_sig","r":"___________________________"},{"t":"     "},{"k":"trainer_date","r":"_________________"}]},{"s":[{"t":"Trainer’s Signature\t\t\tWitness Signature \t\t\tDate","b":1}]},{"s":[{"t":"Congratulations on joining the family and making the decision to train with me, Tony! I am looking forward to working with you and growing your gains!","b":1}]}]}};
+const CT_CURRENT="pta-v1";
+
+/* ================= Contracts ================= */
+const CT_FIELDS={
+  eff_date:{label:'Effective date',who:'coach'},
+  client_name:{label:'Client name / name of Parent/Guardian',who:'client'},
+  minor_name:{label:'Name of minor child',who:'client',opt:true},
+  address:{label:'Address',who:'client'},phone:{label:'Phone number',who:'client'},email:{label:'Email address',who:'client'},
+  a_sessions:{label:'Monthly Term · sessions',who:'coach',term:'a'},a_rate:{label:'Monthly Term · price per session',who:'coach',term:'a'},a_total:{label:'Monthly Term · total',who:'coach',term:'a'},
+  b_sessions:{label:'3 Month Term · sessions',who:'coach',term:'b'},b_rate:{label:'3 Month Term · price per session',who:'coach',term:'b'},b_total:{label:'3 Month Term · total',who:'coach',term:'b'},
+  c_sessions:{label:'6 Month Term · sessions',who:'coach',term:'c'},c_rate:{label:'6 Month Term · price per session',who:'coach',term:'c'},c_total:{label:'6 Month Term · total',who:'coach',term:'c'},
+  custom_term:{label:'Custom Term',who:'coach',term:'d'},
+  schedule:{label:'Training schedule',who:'coach'},
+  ack_name:{label:'“I, ____, acknowledge…” name',who:'client'}};
+const CT_SIGS={client_sig:{label:'Client’s Signature',who:'client'},client_witness_sig:{label:'Witness Signature (client)',who:'client',opt:true},
+  trainer_sig:{label:'Trainer’s Signature',who:'coach'},trainer_witness_sig:{label:'Witness Signature (trainer)',who:'coach',opt:true}};
+const CT_TERMS={a:'Monthly Term',b:'3 Month Term',c:'6 Month Term',d:'Custom Term'};
+const ctTpl=d=>CT_TEMPLATES[(d&&d.templateId)||CT_CURRENT];
+const ctMissing=(d,who)=>{const f=d.fields||{},s=d.sigs||{},m=[];const want=w=>!who||who===w;
+  Object.entries(CT_FIELDS).forEach(([k,v])=>{if(v.opt||!want(v.who))return;if(v.term&&v.term!==d.term)return;if(!String(f[k]??'').trim())m.push(v.label)});
+  if(want('coach')&&!d.term)m.push('Term choice in B.11 (check one)');
+  Object.entries(CT_SIGS).forEach(([k,v])=>{if(!v.opt&&want(v.who)&&!(s[k]&&(s[k].img||s[k].path)))m.push(v.label)});return m};
+function ctStatus(d,today=todayYmd()){
+  if(!d)return {k:'missing',l:'No contract',u:'un'};
+  if(d.status==='cancelled')return {k:'cancelled',l:'Cancelled',u:'un'};
+  if(d.status!=='signed')return {k:'draft',l:'Draft',u:'u1'};
+  if(d.supersededBy)return {k:'superseded',l:'Superseded',u:'un'};
+  if(d.endDate&&d.endDate<today)return {k:'expired',l:'Expired',u:'u3'};
+  const left=d.endDate?daysBetween(today,d.endDate):null;
+  if(left!=null&&left<=(Number(d.remindDays)||30))return {k:'renew',l:`Renews in ${left} day${left===1?'':'s'}`,u:'u2',left};
+  return {k:'active',l:'Active',u:'u0',left}}
+function ctForClient(contracts,cid){const all=Object.values(contracts||{}).filter(x=>x.clientId===cid).sort((a,b)=>(b.created||0)-(a.created||0));
+  const today=todayYmd();const live=all.filter(x=>x.status==='signed'&&!x.supersededBy).sort((a,b)=>(b.startDate||'').localeCompare(a.startDate||''));
+  const cur=live.find(x=>!(x.endDate&&x.endDate<today))||live[0]||null;return {all,cur,st:ctStatus(cur,today),draft:all.find(x=>x.status==='draft')||null}}
+function CtBadge({cid,ctx,onClick,always}){const r=ctForClient(ctx.contracts,cid);if(!always&&r.st.k==='active')return null;
+  const st=r.cur?r.st:(r.draft?{l:'Contract draft',u:'u1'}:{l:'No contract',u:'un'});
+  return html`<span class=${'pill '+st.u} onClick=${onClick} style=${onClick?'cursor:pointer':''} title=${r.cur?`Contract ${r.cur.endDate?'ends '+fmtDateY(r.cur.endDate):''}`:''}>${r.cur?(st.k==='active'?'Contract active':'Contract · '+st.l):st.l}</span>`}
+
+/* ---- pre-fill from the athlete ---- */
+const ctMoney=n=>(Math.round((Number(n)||0)*100)/100).toFixed(2);
+function ctPrefill(ctx,c){const p=c.plan||{};const f={eff_date:todayYmd()};const age=ageFrom(c.dob);
+  if(age!=null&&age<18){f.minor_name=c.name}else{f.client_name=c.name;f.ack_name=c.name}
+  if(c.phone)f.phone=c.phone;if(c.email)f.email=c.email;if(c.address)f.address=c.address;
+  let term='';const cyc=p.billing&&p.billing!=='pack'?Number(p.billing):0;const spm=sessionsPerMonth(p);
+  const perSession=p.rateUnit==='month'?(spm?(Number(p.rate)||0)/spm:0):(Number(p.rate)||0);
+  if(cyc===1||cyc===3||cyc===6){term={1:'a',3:'b',6:'c'}[cyc];const n=Math.round(spm*cyc);f[term+'_sessions']=String(n||'');f[term+'_rate']=perSession?ctMoney(perSession):'';f[term+'_total']=n&&perSession?ctMoney(n*perSession):''}
+  else if(p.billing==='pack'){term='d';const n=Number(p.packSize)||0;f.custom_term=n?`${n} Personal Training Sessions @ $${ctMoney(perSession)} for a total of $${ctMoney(n*perSession)} + GST`:''}
+  const sl=(ctx.settings.baseline||[]).filter(b=>(b.clientIds||[]).includes(c.id)&&!(b.until&&b.until<todayYmd())).sort((a,b)=>(a.dow-b.dow)||(a.start-b.start));
+  if(sl.length)f.schedule=sl.map(b=>`${DOWL[b.dow]}s ${fmtTime(b.start)}`).join(', ');
+  return {fields:f,term}}
+
+/* ---- the contract document (template text + blanks) ---- */
+const ctFmtDate=s=>s?fmtDateY(s):'';
+function ctBlankText(d,k){const f=d.fields||{};const e=f.eff_date?parseYmd(f.eff_date):null;
+  if(k==='eff_month')return e?e.toLocaleDateString('en-CA',{month:'long'}):'';if(k==='eff_day')return e?String(e.getDate()):'';if(k==='eff_year')return e?String(e.getFullYear()).slice(2):'';
+  if(k==='client_date')return d.clientSignedAt?ctFmtDate(d.clientSignedAt.slice(0,10)):'';if(k==='trainer_date')return d.trainerSignedAt?ctFmtDate(d.trainerSignedAt.slice(0,10)):'';
+  return String(f[k]??'')}
+function CtBlank({d,k,seg,edit,set}){const v=ctBlankText(d,k);const fd=CT_FIELDS[k];
+  if(seg.p===2)return !edit&&!v?html`<span class="ct-raw">${seg.r}</span>`:null;
+  const can=edit&&(k==='eff_month'||(fd&&(edit==='coach'||fd.who===edit)));
+  if(can&&k==='eff_month')return html`<input class="ct-in ct-date" type="date" aria-label="Effective date" value=${(d.fields||{}).eff_date||''} onChange=${e=>set('eff_date',e.target.value)}/>`;
+  if(can&&(k==='custom_term'||k==='schedule'))return html`<textarea class="ct-in ct-wide" rows="2" aria-label=${fd.label} value=${v} onInput=${e=>set(k,e.target.value)}></textarea>`;
+  if(can){const numeric=/_(sessions|rate|total)$/.test(k);return html`<input class=${'ct-in'+(numeric?' ct-num':'')+(/name|address|email/.test(k)?' ct-mid':'')} type=${k==='email'?'email':k==='phone'?'tel':'text'} inputmode=${numeric?(/sessions/.test(k)?'numeric':'decimal'):null}
+    aria-label=${fd.label} value=${v} onInput=${e=>set(k,e.target.value)}/>`}
+  return v?html`<span class="ct-val">${v}</span>`:html`<span class="ct-raw">${seg.r}</span>`}
+const ctSeg=(s,i)=>{let x=s.t;if(s.b)x=html`<strong>${x}</strong>`;if(s.i)x=html`<em>${x}</em>`;if(s.u)x=html`<u>${x}</u>`;if(s.red)x=html`<span class="red">${x}</span>`;return html`<span key=${i}>${x}</span>`};
+function CtSigBox({d,k,edit,setSig}){const s=(d.sigs||{})[k];const meta=CT_SIGS[k];const can=edit&&(edit==='coach'||meta.who===edit)&&d.status==='draft';
+  if(can)return html`<${SignaturePad} label=${meta.label+(meta.opt?' (optional)':'')} value=${s} onChange=${v=>setSig(k,v)} big=${edit==='client'}/>`;
+  return html`<div class="ct-sigv">${s&&(s.img||s.path)?html`<div class="pq-sig-img"><${CtSigImg} sig=${s} alt=${meta.label}/></div>`:html`<div class="ct-sigempty"></div>`}</div>`}
+function CtSigImg({sig,alt}){const [src,setSrc]=useState(sig.img||null);
+  useEffect(()=>{let live=true;if(!sig.img&&sig.path)ctFile(sig.path).then(b=>blobToDataUrl(b)).then(u=>live&&setSrc(u)).catch(()=>{});return()=>{live=false}},[sig.path,sig.img]);
+  return src?html`<img src=${src} alt=${alt}/>`:html`<div class="fhint" style="padding:10px">Loading signature…</div>`}
+function CtDoc({d,edit,set,setSig,setTerm}){const tpl=ctTpl(d);const B=tpl.blocks;const out=[];let i=0;
+  const P=(b,key)=>{const segs=b.s;const empty=!segs.some(s=>s.k||(s.t||'').trim());const lab=b.n||'';
+    if(empty&&!lab)return html`<div class="ct-gap" key=${key}></div>`;
+    const inner=segs.map((s,j)=>s.k?html`<${CtBlank} key=${j} d=${d} k=${s.k} seg=${s} edit=${edit} set=${set}/>`:ctSeg(s,j));
+    const kind=/^[A-G]\.$/.test(lab)?'sec':/^[a-d]\.$/.test(lab)?'sub':lab?'cl':'pl';
+    const tick=kind==='sub'?html`<button type="button" class=${'ct-tick'+(d.term===lab[0]?' on':'')} disabled=${!(edit==='coach'&&d.status==='draft')} aria-pressed=${d.term===lab[0]} aria-label=${'Choose '+CT_TERMS[lab[0]]} onClick=${()=>setTerm(lab[0])}>${d.term===lab[0]?'✓':''}</button>`:null;
+    return html`<p class=${'ct-'+kind} key=${key}>${tick}${lab&&html`<span class="ct-n">${lab}</span>`}<span class="ct-tx">${inner}</span></p>`};
+  out.push(html`<p class="ct-hdr" key="h"><strong>${tpl.header}</strong></p>`);
+  while(i<B.length){const b=B[i];
+    if(b.w){const rows={};while(i<B.length&&B[i].w){const [r,c]=B[i].w.slice(1).split('.').map(Number);(rows[r]=rows[r]||{});(rows[r][c]=rows[r][c]||[]).push([B[i],i]);i++}
+      out.push(html`<div class="ct-tw" key=${'t'+i}><table class="ct-parties"><tbody>${Object.keys(rows).map(r=>html`<tr key=${r}>${[0,1,2,3].map(c=>html`<td key=${c}>${(rows[r][c]||[]).map(([pb,pi])=>P(pb,pi))}</td>`)}</tr>`)}</tbody></table></div>`);continue}
+    const sigKs=b.s.filter(s=>s.k&&CT_SIGS[s.k]).map(s=>s.k);
+    if(sigKs.length){const lab=B[i+1];const labs=lab?lab.s.map(s=>s.t||'').join('').split(/\t+/):[];const dateK=b.s.find(s=>/_date$/.test(s.k||''));
+      out.push(html`<div class="ct-sigrow" key=${'s'+i}>
+        ${sigKs.map((k,j)=>html`<div class="ct-sigcell" key=${k}><${CtSigBox} d=${d} k=${k} edit=${edit} setSig=${setSig}/><div class="ct-siglab"><strong>${labs[j]||''}</strong></div></div>`)}
+        <div class="ct-sigcell ct-datecell"><div class="ct-dateval">${dateK?(ctBlankText(d,dateK.k)||html`<span class="ct-raw">${dateK.r}</span>`):''}</div><div class="ct-siglab"><strong>${labs[labs.length-1]||''}</strong></div></div>
+      </div>`);i+=2;continue}
+    out.push(P(b,i));i++}
+  return html`<article class="ct-doc">${out}</article>`}
+
+/* ---- local draft backup (survives a dropped connection) ---- */
+const ctLocal={get(id){return ls.get('cdraft:'+id,null)},set(id,d){ls.set('cdraft:'+id,d)},del(id){try{localStorage.removeItem('sbd:cdraft:'+id)}catch(_){}}};
+function useCtDraft(ctx,doc){const [d,setD]=useState(()=>{const l=ctLocal.get(doc.id);return l&&doc.status==='draft'&&(l.updated||0)>(doc.updated||0)?l:doc});
+  const tmr=useRef(null);
+  useEffect(()=>{const l=ctLocal.get(doc.id);if(l&&doc.status==='draft'&&(l.updated||0)>(doc.updated||0)){toast('Restored unsaved changes from this device');ctx.api.put('contracts',doc.id,l)}},[]);
+  useEffect(()=>{if(doc.status!=='draft')setD(doc)},[doc.status,doc.supersededBy,doc.endDate,doc.remindDays,doc.pdfPath]);
+  const save=n=>{ctLocal.set(n.id,n);clearTimeout(tmr.current);tmr.current=setTimeout(()=>ctx.api.put('contracts',n.id,n),600)};
+  useEffect(()=>()=>clearTimeout(tmr.current),[]);
+  const patch=fn=>setD(s=>{if(s.status!=='draft')return s;const n={...fn(s),updated:Date.now()};save(n);return n});
+  const set=(k,v)=>patch(s=>{const f={...(s.fields||{}),[k]:v};const m=/^([abc])_(sessions|rate)$/.exec(k);
+    if(m){const n=Number(f[m[1]+'_sessions'])||0,r=Number(String(f[m[1]+'_rate']||'').replace(/[^0-9.]/g,''))||0;if(n&&r)f[m[1]+'_total']=ctMoney(n*r)}
+    if(k==='client_name'&&(!f.ack_name||f.ack_name===(s.fields||{}).client_name))f.ack_name=v;return {...s,fields:f}});
+  const setSig=(k,v)=>patch(s=>{const sg={...(s.sigs||{})};if(v)sg[k]=v;else delete sg[k];const o={...s,sigs:sg};
+    if(k==='client_sig')o.clientSignedAt=v?v.at:null;if(k==='trainer_sig')o.trainerSignedAt=v?v.at:null;return o});
+  const setTerm=t=>patch(s=>({...s,term:t}));
+  return {d,set,setSig,setTerm,flush:()=>{clearTimeout(tmr.current)}}}
+
+/* ---- finalize: PDF, fingerprint, lock ---- */
+const ctBusy={};
+async function ctFinalize(ctx,d){if(ctBusy[d.id])return false;ctBusy[d.id]=true;
+  try{const cur=ctx.contracts[d.id];if(cur&&cur.status==='signed')return true;
+    const final={...d,status:'signed',signedAt:new Date().toISOString(),templateId:d.templateId||CT_CURRENT,templateVersion:ctTpl(d).version,templateSha:ctTpl(d).sha256};
+    if(!final.startDate)final.startDate=final.fields.eff_date;if(!final.endDate)final.endDate=addMonthsYmd(final.startDate,12);
+    const pdf=await buildContractPdf(final);const sha=await sha256Hex(pdf);final.pdfSha256=sha;
+    await ctx.api.contractFinalize(final,pdf);
+    if(final.supersedes&&ctx.contracts[final.supersedes])await ctx.api.put('contracts',final.supersedes,{...ctx.contracts[final.supersedes],supersededBy:final.id});
+    ctx.api.logEvent(final.id,'signed',{sha256:sha,template:final.templateId});ctLocal.del(d.id);return true}
+  catch(e){toast('Could not finish signing: '+String(e&&e.message||e).slice(0,120)+'. Nothing was lost; try again.');return false}
+  finally{ctBusy[d.id]=false}}
+
+/* ---- client signing mode ---- */
+function HoldButton({label,onDone,ms=1400}){const [p,setP]=useState(0);const t=useRef(null);
+  const start=e=>{e.preventDefault();const t0=Date.now();clearInterval(t.current);t.current=setInterval(()=>{const v=Math.min(1,(Date.now()-t0)/ms);setP(v);if(v>=1){clearInterval(t.current);setP(0);onDone()}},40)};
+  const stop=()=>{clearInterval(t.current);setP(0)};useEffect(()=>stop,[]);
+  return html`<button type="button" class="btn sm cs-hold" onPointerDown=${start} onPointerUp=${stop} onPointerLeave=${stop} onPointerCancel=${stop} onContextMenu=${e=>e.preventDefault()}>
+    <span class="cs-hold-bar" style=${`transform:scaleX(${p})`}></span><span style="position:relative">${label}</span></button>`}
+function ClientSigning({ctx,doc,onExit}){const D=useCtDraft(ctx,doc);const d=D.d;const [step,setStep]=useState(doc.status==='signed'?'done':'fill');const [err,setErr]=useState([]);const [busy,setBusy]=useState(false);
+  const ref=useRef(null);
+  useEffect(()=>{window.__sbdSigning=true;const b=document.body.style.overflow;document.body.style.overflow='hidden';ctx.api.logEvent(doc.id,'signing_mode_entered');
+    return()=>{window.__sbdSigning=false;document.body.style.overflow=b;ctx.api.logEvent(doc.id,'signing_mode_exited')}},[]);
+  const top=()=>{try{ref.current.scrollTop=0}catch(_){}};
+  const next=()=>{const m=ctMissing(d,'client');setErr(m);if(!m.length){setStep('review');top()}};
+  const submit=async()=>{if(busy)return;const m=ctMissing(d);if(m.length){setErr(m);setStep('fill');return}setBusy(true);D.flush();const ok=await ctFinalize(ctx,d);setBusy(false);if(ok){setStep('done');top()}};
+  return html`<div class="cs" role="dialog" aria-modal="true" aria-label="Client signing">
+    <div class="cs-bar"><span class="mark-sq">SBD</span><b class="cs-title">Personal Training Agreement</b><span class="sp"></span>
+      <span class="cs-steps">${[['fill','1 Fill in & sign'],['review','2 Review'],['done','3 Done']].map(([k,l])=>html`<span class=${step===k?'on':''}>${l}</span>`)}</span>
+      <${HoldButton} label="Hold to exit" onDone=${onExit}/></div>
+    <div class="cs-body" ref=${ref}>
+      ${step==='done'?html`<div class="cs-done"><div class="cs-ok">✓</div><h2>Signed. Thank you!</h2><p>Your agreement is saved. Please hand the iPad back to Tony.</p></div>`:html`
+      <div class="cs-wrap">
+        ${step==='fill'?html`<div class="callout">Please read the agreement, check your details in the yellow boxes, and sign at the bottom.</div>`:html`<div class="callout"><b>Review.</b> This is the full agreement exactly as it will be saved. Tap <b>Back</b> to change anything.</div>`}
+        <${CtDoc} d=${d} edit=${step==='fill'?'client':null} set=${D.set} setSig=${D.setSig} setTerm=${()=>{}}/>
+        ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}
+        <div class="cs-acts">${step==='fill'?html`<button class="btn primary cs-big" onClick=${next}>Review the agreement</button>`
+          :html`<button class="btn cs-big" onClick=${()=>{setStep('fill');top()}} disabled=${busy}>Back</button><button class="btn primary cs-big" onClick=${submit} disabled=${busy}>${busy?'Saving…':'Sign and submit'}</button>`}</div>
+      </div>`}
+    </div></div>`}
+
+/* ---- coach editor / locked view ---- */
+function ContractView({ctx,c,doc,onClose,onSign,onAmend}){const D=useCtDraft(ctx,doc);const d=D.d;const st=ctStatus(d);const locked=d.status!=='draft';
+  const [err,setErr]=useState([]);const [busy,setBusy]=useState(false);const [cancel,setCancel]=useState(null);const [viewer,setViewer]=useState(false);
+  const meta=p=>ctx.api.put('contracts',d.id,{...ctx.contracts[d.id],...p});
+  const finish=async()=>{const m=ctMissing(d);setErr(m);if(m.length||busy)return;setBusy(true);D.flush();await ctFinalize(ctx,d);setBusy(false)};
+  const startSigning=()=>{const m=ctMissing(d,'coach');setErr(m);if(m.length){toast('Fill in your parts and sign as Trainer first');return}onSign()};
+  const verify=async()=>{try{const b=await ctx.api.contractPdf(d);const h=await sha256Hex(b);const ok=h===d.pdfSha256;ctx.api.logEvent(d.id,'verified',{ok});toast(ok?'Verified: the stored PDF matches its fingerprint exactly':'Warning: the stored PDF does NOT match its fingerprint')}catch(e){toast('Could not load the PDF to verify it')}};
+  return html`<div class="ct">
+    <div class="pq-top"><button class="btn ghost sm" onClick=${onClose}><${Icon} n="left" s=${14}/>All contracts</button><span class="sp"></span><span class=${'pill '+st.u}>${locked?html`<${Icon} n="lock" s=${12}/> `:''}${st.l}</span></div>
+    ${locked?html`<div class="ct-actions">
+        <button class="btn primary" onClick=${()=>setViewer(true)}><${Icon} n="note" s=${15}/>View PDF</button>
+        <${CtPdfActions} ctx=${ctx} d=${d} c=${c}/>
+        <button class="btn" onClick=${verify}><${Icon} n="shield" s=${15}/>Verify</button>
+        ${d.status==='signed'&&!d.supersededBy&&html`<button class="btn" onClick=${()=>onAmend(d)}><${Icon} n="repeat" s=${15}/>Replace / amend</button>`}
+        ${d.status==='signed'&&!d.supersededBy&&html`<button class="btn danger" onClick=${()=>setCancel('')}>Cancel contract</button>`}</div>
+      ${cancel!=null&&html`<div class="callout u3"><b>Cancel this contract?</b> The signed PDF stays in the history, marked Cancelled.
+        <label class="field" style="margin-top:8px"><span class="flabel">Reason</span><input type="text" value=${cancel} onInput=${e=>setCancel(e.target.value)} placeholder="e.g. Client moved away"/></label>
+        <div style="display:flex;gap:8px;margin-top:8px"><button class="btn danger" onClick=${()=>{meta({status:'cancelled',cancelledAt:new Date().toISOString(),cancelReason:cancel});ctx.api.logEvent(d.id,'cancelled',{reason:cancel});setCancel(null)}}>Cancel contract</button><button class="btn" onClick=${()=>setCancel(null)}>Keep it</button></div></div>`}
+      <div class="ct-meta">
+        <div><span class="flabel">Term</span><b>${CT_TERMS[d.term]||'—'}</b></div><div><span class="flabel">Start</span><b>${fmtDateY(d.startDate)}</b></div>
+        <div><span class="flabel">Signed</span><b>${d.signedAt?new Date(d.signedAt).toLocaleString('en-CA',{dateStyle:'medium',timeStyle:'short'}):'—'}</b></div>
+        <div><span class="flabel">Template</span><b>v${d.templateVersion||1}</b></div>
+        <label class="field"><span class="flabel">End date</span><input type="date" value=${d.endDate||''} disabled=${d.status!=='signed'} onChange=${e=>meta({endDate:e.target.value})}/></label>
+        <label class="field"><span class="flabel">Remind me (days before)</span><input type="number" min="0" value=${d.remindDays??30} disabled=${d.status!=='signed'} onChange=${e=>meta({remindDays:Number(e.target.value)||0})}/></label>
+        ${d.supersededBy&&ctx.contracts[d.supersededBy]&&html`<div class="wide"><span class="flabel">Replaced by</span><b>Contract signed ${fmtDateY((ctx.contracts[d.supersededBy].signedAt||'').slice(0,10))}</b></div>`}
+        ${d.cancelReason&&html`<div class="wide"><span class="flabel">Cancelled</span><b>${d.cancelReason}</b></div>`}
+        <div class="wide"><span class="flabel">PDF fingerprint (SHA-256)</span><code class="ct-hash">${d.pdfSha256||'—'}</code></div></div>`
+    :html`<div class="callout">Fill in the plan details, sign as Trainer, then tap <b>Client signing mode</b> and hand over the iPad. Saves as you go.${d.supersedes?' This contract will replace the current one once signed.':''}</div>
+      <div class="ct-actions"><button class="btn primary" onClick=${startSigning}><${Icon} n="user" s=${15}/>Client signing mode</button>
+        <button class="btn" onClick=${finish} disabled=${busy}><${Icon} n="lock" s=${15}/>${busy?'Saving…':'Sign and submit here'}</button>
+        <${IconDel} onConfirm=${()=>{ctLocal.del(d.id);ctx.api.del('contracts',d.id);onClose()}}/></div>
+      ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}`}
+    <${CtDoc} d=${d} edit=${locked?null:'coach'} set=${D.set} setSig=${D.setSig} setTerm=${D.setTerm}/>
+    ${viewer&&html`<${PdfViewer} ctx=${ctx} d=${d} onClose=${()=>setViewer(false)}/>`}
+  </div>`}
+
+function CtPdfActions({ctx,d,c}){const name=`Personal Training Agreement - ${(c&&c.name)||'client'} - ${d.startDate||''}.pdf`;
+  const get=()=>ctx.api.contractPdf(d);
+  const canShare=typeof navigator!=='undefined'&&navigator.canShare&&navigator.canShare({files:[new File([new Blob(['x'])],'x.pdf',{type:'application/pdf'})]});
+  const share=async()=>{try{const b=await get();await navigator.share({files:[new File([b],name,{type:'application/pdf'})],title:'Personal Training Agreement'})}catch(e){if(e&&e.name!=='AbortError')toast('Could not open the share sheet')}};
+  const download=async()=>{try{const b=await get();await saveBlob(b,name)}catch(e){if(e&&e.code!=='declined')toast('Could not download the PDF')}};
+  const print=async()=>{try{const b=await get();const u=URL.createObjectURL(b);const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';f.src=u;document.body.appendChild(f);
+    f.onload=()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(_){window.open(u,'_blank')}setTimeout(()=>{f.remove();URL.revokeObjectURL(u)},60000)}}catch(_){toast('Could not print the PDF')}};
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  return html`${canShare&&html`<button class="btn" onClick=${share}><${Icon} n="download" s=${15}/>Share · Mail · Print</button>`}
+    <button class="btn" onClick=${download}><${Icon} n="download" s=${15}/>Download</button>
+    ${!inClaude()&&!isIOS&&html`<button class="btn" onClick=${print}>Print</button>`}`}
+async function saveBlob(blob,filename){const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
+  if(dl){await dl.save({filename,data:blob});toast('PDF saved');return}
+  const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000)}
+
+/* ---- in-app PDF viewer (PDF.js draws every page, which iPad Safari can't do in a frame) ---- */
+let pdfjsP=null;
+const loadPdfJs=()=>pdfjsP||(pdfjsP=new Promise((res,rej)=>{if(window.pdfjsLib)return res(window.pdfjsLib);const V='3.11.174';
+  const srcs=[...(location.protocol==='file:'?['vendor/pdf.min.js']:[]),`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${V}/pdf.min.js`];let i=0;
+  const next=()=>{if(i>=srcs.length){pdfjsP=null;return rej(new Error('load'))}const s=document.createElement('script');const src=srcs[i++];s.src=src;
+    s.onload=()=>{if(!window.pdfjsLib)return next();window.pdfjsLib.GlobalWorkerOptions.workerSrc=src.replace('pdf.min.js','pdf.worker.min.js');res(window.pdfjsLib)};s.onerror=next;document.head.appendChild(s)};next()}));
+function PdfViewer({ctx,d,onClose}){const box=useRef(null);const [msg,setMsg]=useState('Opening…');
+  useEffect(()=>{let dead=false;(async()=>{try{const b=await ctx.api.contractPdf(d);const lib=await loadPdfJs();const buf=new Uint8Array(await b.arrayBuffer());
+      const pdf=await lib.getDocument({data:buf}).promise;if(dead)return;setMsg('');const W=Math.min(900,(box.current.clientWidth||800)-8);
+      for(let n=1;n<=pdf.numPages;n++){const pg=await pdf.getPage(n);const v0=pg.getViewport({scale:1});const sc=W/v0.width;const dpr=Math.min(2,window.devicePixelRatio||1);const v=pg.getViewport({scale:sc*dpr});
+        const cv=document.createElement('canvas');cv.width=v.width;cv.height=v.height;cv.style.width=(v.width/dpr)+'px';cv.className='pdfv-page';box.current&&box.current.appendChild(cv);
+        await pg.render({canvasContext:cv.getContext('2d'),viewport:v}).promise;if(dead)return}}
+    catch(e){setMsg('Could not show the PDF here. Use Download instead.')}})();return()=>{dead=true}},[]);
+  return html`<div class="scrim" onClick=${e=>e.target===e.currentTarget&&onClose()}><div class="modal wide pdfv">
+    <div class="mhead"><h2>Signed agreement</h2><button class="iconbtn" aria-label="Close" onClick=${onClose}><${Icon} n="x" s=${18}/></button></div>
+    <div class="pdfv-body" ref=${box}>${msg&&html`<div class="empty">${msg}</div>`}</div></div></div>`}
+
+/* ---- tab on the athlete profile ---- */
+function ContractsTab({ctx,c}){const {api}=ctx;const [open,setOpen]=useState(null);const [signing,setSigning]=useState(null);
+  const r=ctForClient(ctx.contracts,c.id);
+  if(ctx.contractsOk===false)return html`<div class="callout u2" style="display:flex;flex-direction:column;gap:6px"><b>Contracts need a one-time database setup</b><span>Open Supabase → SQL Editor, paste the contracts setup script (contracts-setup.sql), click Run, then restart the app.</span></div>`;
+  const create=(from)=>{if(r.draft){setOpen(r.draft.id);return}const id=uid();const pre=from?{fields:{...from.fields,eff_date:todayYmd()},term:from.term}:ctPrefill(ctx,c);
+    const doc={clientId:c.id,status:'draft',templateId:CT_CURRENT,templateVersion:ctTpl({}).version,...pre,sigs:{},remindDays:30,created:Date.now(),updated:Date.now(),...(from?{supersedes:from.id}:{})};
+    api.put('contracts',id,doc);api.logEvent(id,'created',from?{amends:from.id}:{});setOpen(id)};
+  const cur=open&&ctx.contracts[open];
+  if(signing&&ctx.contracts[signing])return html`<${ClientSigning} ctx=${ctx} doc=${ctx.contracts[signing]} onExit=${()=>{setOpen(signing);setSigning(null)}}/>`;
+  if(cur)return html`<${ContractView} key=${cur.id} ctx=${ctx} c=${c} doc=${cur} onClose=${()=>setOpen(null)} onSign=${()=>setSigning(cur.id)} onAmend=${x=>create(x)}/>`;
+  const Row=({x})=>{const st=ctStatus(x);return html`<div class="pq-hrow"><button class="pq-hbtn" onClick=${()=>setOpen(x.id)}><b>${CT_TERMS[x.term]||'Contract'} · starts ${fmtDateY(x.startDate||(x.fields||{}).eff_date)}</b>
+    <small>${x.status==='signed'||x.status==='cancelled'?`Signed ${x.signedAt?new Date(x.signedAt).toLocaleDateString('en-CA',{dateStyle:'medium'}):''} · template v${x.templateVersion||1}${x.endDate?' · ends '+fmtDateY(x.endDate):''}`:'Not signed yet'}</small></button><span class=${'pill '+st.u}>${st.l}</span></div>`};
+  const hist=r.all.filter(x=>!r.cur||x.id!==r.cur.id);
+  return html`<div style="display:flex;flex-direction:column;gap:14px">
+    <div class="pq-sum"><div><div class="eyebrow">Personal Training Agreement</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px"><span class=${'pill '+r.st.u}>${r.cur?r.st.l:'No signed contract'}</span>
+        <span class="muted">${r.cur?`${CT_TERMS[r.cur.term]||''} · ${fmtDateY(r.cur.startDate)} to ${fmtDateY(r.cur.endDate)}`:'Create one during intake'}</span></div></div>
+      <span class="sp"></span><button class="btn primary" onClick=${()=>r.cur&&!r.draft?create(r.cur):create(null)}><${Icon} n="clipboard" s=${15}/>${r.draft?'Continue draft':r.cur?'Replace / amend':'New contract'}</button></div>
+    ${r.cur&&html`<div class="panel" style="box-shadow:none"><div class="panel-h"><h3>Current contract</h3></div><div class="pq-hist"><${Row} x=${r.cur}/></div></div>`}
+    <div class="panel" style="box-shadow:none"><div class="panel-h"><h3>History</h3><span class="sp"></span><span class="fhint">${r.all.length} total</span></div>
+      ${hist.length?html`<div class="pq-hist">${hist.map(x=>html`<${Row} key=${x.id} x=${x}/>`)}</div>`:html`<div class="empty">${r.all.length?'No older contracts.':'No contracts yet.'}</div>`}</div>
+  </div>`}
+
+/* ---- PDF (jsPDF, works in iPad Safari) ---- */
+async function buildContractPdf(d){const lib=await loadJsPdf();const tpl=ctTpl(d);const doc=new lib.jsPDF({unit:'pt',format:'letter',compress:true});
+  const PW=612,PH=792,M=54,CW=PW-M*2;let y=M+18;const f=d.fields||{};
+  const SG={};for(const k of Object.keys(CT_SIGS)){try{SG[k]=await sigJpeg(await ctSigSrc((d.sigs||{})[k]))}catch(_){SG[k]=null}}
+  const head=()=>{doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(0);doc.text(tpl.header,PW/2,M-6,{align:'center'})};
+  const need=h=>{if(y+h>PH-50){doc.addPage();y=M+18;head()}};
+  const style=s=>s.b&&s.i?'bolditalic':s.b?'bold':s.i?'italic':'normal';
+  const toks=segs=>{const o=[];segs.forEach(s=>{if(s.k){if(CT_SIGS[s.k])return;if(s.p===2&&String(f[s.k]||'').trim())return;const v=ctBlankText(d,s.k);o.push(v?{t:v,st:'normal',u:1,val:1}:{t:s.r,st:'normal'})}
+    else o.push({t:(s.t||'').replace(/\t/g,'    ').replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g,''),st:style(s),u:s.u,red:s.red})});return o}; // invisible control characters in the .docx are not printed (Word doesn't show them either)
+  const lay=(tk,w,size)=>{const lines=[[]];let cw=0;doc.setFontSize(size);
+    tk.forEach(t=>{t.t.split(/(\s+)/).forEach(p=>{if(!p)return;doc.setFont('helvetica',t.st);const pw=doc.getTextWidth(p);const sp=!p.trim();
+      if(!sp&&cw+pw>w&&lines[lines.length-1].length){lines.push([]);cw=0}
+      if(sp&&!lines[lines.length-1].length&&lines.length>1)return;lines[lines.length-1].push({...t,t:p,w:pw});cw+=pw})});return lines};
+  const draw=(lines,x,size,lh)=>{lines.forEach(L=>{need(lh);let cx=x;L.forEach(p=>{doc.setFont('helvetica',p.st);doc.setFontSize(size);doc.setTextColor(...(p.red?[200,20,30]:p.val?[10,30,110]:[0,0,0]));doc.text(p.t,cx,y+size);
+      if(p.u&&p.t.trim()){doc.setDrawColor(...(p.val?[10,30,110]:[0,0,0]));doc.setLineWidth(.5);doc.line(cx,y+size+1.5,cx+p.w,y+size+1.5)}cx+=p.w});y+=lh});doc.setTextColor(0)};
+  const para=(segs,{x=M,w=CW,size=10,gap=5}={})=>{draw(lay(toks(segs),w,size),x,size,size*1.32);y+=gap};
+  head();const B=tpl.blocks;let i=0;
+  while(i<B.length){const b=B[i];
+    if(b.w){const rows={};while(i<B.length&&B[i].w){const [r,c]=B[i].w.slice(1).split('.').map(Number);((rows[r]=rows[r]||{})[c]=rows[r][c]||[]).push(B[i]);i++}
+      const X=[M,M+190,M+215,M+270],WW=[185,20,50,CW-270];
+      Object.keys(rows).forEach(r=>{const y0=y;let maxY=y;[0,2,3].forEach(c=>{y=y0;(rows[r][c]||[]).forEach(pb=>{const tk=toks(pb.s);if(!tk.length||!tk.some(t=>t.t.trim()))return;draw(lay(tk,WW[c],9.5),X[c],9.5,12.5)});maxY=Math.max(maxY,y)});y=maxY+3});y+=6;continue}
+    const sigKs=b.s.filter(s=>s.k&&CT_SIGS[s.k]).map(s=>s.k);
+    if(sigKs.length){const lab=B[i+1];const labs=lab?lab.s.map(s=>s.t||'').join('').split(/\t+/):[];const dk=b.s.find(s=>/_date$/.test(s.k||''));need(80);
+      const cols=[M,M+180,M+372],cw=[165,165,132];
+      sigKs.forEach((k,j)=>{if(SG[k]){try{doc.addImage(SG[k],'JPEG',cols[j],y,150,40)}catch(_){}}doc.setDrawColor(0);doc.setLineWidth(.6);doc.line(cols[j],y+44,cols[j]+cw[j],y+44)});
+      doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(10,30,110);doc.text(dk?ctBlankText(d,dk.k):'',cols[2]+2,y+40);doc.setTextColor(0);doc.line(cols[2],y+44,cols[2]+cw[2],y+44);
+      doc.setFont('helvetica','bold');doc.setFontSize(10);labs.forEach((t,j)=>doc.text(t.trim(),cols[Math.min(j,2)],y+57));y+=68;i+=2;continue}
+    const lab=b.n||'';const empty=!b.s.some(s=>s.k||(s.t||'').trim());
+    if(empty&&!lab){y+=6;i++;continue}
+    if(/^[A-G]\.$/.test(lab)){need(30);y+=6;doc.setFont('helvetica','bold');doc.setFontSize(10.5);doc.text(lab,M,y+10.5);para(b.s,{x:M+20,w:CW-20,size:10.5})}
+    else if(/^[a-d]\.$/.test(lab)){need(14);doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text((d.term===lab[0]?'[X] ':'[  ] ')+lab,M+30,y+10);para(b.s,{x:M+66,w:CW-66})}
+    else if(lab){need(14);doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(lab,M+14,y+10);para(b.s,{x:M+36,w:CW-36})}
+    else{const sub=b.s.some(s=>s.k==='custom_term'||s.k==='schedule')&&b.s.every(s=>s.k||!(s.t||'').trim());para(b.s,{x:sub?M+66:M,w:sub?CW-66:CW,size:/^\s*\(/.test(b.s.map(s=>s.t||'').join(''))?8.5:10})}
+    i++}
+  // signing record (added by the app, after the agreement text)
+  doc.addPage();y=M+18;head();doc.setFont('helvetica','bold');doc.setFontSize(12);doc.text('Signing record',M,y+12);y+=26;
+  const rec=[['Client',f.client_name||''],['Minor child',f.minor_name||'—'],['Term',CT_TERMS[d.term]||'—'],['Client signed',d.clientSignedAt?new Date(d.clientSignedAt).toLocaleString('en-CA'):'—'],['Trainer signed',d.trainerSignedAt?new Date(d.trainerSignedAt).toLocaleString('en-CA'):'—'],
+    ['Submitted and locked',d.signedAt?new Date(d.signedAt).toLocaleString('en-CA'):'—'],['Template',`${tpl.name} v${tpl.version} (${tpl.source})`],['Template text fingerprint',tpl.sha256],['Contract ID',d.id]];
+  rec.forEach(([k,v])=>{doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.text(k,M,y+10);doc.setFont('helvetica','normal');const L=doc.splitTextToSize(String(v),CW-150);doc.text(L,M+150,y+10);y+=Math.max(1,L.length)*12+4});
+  y+=8;doc.setFontSize(8.5);doc.setTextColor(90);doc.text(doc.splitTextToSize('The SHA-256 fingerprint of this PDF file is stored with the contract in SBD Business Manager. Any change to this file, however small, gives a different fingerprint.',CW),M,y+8);doc.setTextColor(0);
+  const n=doc.getNumberOfPages();for(let p=1;p<=n;p++){doc.setPage(p);doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(90);doc.text(String(p),PW-M,PH-30,{align:'right'});doc.setTextColor(0)}
+  return doc.output('blob')}
+const ctSigSrc=async s=>s?(s.img||(s.path?await blobToDataUrl(await ctFile(s.path)):null)):null;
+
+/* ---- SHA-256 (Web Crypto, with a small fallback) ---- */
+async function sha256Hex(blob){const buf=new Uint8Array(await blob.arrayBuffer());
+  if(window.crypto&&crypto.subtle){try{const h=await crypto.subtle.digest('SHA-256',buf);return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('')}catch(_){}}
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const l=buf.length;const n=((l+9+63)>>6)<<6;const m=new Uint8Array(n);m.set(buf);m[l]=0x80;const bl=l*8;const dv=new DataView(m.buffer);dv.setUint32(n-4,bl>>>0);dv.setUint32(n-8,Math.floor(bl/2**32));
+  const w=new Uint32Array(64);const r=(x,k)=>(x>>>k)|(x<<(32-k));
+  for(let o=0;o<n;o+=64){for(let t=0;t<16;t++)w[t]=dv.getUint32(o+t*4);for(let t=16;t<64;t++){const s0=r(w[t-15],7)^r(w[t-15],18)^(w[t-15]>>>3),s1=r(w[t-2],17)^r(w[t-2],19)^(w[t-2]>>>10);w[t]=(w[t-16]+s0+w[t-7]+s1)>>>0}
+    let [a,b,c,d,e,f,g,h]=H;for(let t=0;t<64;t++){const S1=r(e,6)^r(e,11)^r(e,25),ch=(e&f)^(~e&g),t1=(h+S1+ch+K[t]+w[t])>>>0,S0=r(a,2)^r(a,13)^r(a,22),mj=(a&b)^(a&c)^(b&c),t2=(S0+mj)>>>0;h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0}
+    H=H.map((x,i)=>(x+[a,b,c,d,e,f,g,h][i])>>>0)}
+  return H.map(x=>x.toString(16).padStart(8,'0')).join('')}
+
 function AthletesPage({ctx,selId,setSelId}){
   const {clients,derived}=ctx;
   const [q,setQ]=useState('');const [filter,setFilter]=useState('active');const [modal,setModal]=useState(null);
@@ -1862,7 +2253,7 @@ function AthletesPage({ctx,selId,setSelId}){
         <div style="display:flex;gap:6px;width:100%"><input type="text" placeholder="Search" value=${q} onInput=${e=>setQ(e.target.value)} aria-label="Search athletes"/>
           <select style="width:auto" value=${filter} onChange=${e=>setFilter(e.target.value)} aria-label="Filter"><option value="active">Active</option><option value="paused">Paused</option><option value="former">Former</option><option value="all">All</option></select></div></div>
       <div class="scroll">${list.length?list.map(c=>{const s=derived.cs[c.id]||{};return html`<button class="arow" aria-current=${selId===c.id} onClick=${()=>{setSelId(c.id);try{scrollTo(0,0)}catch(_){}}}>
-        <span class="av">${initials(c.name)}</span><span class="who"><b>${c.name}</b><small>${c.athleteType==='Custom'?(c.athleteCustom||'Custom'):(c.athleteType||'—')}${c.example?' · example':''}</small>${(()=>{const q=parqStatus(ctx.parq,c.id);return q.state!=='complete'||q.flag?html`<span class="pq-mini"><${ParqBadge} st=${q}/></span>`:null})()}</span>
+        <span class="av">${initials(c.name)}</span><span class="who"><b>${c.name}</b><small>${c.athleteType==='Custom'?(c.athleteCustom||'Custom'):(c.athleteType||'—')}${c.example?' · example':''}</small>${(()=>{const q=parqStatus(ctx.parq,c.id);const showQ=q.state!=='complete'||q.flag;const cb=html`<${CtBadge} ctx=${ctx} cid=${c.id}/>`;return html`<span class="pq-mini">${showQ&&html`<${ParqBadge} st=${q}/>`} ${cb}</span>`})()}</span>
         <span style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><span class="num" style="font-size:13px;font-weight:600">${s.remaining??0} left</span>${s.active&&s.urg>0?html`<span title=${s.reason}><${Pill} u=${s.urg}>${s.reason}<//></span>`:null}</span></button>`})
         :html`<div class="empty">${Object.keys(clients).length?'No athletes match.':'No athletes yet. Add your first one to start tracking sessions.'}</div>`}</div>
     </div>
@@ -1922,7 +2313,7 @@ function Profile({ctx,c,onBack}){
   const [tab,setTab]=useState('overview');const [modal,setModal]=useState(null);
   const s=derived.cs[c.id]||{};
   const upd=patch=>api.put('clients',c.id,{...c,...patch});
-  const TABS=[['overview','Overview'],['sessions','Sessions'],['chart','Chart notes'],['prs','PRs'],['goals','Goals'],['limits','Limitations'],['health','Health'],['parq','PAR-Q+'],['equipment','Equipment'],['macros','Macros'],['plan','Plan & billing']];
+  const TABS=[['overview','Overview'],['sessions','Sessions'],['chart','Chart notes'],['prs','PRs'],['goals','Goals'],['limits','Limitations'],['health','Health'],['parq','PAR-Q+'],['contracts','Contracts'],['equipment','Equipment'],['macros','Macros'],['plan','Plan & billing']];
   const type=c.athleteType==='Custom'?(c.athleteCustom||'Custom'):c.athleteType;
   return html`<div class="panel">
     <div class="prof-h">
@@ -1933,6 +2324,7 @@ function Profile({ctx,c,onBack}){
           ${[ageFrom(c.dob)!=null?`${ageFrom(c.dob)} yrs`:null,fmtH(c),fmtW(c)].filter(Boolean).join(' · ')}</div></div>
       <span class="sp"></span>
       <${ParqBadge} st=${parqStatus(ctx.parq,c.id)} onClick=${()=>setTab('parq')}/>
+      <${CtBadge} ctx=${ctx} cid=${c.id} always onClick=${()=>setTab('contracts')}/>
       ${s.active&&html`<${Pill} u=${s.urg}>${s.reason}<//>`}
       <button class="btn sm" onClick=${()=>setModal('edit')}><${Icon} n="edit" s=${14}/>Edit</button>
     </div>
@@ -1946,6 +2338,7 @@ function Profile({ctx,c,onBack}){
       ${tab==='limits'&&html`<${LimitsTab} c=${c} upd=${upd}/>`}
       ${tab==='health'&&html`<${HealthTab} c=${c} upd=${upd}/>`}
       ${tab==='parq'&&html`<${ParqTab} ctx=${ctx} c=${c}/>`}
+      ${tab==='contracts'&&html`<${ContractsTab} ctx=${ctx} c=${c}/>`}
       ${tab==='equipment'&&html`<${EquipTab} c=${c} upd=${upd}/>`}
       ${tab==='macros'&&html`<${MacrosTab} c=${c} upd=${upd}/>`}
       ${tab==='plan'&&html`<${PlanTab} ctx=${ctx} c=${c} s=${s} upd=${upd} openCharge=${()=>setModal('charge')} openPay=${()=>setModal('pay')}/>`}
@@ -3031,8 +3424,8 @@ function ThemePicker({pref,setPref}){
 function useTheme(){const [pref,setP]=useState(themePref);
   const setPref=p=>{themePref=p;ls.set('theme',p);applyTheme(p);setP(p)};return {pref,setPref}}
 
-const BK_COLS=['calendars','clients','events','ledger','travel','parq'];
-const BK_LABEL={calendars:'calendars',clients:'athletes',events:'calendar entries',ledger:'purchases & payments',travel:'travel days',parq:'PAR-Q+ forms'};
+const BK_COLS=['calendars','clients','events','ledger','travel','parq','contracts'];
+const BK_LABEL={calendars:'calendars',clients:'athletes',events:'calendar entries',ledger:'purchases & payments',travel:'travel days',parq:'PAR-Q+ forms',contracts:'contracts'};
 function ImportBackup({api,ctx,compact}){
   const [bk,setBk]=useState(null);const [err,setErr]=useState('');const [mode,setMode]=useState('merge');const [prog,setProg]=useState(null);
   const fileRef=useRef(null);
@@ -3088,10 +3481,10 @@ function SetupPage({ctx}){
   const [busy,setBusy]=useState(false);
   const order=Array.from({length:7},(_,i)=>(Number(S.weekStart)+i)%7);
   const exportData=async()=>{try{const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
-    if(!dl&&!inClaude()){const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel,parq:ctx.parq};
+    if(!dl&&!inClaude()){const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel,parq:ctx.parq,contracts:ctx.contracts};
       const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`sbd-backup-${todayYmd()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('Backup downloaded');return}
     if(!dl){toast('Downloads are not available in this view.');return}
-    const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel,parq:ctx.parq};
+    const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel,parq:ctx.parq,contracts:ctx.contracts};
     await dl.save({filename:`sbd-backup-${todayYmd()}.json`,data:JSON.stringify(data,null,2)});toast('Backup saved')}catch(e){if(e&&e.code!=='declined')toast('Could not save the backup.')}};
   const removeExamples=async()=>{setBusy(true);
     for(const col of ['clients','events','ledger','travel']){for(const x of Object.values(ctx[col])){if(x.example)await api.del(col,x.id)}}
@@ -3225,7 +3618,7 @@ function App(){
   const [selAth,setSelAth]=useState(null);
   const [msg,setMsg]=useState(null);
   useEffect(()=>{toastFn=m=>{setMsg(m);clearTimeout(toastFn._t);toastFn._t=setTimeout(()=>setMsg(null),3200)}},[]);
-  useEffect(()=>{const f=()=>{const h=(location.hash||'').slice(1);if(ROUTES.some(r=>r[0]===h))setRoute(h)};addEventListener('hashchange',f);return()=>removeEventListener('hashchange',f)},[]);
+  useEffect(()=>{const f=()=>{if(window.__sbdSigning)return;const h=(location.hash||'').slice(1);if(ROUTES.some(r=>r[0]===h))setRoute(h)};addEventListener('hashchange',f);return()=>removeEventListener('hashchange',f)},[]);
   const settings=store.settings?{...DEFAULT_SETTINGS,...store.settings}:null;
   WPM=Number((settings||DEFAULT_SETTINGS).weeksPerMonth)||4;TZ_PREF=(settings||DEFAULT_SETTINGS).timeZone||'auto';
   if(settings&&Array.isArray(settings.packages)&&settings.packages.length&&settings.packages.every(k=>!Number(k.price)&&['pkg-pt','pkg-online','pkg-junior'].includes(k.id)))settings.packages=DEFAULT_SETTINGS.packages;
