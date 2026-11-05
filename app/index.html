@@ -1801,9 +1801,12 @@ let jsPdfP=null;
 const loadJsPdf=()=>jsPdfP||(jsPdfP=new Promise((res,rej)=>{if(window.jspdf)return res(window.jspdf);let i=0;
   const srcs=['vendor/jspdf.umd.min.js','https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'].filter(u=>!/^vendor/.test(u)||location.protocol==='file:');
   const next=()=>{if(i>=srcs.length){jsPdfP=null;return rej(new Error('load'))}const s=document.createElement('script');s.src=srcs[i++];s.onload=()=>window.jspdf?res(window.jspdf):next();s.onerror=next;document.head.appendChild(s)};next()}));
+// Signatures go into PDFs as small JPEGs on white (PNG with transparency is stored uncompressed by jsPDF, ~370 KB each)
+const sigJpeg=src=>!src?Promise.resolve(null):new Promise(res=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=im.naturalWidth||600;c.height=im.naturalHeight||160;
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',0.85))};im.onerror=()=>res(null);im.src=src});
 async function buildParqPdf(f){
   const lib=await loadJsPdf();
-  const SG={};for(const k of ['sig','witness','guardian']){try{SG[k]=await pqSigSrc(f[k])}catch(_){SG[k]=null}}
+  const SG={};for(const k of ['sig','witness','guardian']){try{SG[k]=await sigJpeg(await pqSigSrc(f[k]))}catch(_){SG[k]=null}}
   const doc=new lib.jsPDF({unit:'pt',format:'letter'});const PW=612,PH=792,M=44,CW=PW-M*2;let y=M;const a=f.answers||{};
   const foot=()=>{doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(110);doc.text(PQ_TXT.copy,PW-M,PH-24,{align:'right'});doc.text(`${f.name||''} · ${fmtDateY(f.date)}`,M,PH-24);doc.setTextColor(0)};
   const need=h=>{if(y+h>PH-44){foot();doc.addPage();y=M}};
@@ -1830,7 +1833,7 @@ async function buildParqPdf(f){
   para(p1Yes?PQ_TXT.declP4:PQ_TXT.declP1);
   para(`NAME: ${f.name||''}`,{bold:true,gap:2});para(`DATE: ${fmtDateY(f.date)}`,{bold:true,gap:8});
   const sig=(lab,s)=>{need(78);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(lab,M,y+8);y+=12;
-    if(s&&s.src){try{doc.addImage(s.src,'PNG',M,y,180,48)}catch(_){}doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(100);doc.text(`Signed ${new Date(s.at).toLocaleString('en-CA')}${s.mode==='type'?' (typed)':''}`,M+190,y+40);doc.setTextColor(0)}
+    if(s&&s.src){try{doc.addImage(s.src,'JPEG',M,y,180,48)}catch(_){}doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(100);doc.text(`Signed ${new Date(s.at).toLocaleString('en-CA')}${s.mode==='type'?' (typed)':''}`,M+190,y+40);doc.setTextColor(0)}
     doc.setDrawColor(150);doc.line(M,y+50,M+300,y+50);y+=62};
   const S2=k=>f[k]?{...f[k],src:SG[k]}:null;sig('SIGNATURE',S2('sig'));sig('WITNESS',S2('witness'));sig('SIGNATURE OF PARENT/GUARDIAN/CARE PROVIDER',S2('guardian'));
   need(40);para(`Locked ${f.signedAt?new Date(f.signedAt).toLocaleString('en-CA'):''} · valid until ${fmtDateY(f.expiresOn)} · ${PQ_VER}`,{size:7.5});
