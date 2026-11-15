@@ -207,6 +207,12 @@ table.ct-parties td{vertical-align:top;padding:1px 6px}table.ct-parties td:last-
 @media (orientation:portrait){.cs-steps{order:3;width:100%}}
 .pdfv{width:min(960px,100%)}.pdfv-body{padding:12px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--surface-2);max-height:75vh;overflow:auto}
 .pdfv-page{display:block;max-width:100%;height:auto;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.wo-ghost{border-style:dotted;border-width:2px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--c) 10%,transparent) 0 6px,transparent 6px 12px)}
+.wo-ghost .gh-nm{display:flex;align-items:center;gap:3px}
+.lg-wo{border-style:dotted;border-color:var(--ok)}
+.bl-slot.wo-slot{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,.9fr) minmax(0,1.6fr) auto auto}
+.is-m .bl-slot.wo-slot{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto}.is-m .wo-slot input[aria-label=Workout]{grid-column:1/-1;order:5}
+@media (max-width:700px){.bl-slot.wo-slot{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto}.wo-slot input[aria-label=Workout]{grid-column:1/-1;order:5}}
 .tz-now{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
 .tag{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--surface-2);color:var(--muted)}
 .tag.ex{background:transparent;border:1px dashed var(--muted)}
@@ -1221,6 +1227,11 @@ function CalendarPage({ctx}){
   const locs=Object.fromEntries((settings.locations||[]).map(l=>[l.id,l]));
   const baseline=settings.baseline||[];
   const [showBase,setShowBase]=useState(()=>ls.get('showBaseline',true));
+  const myWo=settings.myWorkouts||[];
+  const [showWo,setShowWo]=useState(()=>ls.get('showWorkouts',true));
+  const woCal=id=>calById[id]||calById.personal||Object.values(calById).find(c=>c.icon==='heart'||c.icon==='dumbbell')||cals[0]||{id:'personal',color:'#2E9E5B'};
+  const woFor=k=>{const dow=parseYmd(k).getDay();return myWo.filter(w=>Number(w.dow)===dow&&(!w.from||w.from<=k)&&(!w.until||k<=w.until))};
+  const woBooked=(w,k)=>(byDate[k]||[]).find(e=>e.fromWorkout===w.id||(!evCids(e).length&&e.calendarId===woCal(w.calendarId).id&&Math.abs((e.start||0)-Number(w.start))<15&&e.status!=='cancelled'));
   const slotsFor=k=>{const dow=parseYmd(k).getDay();return baseline.filter(b=>Number(b.dow)===dow&&(!b.from||b.from<=k)&&(!b.until||k<=b.until)&&(b.clientIds||[]).some(id=>clients[id]&&(clients[id].status||'active')!=='former'))};
   const toggleCal=id=>{const s=new Set(hidden);s.has(id)?s.delete(id):s.add(id);setHidden(s);ls.set('hiddenCals',[...s])};
 
@@ -1345,6 +1356,15 @@ function CalendarPage({ctx}){
       onClick=${ev=>{ev.stopPropagation();if(Date.now()-lastDragEnd.current<350)return;if(state==='booked')return;setModal({type:'event',ev:{date:k,start:g.start,dur:g.dur||60,clientIds:g.clientIds.filter(id=>clients[id]),calendarId:g.calendarId||cal.id||'training',location:g.location||''}})}}>
       ${state!=='booked'&&html`<span class="gh-nm">${label}</span><span class="gh-st">${state==='moved'?`Moved to ${fmtTime(moved.start)}`:'Locked in · tap to book'}</span>`}
     </div>`};
+  const WoGhost=(w,k)=>{const cal=woCal(w.calendarId);if(woBooked(w,k))return null;const nm=w.label||'My workout';
+    const top=(w.start-sH*60)/60*HOUR,h=Math.max(18,(w.dur||60)/60*HOUR-2);const wd=100/(w._lanes||1),l=(w._lane||0)*wd;
+    return html`<div key=${'w'+w.id} class="bl-ghost wo-ghost" style=${`--c:${cal.color};top:${top}px;height:${h}px;left:calc(${l}% + 2px);width:calc(${wd}% - 5px)`}
+      title=${`${nm} · your workout ${fmtTime(w.start)}–${fmtTime(w.start+(w.dur||60))} · tap to add it to the calendar`}
+      onClick=${ev=>{ev.stopPropagation();if(Date.now()-lastDragEnd.current<350)return;setModal({type:'event',ev:{date:k,start:Number(w.start),dur:Number(w.dur)||60,clientIds:[],calendarId:cal.id,title:nm,location:w.location||'',fromWorkout:w.id}})}}>
+      <span class="gh-nm"><${Icon} n="dumbbell" s=${11}/> ${nm}</span><span class="gh-st">My workout · tap to add</span></div>`};
+  const bookWorkouts=()=>{let n=0;wkDays.forEach(d=>{const k=ymd(d);woFor(k).forEach(w=>{if(woBooked(w,k))return;const cal=woCal(w.calendarId);
+      api.put('events',uid(),{calendarId:cal.id,title:w.label||'My workout',clientIds:[],statusBy:{},status:'scheduled',note:'',date:k,start:Number(w.start),dur:Number(w.dur)||60,location:w.location||'',created:Date.now(),fromWorkout:w.id});n++})});
+    toast(n?`Added ${n} workout${n===1?'':'s'} to this week`:'Every workout this week is already on the calendar')};
   const bookWeek=()=>{let n=0;wkDays.forEach(d=>{const k=ymd(d);slotsFor(k).forEach(g=>{const ids=(g.clientIds||[]).filter(id=>clients[id]);if(!ids.length)return;
       const has=Object.values(events).some(e=>e.date===k&&!FREED.has(e.status||'scheduled')&&evCids(e).some(id=>ids.includes(id)));if(has)return;
       api.put('events',uid(),{calendarId:g.calendarId||'training',title:'',clientIds:ids,clientId:ids[0],statusBy:{},status:'scheduled',note:'',date:k,start:Number(g.start),dur:Number(g.dur)||60,location:g.location||'',created:Date.now(),fromBaseline:g.id});n++})});
@@ -1366,12 +1386,12 @@ function CalendarPage({ctx}){
             const wins=((settings.trainingHours||{})[String(d.getDay())]||[]).slice().sort((a,b)=>a.s-b.s);
             const offs=[];let p=sH*60;wins.forEach(w=>{if(w.s>p)offs.push([p,Math.min(w.s,eH*60)]);p=Math.max(p,w.e)});if(p<eH*60)offs.push([p,eH*60]);
             const evs=layoutDay((byDate[k]||[]).map(e=>({...e,start:e.start||0,dur:e.dur||60})));
-            const ghosts=showBase?layoutDay(slotsFor(k).map(g=>({...g,start:Number(g.start)||0,dur:Number(g.dur)||60})).sort((a,b)=>a.start-b.start)):[];
+            const ghosts=layoutDay([...(showBase?slotsFor(k).map(g=>({...g,_k:'b'})):[]),...(showWo?woFor(k).filter(w=>!woBooked(w,k)).map(w=>({...w,_k:'w'})):[])].map(g=>({...g,start:Number(g.start)||0,dur:Number(g.dur)||60})).sort((a,b)=>a.start-b.start));
             return html`<div class=${'g-col'+(k===today?' today':'')} data-col=${k}
               onClick=${ev=>{const r=ev.currentTarget.getBoundingClientRect();const m=clamp(Math.floor((sH*60+(ev.clientY-r.top)/HOUR*60)/30)*30,sH*60,eH*60-30);newAt(k,m)}}>
               ${offs.filter(o=>o[1]>o[0]).map(o=>html`<div class="off" style=${`top:${(o[0]-sH*60)/60*HOUR}px;height:${(o[1]-o[0])/60*HOUR}px`}></div>`)}
               ${k===today&&nowMin>=sH*60&&nowMin<=eH*60&&html`<div class="nowline" style=${`top:${(nowMin-sH*60)/60*HOUR}px`}></div>`}
-              ${ghosts.map(g=>GhostBlock(g,k))}
+              ${ghosts.map(g=>g._k==='w'?WoGhost(g,k):GhostBlock(g,k))}
               ${evs.map(e=>EvBlock(e))}
             </div>`})}
         </div>
@@ -1432,6 +1452,12 @@ function CalendarPage({ctx}){
           <span class="fhint">${baseline.length?`${baseline.length} standing weekly slot${baseline.length===1?'':'s'}`:'Set each client\'s standing weekly time.'}</span>
           ${baseline.length>0&&html`<button class="btn sm" onClick=${()=>{setSideOpen(false);bookWeek()}}><${Icon} n="cal" s=${14}/>Book this week from baseline</button>`}
         </div></div>
+      <div class="panel"><div class="panel-h"><h3>My workouts</h3><span class="sp"></span><button class="btn ghost sm" onClick=${()=>{setSideOpen(false);setModal({type:'workouts'})}}>Edit</button></div>
+        <div class="panel-b" style="display:flex;flex-direction:column;gap:8px">
+          <label class="check"><input type="checkbox" checked=${showWo} onChange=${e=>{setShowWo(e.target.checked);ls.set('showWorkouts',e.target.checked)}}/>Show my workout times</label>
+          <span class="fhint">${myWo.length?`${myWo.length} workout${myWo.length===1?'':'s'} a week`:'Set your own weekly training times.'}</span>
+          ${myWo.length>0&&html`<button class="btn sm" onClick=${()=>{setSideOpen(false);bookWorkouts()}}><${Icon} n="cal" s=${14}/>Add this week's workouts</button>`}
+        </div></div>
       <div class="mini-stats">
         <div><small>Booked</small><b class="num">${wkStats.booked}</b><small>this week</small></div>
         <div><small>Open</small><b class="num">${wkStats.open}h</b><small>training time</small></div>
@@ -1441,6 +1467,7 @@ function CalendarPage({ctx}){
       <div class="legend"><span><i class="lg-open"></i>Training hours (bookable)</span><span><i class="lg-off"></i>Outside training hours</span>
         <span><span class="ev late" style="position:static;width:18px;height:12px;padding:0;--c:var(--r)"></span>Late cancel, no-show or sick (session used)</span>
         <span><i class="lg-ghost"></i>Locked-in baseline slot</span>
+        <span><i class="lg-ghost lg-wo"></i>My workout time (template)</span>
         ${isM&&html`<span>Hold a session for a moment, then drag to move it. Swipe sideways to change days.</span>`}
         <a href="#setup" onClick=${()=>setSideOpen(false)} style="color:var(--muted);font-size:12.5px">Change training hours</a></div>`;
 
@@ -1477,6 +1504,7 @@ function CalendarPage({ctx}){
     ${modal&&modal.type==='travel'&&html`<${TravelModal} ctx=${ctx} date=${modal.date} onClose=${()=>setModal(null)}/>`}
     ${modal&&modal.type==='cals'&&html`<${CalendarsModal} ctx=${ctx} onClose=${()=>setModal(null)}/>`}
     ${modal&&modal.type==='baseline'&&html`<${BaselineModal} ctx=${ctx} onClose=${()=>setModal(null)}/>`}
+    ${modal&&modal.type==='workouts'&&html`<${WorkoutsModal} ctx=${ctx} onClose=${()=>setModal(null)}/>`}
   </div>`;
 }
 
@@ -1501,7 +1529,7 @@ function EventModal({ctx,init,onClose}){
     if(!f.calendarId){toast('Pick a calendar first.');return}
     if(!ids.length&&!f.title.trim()){toast('Add a title or pick an athlete.');return}
     const sb={};ids.forEach(id=>{if(f.statusBy&&f.statusBy[id])sb[id]=f.statusBy[id]});
-    const base={calendarId:f.calendarId,title:f.title.trim(),clientIds:ids,clientId:ids[0]||null,statusBy:ids.length>1?sb:{},status:f.status||'scheduled',note:f.note||'',date:f.date,start:Number(f.start),dur:Number(f.dur)||60,location:f.location||''};
+    const base={calendarId:f.calendarId,title:f.title.trim(),clientIds:ids,clientId:ids[0]||null,statusBy:ids.length>1?sb:{},status:f.status||'scheduled',note:f.note||'',date:f.date,start:Number(f.start),dur:Number(f.dur)||60,location:f.location||''};if(f.fromWorkout)base.fromWorkout=f.fromWorkout;
     if(isNew){
       const n=Number(f.repeat)||0;
       for(let i=0;i<=n;i++){const id=uid();api.put('events',id,{...base,date:ymd(addDays(parseYmd(f.date),7*i)),created:Date.now()})}
@@ -1574,6 +1602,39 @@ function TravelModal({ctx,date,onClose}){
   <//>`;
 }
 
+function WorkoutsModal({ctx,onClose}){
+  const {settings,calendars,api}=ctx;const list=settings.myWorkouts||[];
+  const cals=Object.values(calendars).sort((a,b)=>(a.order||0)-(b.order||0));
+  const defCal=(calendars.personal||cals.find(c=>c.icon==='heart'||c.icon==='dumbbell')||cals[0]||{}).id||'personal';
+  const ws=Number(settings.weekStart)||0;const order=Array.from({length:7},(_,i)=>(ws+i)%7);
+  const commit=next=>api.setSettings({...settings,myWorkouts:next});
+  const upd=(id,p)=>commit(list.map(x=>x.id===id?{...x,...p}:x));const del=id=>commit(list.filter(x=>x.id!==id));
+  const sorted=list.slice().sort((a,b)=>(order.indexOf(Number(a.dow))-order.indexOf(Number(b.dow)))||(a.start-b.start));
+  const add=()=>{const last=sorted[sorted.length-1];const used=new Set(list.map(x=>Number(x.dow)));const day=order.find(d=>!used.has(d))??1;
+    commit([...list,{id:uid(),dow:day,start:last?Number(last.start):6*60,dur:last?Number(last.dur)||60:60,label:last?last.label||'':'',calendarId:last&&last.calendarId||defCal,from:'',until:''}])};
+  const [more,setMore]=useState(null);const today=todayYmd();
+  const total=sum(list,x=>Number(x.dur)||60);
+  return html`<${Modal} title="My workout times" wide onClose=${onClose} footer=${html`<span class="fhint">${list.length} workout${list.length===1?'':'s'} · ${total/60%1?(total/60).toFixed(1):total/60} h a week · saves as you go</span><span class="sp"></span><button class="btn primary" onClick=${onClose}>Done</button>`}>
+    <p class="fhint" style="margin:0">Your own weekly training template. These show as dashed outlines on the calendar every week. Tap one to put that workout on the calendar, or use <b>Add this week's workouts</b> to add the whole week at once.</p>
+    <div class="bl-slots">
+      ${sorted.map(w=>{const ended=w.until&&w.until<today;return html`<div class=${'bl-slot wo-slot'+(ended?' bl-ended':'')} key=${w.id}>
+        <select aria-label="Day" value=${String(w.dow)} onChange=${e=>upd(w.id,{dow:Number(e.target.value)})}>${order.map(d=>html`<option value=${d}>${DOWL[d]}</option>`)}</select>
+        <input type="time" step="900" aria-label="Start time" value=${toHHMM(Number(w.start))} onChange=${e=>e.target.value&&upd(w.id,{start:fromHHMM(e.target.value)})}/>
+        <select aria-label="Length" value=${String(w.dur||60)} onChange=${e=>upd(w.id,{dur:Number(e.target.value)})}>${[30,45,60,75,90,105,120,150].map(m=>html`<option value=${m}>${m<60?m+' min':(m%60?(m/60).toFixed(2).replace(/0$/,'')+' hr':(m/60)+' hr')}</option>`)}</select>
+        <input type="text" aria-label="Workout" placeholder="e.g. Squat day" value=${w.label||''} onChange=${e=>upd(w.id,{label:e.target.value})}/>
+        <button class="iconbtn" aria-label="More options" aria-expanded=${more===w.id} onClick=${()=>setMore(more===w.id?null:w.id)}><${Icon} n="gear" s=${15}/></button>
+        <${IconDel} onConfirm=${()=>del(w.id)}/>
+        ${more===w.id&&html`<div class="bl-more">
+          <label class="field"><span class="flabel">Starts</span><input type="date" value=${w.from||''} onChange=${e=>upd(w.id,{from:e.target.value})}/></label>
+          <label class="field"><span class="flabel">Ends (optional)</span><input type="date" value=${w.until||''} onChange=${e=>upd(w.id,{until:e.target.value})}/></label>
+          <label class="field"><span class="flabel">Calendar</span><select value=${w.calendarId||defCal} onChange=${e=>upd(w.id,{calendarId:e.target.value})}>${cals.map(x=>html`<option value=${x.id}>${x.name}</option>`)}</select></label>
+          <label class="field" style="grid-column:1/-1"><span class="flabel">Location (optional)</span><input type="text" value=${w.location||''} placeholder="e.g. Brickhouse Gym" onChange=${e=>upd(w.id,{location:e.target.value})}/></label></div>`}
+      </div>`})}
+      ${!list.length&&html`<div class="empty">No workout times yet. Add your first one below.</div>`}
+      <div><button class="btn sm" onClick=${add}><${Icon} n="plus" s=${13}/>${list.length?'Add another workout':'Add a workout'}</button></div>
+    </div>
+  <//>`;
+}
 function BaselineModal({ctx,onClose}){
   const {settings,clients,calendars,api}=ctx;
   const list=settings.baseline||[];
