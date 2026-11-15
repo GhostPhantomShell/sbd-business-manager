@@ -1229,9 +1229,9 @@ function CalendarPage({ctx}){
   const [showBase,setShowBase]=useState(()=>ls.get('showBaseline',true));
   const myWo=settings.myWorkouts||[];
   const [showWo,setShowWo]=useState(()=>ls.get('showWorkouts',true));
-  const woCal=id=>calById[id]||calById.personal||Object.values(calById).find(c=>c.icon==='heart'||c.icon==='dumbbell')||cals[0]||{id:'personal',color:'#2E9E5B'};
+  const woCal=w=>woCalOf(w,settings,calById);
   const woFor=k=>{const dow=parseYmd(k).getDay();return myWo.filter(w=>Number(w.dow)===dow&&(!w.from||w.from<=k)&&(!w.until||k<=w.until))};
-  const woBooked=(w,k)=>(byDate[k]||[]).find(e=>e.fromWorkout===w.id||(!evCids(e).length&&e.calendarId===woCal(w.calendarId).id&&Math.abs((e.start||0)-Number(w.start))<15&&e.status!=='cancelled'));
+  const woBooked=(w,k)=>(byDate[k]||[]).find(e=>e.fromWorkout===w.id||(!evCids(e).length&&e.calendarId===woCal(w).id&&Math.abs((e.start||0)-Number(w.start))<15&&e.status!=='cancelled'));
   const slotsFor=k=>{const dow=parseYmd(k).getDay();return baseline.filter(b=>Number(b.dow)===dow&&(!b.from||b.from<=k)&&(!b.until||k<=b.until)&&(b.clientIds||[]).some(id=>clients[id]&&(clients[id].status||'active')!=='former'))};
   const toggleCal=id=>{const s=new Set(hidden);s.has(id)?s.delete(id):s.add(id);setHidden(s);ls.set('hiddenCals',[...s])};
 
@@ -1356,13 +1356,13 @@ function CalendarPage({ctx}){
       onClick=${ev=>{ev.stopPropagation();if(Date.now()-lastDragEnd.current<350)return;if(state==='booked')return;setModal({type:'event',ev:{date:k,start:g.start,dur:g.dur||60,clientIds:g.clientIds.filter(id=>clients[id]),calendarId:g.calendarId||cal.id||'training',location:g.location||''}})}}>
       ${state!=='booked'&&html`<span class="gh-nm">${label}</span><span class="gh-st">${state==='moved'?`Moved to ${fmtTime(moved.start)}`:'Locked in · tap to book'}</span>`}
     </div>`};
-  const WoGhost=(w,k)=>{const cal=woCal(w.calendarId);if(woBooked(w,k))return null;const nm=w.label||'My workout';
+  const WoGhost=(w,k)=>{const cal=woCal(w);if(woBooked(w,k))return null;const nm=w.label||'My workout';
     const top=(w.start-sH*60)/60*HOUR,h=Math.max(18,(w.dur||60)/60*HOUR-2);const wd=100/(w._lanes||1),l=(w._lane||0)*wd;
     return html`<div key=${'w'+w.id} class="bl-ghost wo-ghost" style=${`--c:${cal.color};top:${top}px;height:${h}px;left:calc(${l}% + 2px);width:calc(${wd}% - 5px)`}
       title=${`${nm} · your workout ${fmtTime(w.start)}–${fmtTime(w.start+(w.dur||60))} · tap to add it to the calendar`}
       onClick=${ev=>{ev.stopPropagation();if(Date.now()-lastDragEnd.current<350)return;setModal({type:'event',ev:{date:k,start:Number(w.start),dur:Number(w.dur)||60,clientIds:[],calendarId:cal.id,title:nm,location:w.location||'',fromWorkout:w.id}})}}>
       <span class="gh-nm"><${Icon} n="dumbbell" s=${11}/> ${nm}</span><span class="gh-st">My workout · tap to add</span></div>`};
-  const bookWorkouts=()=>{let n=0;wkDays.forEach(d=>{const k=ymd(d);woFor(k).forEach(w=>{if(woBooked(w,k))return;const cal=woCal(w.calendarId);
+  const bookWorkouts=()=>{let n=0;wkDays.forEach(d=>{const k=ymd(d);woFor(k).forEach(w=>{if(woBooked(w,k))return;const cal=woCal(w);
       api.put('events',uid(),{calendarId:cal.id,title:w.label||'My workout',clientIds:[],statusBy:{},status:'scheduled',note:'',date:k,start:Number(w.start),dur:Number(w.dur)||60,location:w.location||'',created:Date.now(),fromWorkout:w.id});n++})});
     toast(n?`Added ${n} workout${n===1?'':'s'} to this week`:'Every workout this week is already on the calendar')};
   const bookWeek=()=>{let n=0;wkDays.forEach(d=>{const k=ymd(d);slotsFor(k).forEach(g=>{const ids=(g.clientIds||[]).filter(id=>clients[id]);if(!ids.length)return;
@@ -1602,19 +1602,31 @@ function TravelModal({ctx,date,onClose}){
   <//>`;
 }
 
+// Which calendar workouts go in: the one chosen in My workouts, else one named "Workout…", else Personal
+const woDefaultCal=(settings,calendars)=>{const cals=Object.values(calendars||{}).sort((a,b)=>(a.order||0)-(b.order||0));
+  return calendars[settings.workoutCalendarId]||cals.find(c=>/work\s*out/i.test(c.name||''))||cals.find(c=>/\b(gym|lift|my training|own training)\b/i.test(c.name||''))||calendars.personal||cals.find(c=>c.icon==='heart'||c.icon==='dumbbell')||cals[0]||{id:'personal',color:'#2E9E5B',name:'Personal'}};
+const woCalOf=(w,settings,calendars)=>(w.calOwn&&calendars[w.calendarId])||woDefaultCal(settings,calendars);
 function WorkoutsModal({ctx,onClose}){
   const {settings,calendars,api}=ctx;const list=settings.myWorkouts||[];
   const cals=Object.values(calendars).sort((a,b)=>(a.order||0)-(b.order||0));
-  const defCal=(calendars.personal||cals.find(c=>c.icon==='heart'||c.icon==='dumbbell')||cals[0]||{}).id||'personal';
+  const defCalObj=woDefaultCal(settings,calendars);const defCal=defCalObj.id;
   const ws=Number(settings.weekStart)||0;const order=Array.from({length:7},(_,i)=>(ws+i)%7);
   const commit=next=>api.setSettings({...settings,myWorkouts:next});
+  const today0=todayYmd();
+  const stray=Object.entries(ctx.events||{}).filter(([id,e])=>e.fromWorkout&&e.date>=today0&&(e.status||'scheduled')==='scheduled'&&list.some(w=>w.id===e.fromWorkout&&woCalOf(w,settings,calendars).id!==e.calendarId));
+  const moveStray=()=>{stray.forEach(([id,e])=>{const w=list.find(x=>x.id===e.fromWorkout);api.put('events',id,{...e,calendarId:woCalOf(w,settings,calendars).id})});toast(`Moved ${stray.length} upcoming workout${stray.length===1?'':'s'}`)};
   const upd=(id,p)=>commit(list.map(x=>x.id===id?{...x,...p}:x));const del=id=>commit(list.filter(x=>x.id!==id));
   const sorted=list.slice().sort((a,b)=>(order.indexOf(Number(a.dow))-order.indexOf(Number(b.dow)))||(a.start-b.start));
   const add=()=>{const last=sorted[sorted.length-1];const used=new Set(list.map(x=>Number(x.dow)));const day=order.find(d=>!used.has(d))??1;
-    commit([...list,{id:uid(),dow:day,start:last?Number(last.start):6*60,dur:last?Number(last.dur)||60:60,label:last?last.label||'':'',calendarId:last&&last.calendarId||defCal,from:'',until:''}])};
+    commit([...list,{id:uid(),dow:day,start:last?Number(last.start):6*60,dur:last?Number(last.dur)||60:60,label:last?last.label||'':'',from:'',until:''}])};
   const [more,setMore]=useState(null);const today=todayYmd();
   const total=sum(list,x=>Number(x.dur)||60);
   return html`<${Modal} title="My workout times" wide onClose=${onClose} footer=${html`<span class="fhint">${list.length} workout${list.length===1?'':'s'} · ${total/60%1?(total/60).toFixed(1):total/60} h a week · saves as you go</span><span class="sp"></span><button class="btn primary" onClick=${onClose}>Done</button>`}>
+    <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+      <label class="field" style="min-width:220px"><span class="flabel">Calendar for my workouts</span>
+        <select value=${defCal} onChange=${e=>api.setSettings({...settings,workoutCalendarId:e.target.value})}>${cals.map(x=>html`<option value=${x.id}>${x.name}</option>`)}</select></label>
+      ${stray.length>0&&html`<button class="btn sm" onClick=${moveStray}>Move ${stray.length} upcoming workout${stray.length===1?'':'s'} to ${defCalObj.name}</button>`}
+    </div>
     <p class="fhint" style="margin:0">Your own weekly training template. These show as dashed outlines on the calendar every week. Tap one to put that workout on the calendar, or use <b>Add this week's workouts</b> to add the whole week at once.</p>
     <div class="bl-slots">
       ${sorted.map(w=>{const ended=w.until&&w.until<today;return html`<div class=${'bl-slot wo-slot'+(ended?' bl-ended':'')} key=${w.id}>
@@ -1627,7 +1639,8 @@ function WorkoutsModal({ctx,onClose}){
         ${more===w.id&&html`<div class="bl-more">
           <label class="field"><span class="flabel">Starts</span><input type="date" value=${w.from||''} onChange=${e=>upd(w.id,{from:e.target.value})}/></label>
           <label class="field"><span class="flabel">Ends (optional)</span><input type="date" value=${w.until||''} onChange=${e=>upd(w.id,{until:e.target.value})}/></label>
-          <label class="field"><span class="flabel">Calendar</span><select value=${w.calendarId||defCal} onChange=${e=>upd(w.id,{calendarId:e.target.value})}>${cals.map(x=>html`<option value=${x.id}>${x.name}</option>`)}</select></label>
+          <label class="field"><span class="flabel">Calendar</span><select value=${w.calOwn&&calendars[w.calendarId]?w.calendarId:''} onChange=${e=>upd(w.id,e.target.value?{calendarId:e.target.value,calOwn:true}:{calOwn:false})}>
+            <option value="">Same as my workouts (${defCalObj.name})</option>${cals.map(x=>html`<option value=${x.id}>${x.name}</option>`)}</select></label>
           <label class="field" style="grid-column:1/-1"><span class="flabel">Location (optional)</span><input type="text" value=${w.location||''} placeholder="e.g. Brickhouse Gym" onChange=${e=>upd(w.id,{location:e.target.value})}/></label></div>`}
       </div>`})}
       ${!list.length&&html`<div class="empty">No workout times yet. Add your first one below.</div>`}
