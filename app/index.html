@@ -273,6 +273,7 @@ table.ct-parties td{vertical-align:top;padding:1px 6px}table.ct-parties td:last-
 .en-pend-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid var(--line-2)}.en-pend-row b{display:block;font-size:14px}.en-pend-row small{color:var(--muted);font-size:12px}
 @media (max-width:760px){.en-form{grid-template-columns:minmax(0,1fr)}.en-best-row{grid-template-columns:1fr 1fr}.en-best-row b{grid-column:1/-1}.en-prog small{display:none}.en-prog span{min-width:20px}}
 /* Enrollment phase 3 */
+.en-agr{display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .en-pgroup h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:18px;margin:6px 0 8px}
 .en-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .en-card{display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:inherit;font:inherit;cursor:pointer;touch-action:manipulation}
@@ -1977,7 +1978,7 @@ function PqYN({name,val,set,disabled}){return html`<span class="pq-yn" role="rad
 const PqBox=({kind,head,children})=>html`<div class=${'pq-box '+kind}>${head&&html`<b class="pq-box-h">${head}</b>`}${children}</div>`;
 const PqList=({items})=>html`<ul class="pq-ul">${items.map(t=>html`<li>${t}</li>`)}</ul>`;
 
-function ParqForm({ctx,c,form,onClose}){
+function ParqForm({ctx,c,form,onClose,embed}){
   const {api}=ctx;const locked=form.status==='signed';
   const [f,setF]=useState(()=>({answers:{},...form}));const [err,setErr]=useState([]);const [confirm,setConfirm]=useState(false);
   const tmr=useRef(null);
@@ -1996,7 +1997,7 @@ function ParqForm({ctx,c,form,onClose}){
   const Q1=html`Has your doctor ever said that you have a heart condition <label class="pq-inl"><input type="checkbox" disabled=${dis} checked=${!!a.q1h} onChange=${e=>setA('q1h',e.target.checked)}/></label> <b>OR</b> high blood pressure <label class="pq-inl"><input type="checkbox" disabled=${dis} checked=${!!a.q1b} onChange=${e=>setA('q1b',e.target.checked)}/></label>?`;
   const declTxt=p1Yes?PQ_TXT.declP4:PQ_TXT.declP1;
   return html`<div class="pq">
-    <div class="pq-top"><button class="btn ghost sm" onClick=${onClose}><${Icon} n="left" s=${14}/>All PAR-Q+ forms</button><span class="sp"></span>
+    <div class="pq-top">${!embed&&html`<button class="btn ghost sm" onClick=${onClose}><${Icon} n="left" s=${14}/>All PAR-Q+ forms</button>`}<span class="sp"></span>
       ${locked?html`<span class="pill u0"><${Icon} n="lock" s=${12}/>Signed & locked · ${fmtDateY(f.date)}</span><button class="btn sm" onClick=${()=>parqPdf(f,c)}><${Icon} n="download" s=${14}/>PDF</button>`:html`<span class="pill un">Draft · saves as you go</span>`}</div>
     <div class="callout pq-consent"><${Icon} n="shield" s=${16}/><span>${PQ_CONSENT}</span></div>
     <div class="pq-doc">
@@ -2041,7 +2042,7 @@ function ParqForm({ctx,c,form,onClose}){
     ${!locked&&html`<div class="pq-actions">
       ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}
       ${confirm?html`<div class="callout"><b>Sign and lock this PAR-Q+?</b> Once signed it can't be changed. A new form can be started any time.<div style="display:flex;gap:8px;margin-top:8px"><button class="btn primary" onClick=${sign}><${Icon} n="lock" s=${14}/>Sign & lock</button><button class="btn" onClick=${()=>setConfirm(false)}>Keep editing</button></div></div>`
-        :html`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onClick=${()=>{const m=pqMissing(f);setErr(m);if(!m.length)setConfirm(true)}}><${Icon} n="lock" s=${14}/>Finish & sign</button><button class="btn" onClick=${onClose}>Save draft & close</button></div>`}
+        :html`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onClick=${()=>{const m=pqMissing(f);setErr(m);if(!m.length)setConfirm(true)}}><${Icon} n="lock" s=${14}/>Finish & sign</button>${!embed&&html`<button class="btn" onClick=${onClose}>Save draft & close</button>`}</div>`}
     </div>`}
   </div>`;
 }
@@ -2634,6 +2635,7 @@ function EnrollMode({ctx,enrollId,onClose}){
   const back=()=>{setErr([]);if(sec>0){setSec(sec-1);top()}else goStep(0)};
   // finishing or leaving clears everything from this screen
   const exit=()=>{flush();enLocal.del(enrollId);setD(null);onClose()};
+  const finish=open=>{const n={...d,status:'active',completedAt:new Date().toISOString(),updated:Date.now()};clearTimeout(tmr.current);api.put('enrollments',n.id,n);enLocal.del(enrollId);setD(null);onClose(open?n.clientId:null)};
   if(!d)return null;
   const first=(a.preferred_name||a.legal_name||'').trim().split(/\s+/)[0];
   const step=d.step||0;const S=IN_SECTIONS[sec];
@@ -2643,7 +2645,7 @@ function EnrollMode({ctx,enrollId,onClose}){
           <button class="btn cs-big" onClick=${exit}>Pause & exit Client Mode</button></div></div></div>`
       :html`<${PinGate} settings=${settings} title=${lock==='handback'?'Thank you!':lock==='idle'?'Locked':'Coach PIN'}
         sub=${lock==='handback'?'Your answers are saved. Please hand the iPad back to your coach.':lock==='idle'?'Locked after no activity. Your progress is saved.':'Enter your PIN to open the coach menu.'}
-        onOk=${()=>{setCoach(true);if(lock==='handback'){setLock(null);patch(s=>({...s,step:Math.max(3,s.step||0)}));top()}else if(lock==='idle')setLock(null);else setLock('coach-menu')}} onCancel=${lock==='coach'?()=>setLock(null):null}/>`}</div>`;
+        onOk=${()=>{setCoach(true);if(lock==='handback'){setLock(null);patch(s=>({...s,step:s.step===7?8:Math.max(3,s.step||0)}));top()}else if(lock==='idle')setLock(null);else setLock('coach-menu')}} onCancel=${lock==='coach'?()=>setLock(null):null}/>`}</div>`;
   return html`<div class="cs en" role="dialog" aria-modal="true" aria-label="Enrollment">
     <div class="cs-bar"><span class="mark-sq">SBD</span><b class="cs-title">Strength By Design</b><span class="sp"></span>
       <button class="btn sm cs-hold" onClick=${()=>setLock('coach')}><${Icon} n="lock" s=${14}/> Coach</button></div>
@@ -2665,10 +2667,13 @@ function EnrollMode({ctx,enrollId,onClose}){
           ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}
           <div class="cs-acts"><button class="btn cs-big" onClick=${back}>Back</button><button class="btn primary cs-big" onClick=${next}>${sec<IN_SECTIONS.length-1?'Next':'Finish intake'}</button></div></div>`
       :step===2?html`<${EnPlans} ctx=${ctx} d=${d} patch=${patch} onDone=${()=>{flush();setCoach(false);setLock('handback')}}/>`
+      :step===6?html`<${EnParq} ctx=${ctx} d=${d} patch=${patch} onDone=${()=>{patch(s=>({...s,step:7,status:['profile'].includes(s.status)?'parq':s.status,parqAt:new Date().toISOString()}));top()}}/>`
+      :step===7?html`<${EnContract} ctx=${ctx} d=${d} patch=${patch} onSigned=${()=>{patch(s=>({...s,status:['profile','parq'].includes(s.status)?'contract':s.status,contractAt:s.contractAt||new Date().toISOString()}));setCoach(false);setLock('handback')}}/>`
       :!coach?html`<div class="en-welcome"><h1>Coach <em>only.</em></h1><p>Please hand the iPad back to your coach.</p><button class="btn primary cs-big" style="max-width:360px" onClick=${()=>setLock('handback')}>Coach PIN</button></div>`
       :step===3?html`<${EnReview} ctx=${ctx} d=${d} patch=${patch}/>`
       :step===4?html`<${EnBilling} ctx=${ctx} d=${d} patch=${patch}/>`
-      :html`<${EnProfile} ctx=${ctx} d=${d} patch=${patch}/>`}
+      :step===5?html`<${EnProfile} ctx=${ctx} d=${d} patch=${patch} onNext=${()=>{flush();setCoach(false);patch(s=>({...s,step:6}));top()}}/>`
+      :html`<${EnDone} ctx=${ctx} d=${d} onFinish=${()=>finish(false)} onOpenProfile=${()=>finish(true)}/>`}
     </div></div>`;
 }
 
@@ -2774,8 +2779,9 @@ function EnBilling({ctx,d,patch}){const {settings}=ctx;const a=d.intake||{};
   const addSaved=id=>{const x=(settings.discounts||[]).find(y=>y.id===id);if(!x)return;const row={id:x.id,name:x.name,kind:x.type,amount:Number(x.amount)||0};setB({discounts:settings.discountStack?[...disc.filter(y=>y.id!==x.id),row]:[row]})};
   const addCustom=()=>{if(!cust||!(Number(cust.amount)>0)||!cust.reason.trim()){toast('Enter an amount and a reason');return}
     const row={id:'',custom:true,name:'Custom: '+cust.reason.trim(),reason:cust.reason.trim(),kind:cust.kind,amount:Number(cust.amount)};setB({discounts:settings.discountStack?[...disc,row]:[row]});setCust(null)};
-  const confirm=()=>{if(!b.method){toast('Pick a payment method');return}
-    patch(s=>({...s,step:5,status:['started','intake'].includes(s.status)?'plan':s.status,billing:{...(s.billing||{}),planId:k.id,freq,start,firstDue:first,method:b.method,gst:b.gst!==false,discounts:disc},price:pr,planSetAt:new Date().toISOString()}))};
+  const sched0=d.schedule!=null?d.schedule:enAvailText(a);
+  const confirm=()=>{if(!b.method){toast('Pick a payment method');return}if(!String(sched0||'').trim()){toast('Add the training schedule for the agreement');return}if(!(d.trainerSig&&d.trainerSig.img)){toast('Sign as Trainer for the agreement');return}
+    patch(s=>({...s,step:5,schedule:sched0,status:['started','intake'].includes(s.status)?'plan':s.status,billing:{...(s.billing||{}),planId:k.id,freq,start,firstDue:first,method:b.method,gst:b.gst!==false,discounts:disc},price:pr,planSetAt:new Date().toISOString()}))};
   return html`<div class="cs-wrap">
     <div class="eyebrow">Coach only</div><h2 class="en-h">Plan & billing</h2>
     <div class="en-bill">
@@ -2810,6 +2816,9 @@ function EnBilling({ctx,d,patch}){const {settings}=ctx;const a=d.intake||{};
           ${pr.periods===1&&pr.months&&!pr.commit&&html`<small class="fhint">Month to month: the next payment shows as a renewal in Payments.</small>`}</div>
       </div>
     </div>
+    <div class="en-agr"><div class="eyebrow">For the agreement</div>
+      <${Field} label="Training schedule (clause B.14)" hint="From their availability. Edit to the times you agreed on."><textarea rows="2" value=${sched0} onInput=${e=>patch(s=>({...s,schedule:e.target.value}))}></textarea><//>
+      <${SignaturePad} label="Trainer’s Signature" value=${d.trainerSig} onChange=${v=>patch(s=>({...s,trainerSig:v}))}/></div>
     <div class="cs-acts"><button class="btn cs-big" onClick=${()=>patch(s=>({...s,step:3}))}>Back</button><button class="btn primary cs-big" onClick=${confirm}>Confirm plan</button></div></div>`}
 
 /* ---- Step 6: create the athlete profile ---- */
@@ -2869,7 +2878,7 @@ async function buildIntakePdf(d,version){const lib=await loadJsPdf();const doc=n
   const n=doc.getNumberOfPages();for(let p=1;p<=n;p++){doc.setPage(p);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(110);doc.text(`${a.legal_name||''} · intake v${version}`,M,PH-26);doc.text(`${p} / ${n}`,PW-M,PH-26,{align:'right'});doc.setTextColor(0)}
   return doc.output('blob')}
 
-function EnProfile({ctx,d,patch}){const a=d.intake||{};const [busy,setBusy]=useState(false);const [choice,setChoice]=useState(d.linkTo||null);
+function EnProfile({ctx,d,patch,onNext}){const a=d.intake||{};const [busy,setBusy]=useState(false);const [choice,setChoice]=useState(d.linkTo||null);
   const dup=d.clientId?[]:enDupes(ctx,a);const pk=pkgOf(ctx.settings,(d.billing||{}).planId);const pr=d.price||{};
   const create=async mode=>{if(busy)return;setBusy(true);
     try{const existing=mode&&mode!=='new'?ctx.clients[mode]:null;const id=existing?existing.id:uid();
@@ -2889,7 +2898,7 @@ function EnProfile({ctx,d,patch}){const a=d.intake||{};const [busy,setBusy]=useS
     setBusy(false)};
   if(d.clientId){const c=ctx.clients[d.clientId];return html`<div class="cs-wrap"><div class="cs-done" style="margin-top:4vh"><div class="cs-ok">✓</div><h2>${d.linked?'Profile updated':'Profile created'}</h2>
     <p>${c?c.name:''} is in Athletes with their goals, injuries, PRs, contact details and an intake summary note. ${pr.total?`First payment of ${money(pr.total)} is in Payments, due ${fmtDateY((d.billing||{}).firstDue)}.`:''} The intake PDF is saved on their Intake tab.</p></div>
-    <div class="callout">Next in the following update: PAR-Q+ and the contract right here in Client Mode. For now, finish those from the athlete's profile.</div></div>`}
+    <div class="cs-acts"><button class="btn primary cs-big" onClick=${onNext}>Next: health questionnaire · hand the iPad to ${(d.intake||{}).preferred_name||((d.intake||{}).legal_name||'the client').split(' ')[0]}</button></div></div>`}
   return html`<div class="cs-wrap">
     <div class="eyebrow">Coach only</div><h2 class="en-h">Create athlete profile</h2>
     <div class="en-sumgrid"><div><span class="flabel">Name</span><b>${a.legal_name}</b></div><div><span class="flabel">Plan</span><b>${pk?pk.name:'—'}</b></div>
@@ -2920,13 +2929,70 @@ function IntakeTab({ctx,c}){const subs=Object.values(ctx.intakes||{}).filter(x=>
           return rows.length?html`<h4 class="en-rv-t">${s.title}</h4><dl class="en-rv">${rows.map(([l,v])=>html`<dt>${l}</dt><dd>${v}</dd>`)}</dl>`:null})}</div>`}</div>`)
         :html`<div class="empty">No intake forms yet.</div>`}</div></div>`}
 
+/* ================= Enrollment phase 4: PAR-Q+, contract, done ================= */
+const enAvailText=a=>{const g=a.avail||{};const days=[1,2,3,4,5,6,0].filter(d=>(g[d]||[]).length);return days.map(d=>`${DOWL[d]} ${g[d].map(s=>s.toLowerCase()).join('/')}`).join(', ')};
+/* Contract blanks from the confirmed plan. Term follows the commitment: none → a (Monthly), 3 → b, 6 → c, anything else → d (Custom). */
+function enContractFields(ctx,d){const a=d.intake||{};const b=d.billing||{};const k=pkgOf(ctx.settings,b.planId);const pr=d.price||{};
+  const minor=enMinor(a);const f={eff_date:b.start||todayYmd(),address:a.address||'',phone:minor?(a.guardian_phone||a.phone||''):(a.phone||''),email:minor?(a.guardian_email||a.email||''):(a.email||''),schedule:d.schedule||''};
+  if(minor){f.client_name=a.guardian_name||'';f.minor_name=a.legal_name||''}else f.client_name=a.legal_name||'';f.ack_name=f.client_name;
+  let term='';if(k){const bt=billTypeOf(k);const commit=Number(k.commit)||0;const spm=(Number(k.perWeek)||0)*WPM;
+    const rate=bt==='pack'?(pr.perSession??Number(k.price)):null;
+    if(bt==='pack'&&spm>0&&[0,3,6].includes(commit)){term={0:'a',3:'b',6:'c'}[commit];const m=commit||1;const n=Math.round(spm*m);f[term+'_sessions']=String(n);f[term+'_rate']=ctMoney(rate);f[term+'_total']=ctMoney(n*rate)}
+    else{term='d';const per=bt==='pack'&&rate!=null?`@ $${ctMoney(rate)} per session`:'';
+      f.custom_term=bt==='pack'&&spm>0?`${commit}-month term: ${Math.round(spm*commit)} sessions ${per} for a total of $${ctMoney(Math.round(spm*commit)*rate)} + GST`
+        :bt==='pack'?`${pr.sessions||k.qty} sessions ${per} for a total of $${ctMoney(pr.sub)} + GST`
+        :bt==='program'?`${k.name}: $${ctMoney(pr.sub)} one-time + GST`
+        :`${k.name}: $${ctMoney((pr.sub||0)/(pr.months||1))} per month${commit?`, ${commit}-month commitment`:''} + GST`}}
+  return {fields:f,term}}
+
+function EnParq({ctx,d,patch,onDone}){const cid=d.clientId;const c=ctx.clients[cid];const id=d.parqId;const form=id&&ctx.parq[id];
+  useEffect(()=>{if(!id&&c){const nid=uid();ctx.api.put('parq',nid,{clientId:cid,status:'draft',formVersion:PQ_VER,answers:{},name:c.name,date:todayYmd(),source:'enrollment',enrollmentId:d.id,created:Date.now()});patch(s=>({...s,parqId:nid}))}},[id,cid]);
+  if(!form||!c)return html`<div class="empty">Opening the PAR-Q+…</div>`;
+  const signed=form.status==='signed';
+  return html`<div class="cs-wrap"><h2 class="en-h">Health questionnaire</h2>
+    <${ParqForm} key=${form.id} ctx=${ctx} c=${c} form=${form} embed=${true} onClose=${()=>{}}/>
+    ${signed&&html`<div class=${'callout'+(form.needsClearance?' u2':'')}>${form.needsClearance?html`<b>Thanks.</b> One or more follow-up answers was YES, so your coach will talk with you about clearance from your doctor before harder training.`:html`<b>Thanks, all done.</b>`}</div>
+      <div class="cs-acts"><button class="btn primary cs-big" onClick=${onDone}>Continue to your agreement</button></div>`}</div>`}
+
+function EnContract({ctx,d,patch,onSigned}){const id=d.contractId;const doc=id&&ctx.contracts[id];
+  useEffect(()=>{if(!id&&d.clientId){const nid=uid();const pre=enContractFields(ctx,d);const ts=d.trainerSig;
+    const docu={clientId:d.clientId,status:'draft',templateId:CT_CURRENT,templateVersion:ctTpl({}).version,...pre,sigs:ts?{trainer_sig:ts}:{},trainerSignedAt:ts?ts.at:null,remindDays:30,startDate:(d.billing||{}).start,created:Date.now(),updated:Date.now(),enrollmentId:d.id};
+    ctx.api.put('contracts',nid,docu);ctx.api.logEvent(nid,'created',{enrollment:d.id});patch(s=>({...s,contractId:nid}))}},[id]);
+  if(!doc)return html`<div class="empty">Opening your agreement…</div>`;
+  return html`<${EnContractInner} key=${doc.id} ctx=${ctx} doc=${doc} onSigned=${onSigned}/>`}
+function EnContractInner({ctx,doc,onSigned}){const D=useCtDraft(ctx,doc);const dd=D.d;const [step,setStep]=useState(doc.status==='signed'?'done':'fill');const [err,setErr]=useState([]);const [busy,setBusy]=useState(false);
+  useEffect(()=>{if(doc.status==='signed')onSigned()},[doc.status]);
+  const top=()=>{try{document.querySelector('.cs-body').scrollTop=0}catch(_){}};
+  const next=()=>{const m=ctMissing(dd,'client');setErr(m);if(!m.length){setStep('review');top()}};
+  const submit=async()=>{if(busy)return;const m=ctMissing(dd);if(m.length){setErr(m);setStep('fill');return}setBusy(true);D.flush();const ok=await ctFinalize(ctx,dd);setBusy(false);if(ok)onSigned()};
+  return html`<div class="cs-wrap"><h2 class="en-h">Your agreement</h2>
+    ${step==='fill'?html`<div class="callout">Please read your agreement, check your details in the yellow boxes, and sign at the bottom.</div>`:html`<div class="callout"><b>Review.</b> This is the full agreement exactly as it will be saved. Tap <b>Back</b> to change anything.</div>`}
+    <${CtDoc} d=${dd} edit=${step==='fill'?'client':null} set=${D.set} setSig=${D.setSig} setTerm=${()=>{}}/>
+    ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}
+    <div class="cs-acts">${step==='fill'?html`<button class="btn primary cs-big" onClick=${next}>Review the agreement</button>`
+      :html`<button class="btn cs-big" onClick=${()=>{setStep('fill');top()}} disabled=${busy}>Back</button><button class="btn primary cs-big" onClick=${submit} disabled=${busy}>${busy?'Saving…':'Sign and submit'}</button>`}</div></div>`}
+
+function EnDone({ctx,d,onFinish,onOpenProfile}){const c=ctx.clients[d.clientId];const b=d.billing||{};const k=pkgOf(ctx.settings,b.planId);const pr=d.price||{};
+  const pq=d.parqId&&ctx.parq[d.parqId];const ct=d.contractId&&ctx.contracts[d.contractId];
+  return html`<div class="cs-wrap"><div class="eyebrow">Coach only · enrollment complete</div><h2 class="en-h">${c?c.name:'New athlete'}</h2>
+    <div class="en-sumgrid">
+      <div><span class="flabel">Plan</span><b>${k?k.name:'—'}</b><small>${[BILLING_LABEL[String(b.freq)]||null,METHOD_LABEL[b.method]||b.method].filter(Boolean).join(' · ')}</small></div>
+      <div><span class="flabel">Each payment</span><b>${money(pr.total||0)}</b><small>${pr.perSession!=null?money(pr.perSession)+' per session before GST':''}</small></div>
+      <div><span class="flabel">Discounts</span><b>${(pr.lines||[]).map(x=>`${x.name} (−${money(x.value)})`).join(', ')||'None'}</b></div>
+      <div><span class="flabel">First payment</span><b>${fmtDateY(b.firstDue)}</b><small>In Payments</small></div>
+      <div><span class="flabel">PAR-Q+</span><b>${pq&&pq.status==='signed'?(pq.needsClearance?'Signed · needs clearance':'Signed · all clear'):'Not signed'}</b></div>
+      <div><span class="flabel">Agreement</span><b>${ct&&ct.status==='signed'?`Signed ${fmtDateY(String(ct.signedAt||'').slice(0,10))}`:'Not signed'}</b><small>${ct&&ct.pdfSha256?'PDF saved and fingerprinted':''}</small></div></div>
+    ${pq&&pq.needsClearance&&html`<div class="callout u2"><b>Needs clearance.</b> A PAR-Q+ follow-up was YES. The athlete is flagged on their profile until you record doctor clearance on the PAR-Q+ tab.</div>`}
+    <div class="cs-acts"><button class="btn cs-big" onClick=${onOpenProfile}>Finish & open profile</button><button class="btn primary cs-big" onClick=${onFinish}>Finish</button></div>
+    <p class="fhint" style="margin:0">Finishing clears this screen so the next person can't see these answers.</p></div>`}
+
 function AthletesPage({ctx,selId,setSelId}){
   const {clients,derived}=ctx;
   const [q,setQ]=useState('');const [filter,setFilter]=useState('active');const [modal,setModal]=useState(null);
   const list=Object.values(clients).filter(c=>(filter==='all'||(c.status||'active')===filter)&&(!q||c.name.toLowerCase().includes(q.toLowerCase())))
     .sort((a,b)=>a.name.localeCompare(b.name));
   const sel=selId&&clients[selId];const [enrolling,setEnrolling]=useState(null);
-  return html`${enrolling&&ctx.enrollments[enrolling]&&html`<${EnrollMode} key=${enrolling} ctx=${ctx} enrollId=${enrolling} onClose=${()=>setEnrolling(null)}/>`}<div class=${'ath'+(sel?' has-sel':'')}>
+  return html`${enrolling&&ctx.enrollments[enrolling]&&html`<${EnrollMode} key=${enrolling} ctx=${ctx} enrollId=${enrolling} onClose=${cid=>{setEnrolling(null);if(cid)setSelId(cid)}}/>`}<div class=${'ath'+(sel?' has-sel':'')}>
     <div class="panel ath-list">
       <div class="panel-h" style="flex-wrap:wrap"><h3>Athletes</h3><span class="sp"></span><${EnrollButton} ctx=${ctx} onOpen=${setEnrolling}/><button class="btn primary sm" onClick=${()=>setModal({type:'new'})}><${Icon} n="plus" s=${14}/>Add</button>
         <div style="display:flex;gap:6px;width:100%"><input type="text" placeholder="Search" value=${q} onInput=${e=>setQ(e.target.value)} aria-label="Search athletes"/>
