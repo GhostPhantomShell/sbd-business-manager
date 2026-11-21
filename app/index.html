@@ -2958,6 +2958,10 @@ function EnContract({ctx,d,patch,onSigned}){const id=d.contractId;const doc=id&&
   useEffect(()=>{if(!id&&d.clientId){const nid=uid();const pre=enContractFields(ctx,d);const ts=d.trainerSig;
     const docu={clientId:d.clientId,status:'draft',templateId:CT_CURRENT,templateVersion:ctTpl({}).version,...pre,sigs:ts?{trainer_sig:ts}:{},trainerSignedAt:ts?ts.at:null,remindDays:30,startDate:(d.billing||{}).start,created:Date.now(),updated:Date.now(),enrollmentId:d.id};
     ctx.api.put('contracts',nid,docu);ctx.api.logEvent(nid,'created',{enrollment:d.id});patch(s=>({...s,contractId:nid}))}},[id]);
+  useEffect(()=>{if(!doc||doc.status!=='draft')return;const f=doc.fields||{};const p={};
+    if(!String(f.schedule||'').trim()&&String(d.schedule||'').trim())p.fields={...f,schedule:d.schedule};
+    if(!(doc.sigs&&doc.sigs.trainer_sig)&&d.trainerSig){p.sigs={...(doc.sigs||{}),trainer_sig:d.trainerSig};p.trainerSignedAt=d.trainerSig.at}
+    if(Object.keys(p).length)ctx.api.put('contracts',doc.id,{...doc,...p,updated:Date.now()})},[doc&&doc.id]);
   if(!doc)return html`<div class="empty">Opening your agreement…</div>`;
   return html`<${EnContractInner} key=${doc.id} ctx=${ctx} doc=${doc} onSigned=${onSigned}/>`}
 function EnContractInner({ctx,doc,onSigned}){const D=useCtDraft(ctx,doc);const dd=D.d;const [step,setStep]=useState(doc.status==='signed'?'done':'fill');const [err,setErr]=useState([]);const [busy,setBusy]=useState(false);
@@ -2965,6 +2969,16 @@ function EnContractInner({ctx,doc,onSigned}){const D=useCtDraft(ctx,doc);const d
   const top=()=>{try{document.querySelector('.cs-body').scrollTop=0}catch(_){}};
   const next=()=>{const m=ctMissing(dd,'client');setErr(m);if(!m.length){setStep('review');top()}};
   const submit=async()=>{if(busy)return;const m=ctMissing(dd);if(m.length){setErr(m);setStep('fill');return}setBusy(true);D.flush();const ok=await ctFinalize(ctx,dd);setBusy(false);if(ok)onSigned()};
+  // Coach parts (schedule, term, trainer signature) must be done before the client can finish
+  const coachMiss=dd.status==='draft'?ctMissing(dd,'coach'):[];const [mode,setMode]=useState(null);
+  if(mode==='pin')return html`<${PinGate} settings=${ctx.settings} title="Coach PIN" sub="Enter your PIN to finish your part of the agreement." onOk=${()=>setMode('coach')} onCancel=${()=>setMode(null)}/>`;
+  if(mode==='coach')return html`<div class="cs-wrap"><div class="eyebrow">Coach only</div><h2 class="en-h">Finish your part</h2>
+    <div class="callout">Fill in the highlighted items and sign as Trainer, then hand the iPad back.${coachMiss.length?html` <b>Still needed:</b> ${coachMiss.join(', ')}`:''}</div>
+    <${CtDoc} d=${dd} edit="coach" set=${D.set} setSig=${D.setSig} setTerm=${D.setTerm}/>
+    <div class="cs-acts"><button class="btn primary cs-big" onClick=${()=>{if(coachMiss.length){toast('Still needed: '+coachMiss.join(', '));return}setErr([]);setMode(null);top()}}>Done · hand back to client</button></div></div>`;
+  if(coachMiss.length)return html`<div class="cs-wrap"><h2 class="en-h">Your agreement</h2>
+    <div class="callout u2"><b>Your coach needs to finish a couple of things first.</b> Please hand the iPad to your coach.<br/><span class="fhint">Still needed: ${coachMiss.join(', ')}</span></div>
+    <div class="cs-acts"><button class="btn primary cs-big" onClick=${()=>setMode('pin')}>Coach: finish the agreement</button></div></div>`;
   return html`<div class="cs-wrap"><h2 class="en-h">Your agreement</h2>
     ${step==='fill'?html`<div class="callout">Please read your agreement, check your details in the yellow boxes, and sign at the bottom.</div>`:html`<div class="callout"><b>Review.</b> This is the full agreement exactly as it will be saved. Tap <b>Back</b> to change anything.</div>`}
     <${CtDoc} d=${dd} edit=${step==='fill'?'client':null} set=${D.set} setSig=${D.setSig} setTerm=${()=>{}}/>
