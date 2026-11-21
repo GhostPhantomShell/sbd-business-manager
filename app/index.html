@@ -272,6 +272,36 @@ table.ct-parties td{vertical-align:top;padding:1px 6px}table.ct-parties td:last-
 .en-pend-h{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;padding:10px 12px;color:inherit;font:inherit;cursor:pointer}
 .en-pend-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid var(--line-2)}.en-pend-row b{display:block;font-size:14px}.en-pend-row small{color:var(--muted);font-size:12px}
 @media (max-width:760px){.en-form{grid-template-columns:minmax(0,1fr)}.en-best-row{grid-template-columns:1fr 1fr}.en-best-row b{grid-column:1/-1}.en-prog small{display:none}.en-prog span{min-width:20px}}
+/* Enrollment phase 3 */
+.en-pgroup h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:18px;margin:6px 0 8px}
+.en-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.en-card{display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:inherit;font:inherit;cursor:pointer;touch-action:manipulation}
+.en-card.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.en-card-t{font-family:var(--f-display);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:.03em;line-height:1.1}
+.en-price{display:flex;align-items:baseline;gap:6px}.en-price b{font-size:28px;font-weight:600}.en-price small{color:var(--muted);font-size:13px}
+.en-card-m{font-size:13.5px;color:var(--muted)}.en-card-d{font-size:14.5px}
+.en-card ul{margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:2px}
+.en-card-pick{margin-top:auto;font-weight:700;font-size:13px;color:var(--muted)}.en-card.on .en-card-pick{color:var(--accent)}
+.en-sumgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.en-sumgrid>div{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);min-width:0}
+.en-sumgrid small{color:var(--muted);font-size:13px}
+.en-rv-sec{border-bottom:1px solid var(--line-2)}.en-rv-sec:last-child{border-bottom:0}
+.en-rv-h{display:flex;gap:10px;align-items:center;width:100%;background:none;border:0;padding:12px 14px;color:inherit;font:inherit;cursor:pointer;text-align:left}
+.en-rv{display:grid;grid-template-columns:minmax(120px,240px) 1fr;gap:6px 14px;margin:0;padding:0 14px 12px;font-size:14px}
+.en-rv dt{color:var(--muted);font-size:12.5px;font-weight:700}.en-rv dd{margin:0;white-space:pre-wrap}
+.en-rv-t{margin:10px 14px 6px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em}
+.en-bill{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start}
+.en-bill-l{display:flex;flex-direction:column;gap:14px}
+.en-disc{display:flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.en-cust{display:grid;grid-template-columns:70px 110px minmax(0,1fr) auto auto;gap:8px;align-items:center}
+.en-bd{display:flex;flex-direction:column;gap:6px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.en-bd>div{display:flex;justify-content:space-between;gap:10px}.en-bd-d{color:var(--ok)}
+.en-bd-t{border-top:1.5px solid var(--fg);padding-top:6px;font-size:18px}.en-bd-t b{font-size:20px}
+.en-bd-s{font-size:13px;color:var(--muted)}
+.en-sched{display:flex;flex-direction:column;gap:4px;margin-top:12px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px}
+.en-sched>div{display:flex;justify-content:space-between;font-size:14px}
+.en-dup{display:flex;gap:10px;align-items:flex-start;padding:8px 0}.en-dup input{width:22px;height:22px;flex:none;margin-top:2px}.en-dup small{display:block;color:var(--muted)}
+@media (max-width:820px){.en-bill{grid-template-columns:minmax(0,1fr)}.en-cust{grid-template-columns:70px 1fr;}.en-rv{grid-template-columns:1fr}}
 .tz-now{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
 .tag{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--surface-2);color:var(--muted)}
 .tag.ex{background:transparent;border:1px dashed var(--muted)}
@@ -847,7 +877,7 @@ const EQUIPMENT=['Barbell + plates','Squat rack','Bench','Dumbbells (full set)',
 const STATUS_LABEL={scheduled:'Scheduled',completed:'Completed',late:'Late cancel',sickused:'Sick · session used',sick:'Sick · session kept',cancelled:'Cancelled',noshow:'No-show'};
 const COUNTED=new Set(['completed','late','noshow','sickused']);
 const FREED=new Set(['cancelled','sick']);
-const METHOD_LABEL={cash:'Cash',invoice:'Invoice (Square)',etransfer:'e-Transfer'};
+const METHOD_LABEL={cash:'Cash',invoice:'Invoice (Square)',etransfer:'e-Transfer',card:'Card',other:'Other'};
 const BILLING_LABEL={'1':'Monthly','3':'Every 3 months','6':'Every 6 months','12':'Every 12 months',pack:'Per session pack'};
 const RATE_TYPE_LABEL={standard:'Standard rate',legacy:'Legacy rate',custom:'Custom rate'};
 
@@ -863,7 +893,7 @@ const DEFAULT_CALENDARS=[
   {id:'personal',name:'Personal',color:'#2E9E5B',icon:'heart',order:3}];
 
 /* ================= Store (private per-user cloud storage) ================= */
-const COLS=['calendars','clients','events','ledger','travel','parq','contracts','enrollments'];
+const COLS=['calendars','clients','events','ledger','travel','parq','contracts','enrollments','intakes'];
 let toastFn=()=>{};
 const toast=m=>toastFn(m);
 const errMsg=e=>{const c=e&&e.code;if(c==='quota_exceeded')return 'Storage is full. Remove old data, then try again.';if(c==='invalid_argument')return 'That change could not be saved.';if(c==='revoked')return 'Saving was switched off for this view.';return 'Could not save. Check your connection and try again.'};
@@ -900,7 +930,7 @@ const ctFile=path=>{if(!sbClient)return Promise.reject(new Error('offline'));ret
 const dataUrlToBlob=async u=>(await fetch(u)).blob();
 const pqMissingTable=e=>/PGRST205|42P01|parq_forms|schema cache|does not exist/i.test(String((e&&(e.code+' '+e.message))||e));
 function useStore(){
-  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{},enrollments:{}});
+  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{},enrollments:{},intakes:{}});
   const R=useRef({mode:'loading',root:null,q:{},uid:null,recent:{}});
   const [authTick,setAuthTick]=useState(0);
   useEffect(()=>{
@@ -955,6 +985,8 @@ function useStore(){
           const row=p.eventType==='DELETE'?p.old:p.new;if(!row||!row.id)return;const t=R.current.recent['enrollments/'+row.id];if(t&&Date.now()-t<4000)return;
           setSt(s=>{const m={...s.enrollments};if(p.eventType==='DELETE')delete m[row.id];else m[row.id]={...(row.data||{}),id:row.id,status:row.status};return {...s,enrollments:m}})}).subscribe();
         unsubs.push(()=>{try{sb.removeChannel(ech)}catch(_){}})}
+      try{const {data,error}=await sb.from('intake_submissions').select('id,client_id,enrollment_id,version,answers,submitted_at,pdf_path');if(error)throw error;
+        (data||[]).forEach(r=>{all.intakes[r.id]={id:r.id,clientId:r.client_id,enrollmentId:r.enrollment_id,version:r.version,answers:r.answers,submittedAt:r.submitted_at,pdfPath:r.pdf_path}})}catch(e){}
       let contractsOk=true;R.current.ctLocked={};
       try{const {data,error}=await sb.from(CT_TABLE).select('*');if(error)throw error;
         (data||[]).forEach(r=>{all.contracts[r.id]=ctFromRow(r);if(r.status!=='draft')R.current.ctLocked[r.id]=true})}
@@ -1019,6 +1051,19 @@ function useStore(){
         if(m==='supabase'&&d.pdfPath)b=await ctFile(d.pdfPath);
         else if(m==='cloud'){const sn=await R.current.root.collection('cfiles').doc(d.id).get();const v=sn&&sn.exists?sn.data():null;if(v&&v.pdf)b=await dataUrlToBlob(v.pdf)}
         if(!b)throw new Error('PDF not found');ctPdfMem[d.id]=b;return b},
+      async intakeSave(sub,pdf){const m=R.current.mode;const id=sub.id;if(pdf)ctPdfMem['in-'+id]=pdf;
+        if(m==='supabase'){const uidv=R.current.uid;let pdfPath=null,sha=null;
+          if(pdf){pdfPath=`${uidv}/${sub.clientId}/intake-${id}.pdf`;const up=await sbClient.storage.from('enrollment-private').upload(pdfPath,pdf,{contentType:'application/pdf',upsert:false});if(up.error&&!/exist|duplicate/i.test(up.error.message||''))throw up.error;sha=await sha256Hex(pdf)}
+          const {error}=await sbClient.from('intake_submissions').insert({id,user_id:uidv,enrollment_id:sub.enrollmentId,client_id:sub.clientId,version:sub.version,answers:sub.answers,submitted_at:sub.submittedAt,pdf_path:pdfPath,pdf_sha256:sha});if(error)throw error;
+          setSt(s=>({...s,intakes:{...s.intakes,[id]:{...sub,pdfPath}}}));return}
+        if(m==='cloud'){if(pdf)await R.current.root.collection('cfiles').doc('in-'+id).set({pdf:await blobToDataUrl(pdf)});await R.current.root.collection('intakes').doc(id).set(strip(sub))}
+        setSt(s=>({...s,intakes:{...s.intakes,[id]:{...sub}}}))},
+      async intakePdf(sub){const key='in-'+sub.id;if(ctPdfMem[key])return ctPdfMem[key];const m=R.current.mode;let b=null;
+        if(m==='supabase'&&sub.pdfPath){const {data,error}=await sbClient.storage.from('enrollment-private').download(sub.pdfPath);if(error)throw error;b=data}
+        else if(m==='cloud'){const sn=await R.current.root.collection('cfiles').doc(key).get();const v=sn&&sn.exists?sn.data():null;if(v&&v.pdf)b=await dataUrlToBlob(v.pdf)}
+        if(!b){b=await buildIntakePdf({id:sub.enrollmentId||'',intake:sub.answers,intakeDoneAt:sub.submittedAt},sub.version)}
+        ctPdfMem[key]=b;return b},
+      logDiscountUse(row){const m=R.current.mode;try{if(m==='supabase')sbClient.from('discount_uses').insert({...row,user_id:R.current.uid}).then(()=>{},()=>{});else if(m==='cloud')R.current.root.collection('discountUses').doc(uid()).set({...row,used_at:new Date().toISOString()}).catch(()=>{})}catch(_){}},
       logEvent(cid,event,detail){const m=R.current.mode;const row={contract_id:cid,event,detail:detail||{},at:new Date().toISOString()};
         try{if(m==='supabase')sbClient.from(CT_EVENTS).insert({...row,user_id:R.current.uid}).then(()=>{},()=>{});else if(m==='cloud')R.current.root.collection('cevents').doc(uid()).set(row).catch(()=>{})}catch(_){}},
       put(col,id,data){const body=strip(data);setSt(s=>({...s,[col]:{...s[col],[id]:{...body,id}}}));const m=R.current.mode;
@@ -1042,7 +1087,7 @@ function useStore(){
         const t=new Promise((_,rej)=>setTimeout(()=>rej(new Error('No answer from the server after 15 seconds. Check your internet, and make sure you opened this file in a normal browser window.')),15000));
         const {error}=await Promise.race([sbClient.auth.signInWithPassword({email,password}),t]);if(error)throw error},
       async resetPassword(email){const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:location.href.split('#')[0]});if(error)throw error},
-      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{},enrollments:{}});setAuthTick(t=>t+1)}
+      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{},enrollments:{},intakes:{}});setAuthTick(t=>t+1)}
     };
   },[]);
   return {...st,api};
@@ -2569,6 +2614,7 @@ function EnrollMode({ctx,enrollId,onClose}){
   const [d,setD]=useState(()=>{const l=enLocal.get(enrollId);return l&&src&&(l.updated||0)>(src.updated||0)?l:src});
   const [lock,setLock]=useState(null); // null | 'coach' | 'idle' | 'handback'
   const [sec,setSec]=useState(()=>Math.min((src&&src.section)||0,IN_SECTIONS.length-1));const [err,setErr]=useState([]);
+  const [coach,setCoach]=useState(()=>((src&&src.step)||0)>=3);
   const body=useRef(null);const tmr=useRef(null);
   const save=n=>{enLocal.set(n.id,n);clearTimeout(tmr.current);tmr.current=setTimeout(()=>api.put('enrollments',n.id,n),500)};
   const patch=fn=>setD(s=>{const n={...fn(s),updated:Date.now()};save(n);return n});
@@ -2580,9 +2626,11 @@ function EnrollMode({ctx,enrollId,onClose}){
   const a=(d&&d.intake)||{};
   const set=(k,v)=>{if(err.length)setErr([]);patch(s=>({...s,intake:{...(s.intake||{}),[k]:v},name:k==='preferred_name'||k==='legal_name'?((k==='preferred_name'?v:(s.intake||{}).preferred_name)||(k==='legal_name'?v:(s.intake||{}).legal_name)||''):s.name}))};
   const goStep=st=>{patch(s=>({...s,step:st}));top()};
+  useEffect(()=>{if(d&&d.step===1&&typeof d.section==='number'&&d.section!==sec)setSec(d.section)},[d&&d.section,d&&d.step]);
   const next=()=>{const m=inMissing(IN_SECTIONS[sec],a);setErr(m);if(m.length){toast('Please fill in the items marked *');return}
+    if(d.editFromReview&&coach){patch(s=>({...s,step:3,editFromReview:false}));top();return}
     if(sec<IN_SECTIONS.length-1){const n=sec+1;setSec(n);patch(s=>({...s,section:n}));top();return}
-    patch(s=>({...s,status:s.status==='started'?'intake':s.status,step:2,section:sec,intakeDoneAt:s.intakeDoneAt||new Date().toISOString()}));setLock('handback');top()};
+    patch(s=>({...s,status:s.status==='started'?'intake':s.status,step:s.editFromReview?3:2,editFromReview:false,section:sec,intakeDoneAt:s.intakeDoneAt||new Date().toISOString()}));top()};
   const back=()=>{setErr([]);if(sec>0){setSec(sec-1);top()}else goStep(0)};
   // finishing or leaving clears everything from this screen
   const exit=()=>{flush();enLocal.del(enrollId);setD(null);onClose()};
@@ -2595,7 +2643,7 @@ function EnrollMode({ctx,enrollId,onClose}){
           <button class="btn cs-big" onClick=${exit}>Pause & exit Client Mode</button></div></div></div>`
       :html`<${PinGate} settings=${settings} title=${lock==='handback'?'Thank you!':lock==='idle'?'Locked':'Coach PIN'}
         sub=${lock==='handback'?'Your answers are saved. Please hand the iPad back to your coach.':lock==='idle'?'Locked after no activity. Your progress is saved.':'Enter your PIN to open the coach menu.'}
-        onOk=${()=>setLock(lock==='handback'?'coach-menu':'coach-menu')} onCancel=${lock==='coach'?()=>setLock(null):null}/>`}</div>`;
+        onOk=${()=>{setCoach(true);if(lock==='handback'){setLock(null);patch(s=>({...s,step:Math.max(3,s.step||0)}));top()}else if(lock==='idle')setLock(null);else setLock('coach-menu')}} onCancel=${lock==='coach'?()=>setLock(null):null}/>`}</div>`;
   return html`<div class="cs en" role="dialog" aria-modal="true" aria-label="Enrollment">
     <div class="cs-bar"><span class="mark-sq">SBD</span><b class="cs-title">Strength By Design</b><span class="sp"></span>
       <button class="btn sm cs-hold" onClick=${()=>setLock('coach')}><${Icon} n="lock" s=${14}/> Coach</button></div>
@@ -2616,8 +2664,11 @@ function EnrollMode({ctx,enrollId,onClose}){
           <div class="en-form">${S.fields.map((f,i)=>!inShown(f,a)?null:f.h?html`<div class="en-sub" key=${'h'+i}><b>${f.h}</b>${f.note&&html`<span class="fhint">${f.note}</span>`}</div>`:html`<${InField} key=${f.k} f=${f} a=${a} set=${set}/>`)}</div>
           ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}
           <div class="cs-acts"><button class="btn cs-big" onClick=${back}>Back</button><button class="btn primary cs-big" onClick=${next}>${sec<IN_SECTIONS.length-1?'Next':'Finish intake'}</button></div></div>`
-      :html`<div class="en-welcome"><h1>Intake <em>complete.</em></h1><p>The next steps (plans, coach review, PAR-Q+ and agreement) are coming in the next update.</p>
-          <button class="btn primary cs-big" style="max-width:360px" onClick=${()=>setLock('handback')}>Hand back to coach</button></div>`}
+      :step===2?html`<${EnPlans} ctx=${ctx} d=${d} patch=${patch} onDone=${()=>{flush();setCoach(false);setLock('handback')}}/>`
+      :!coach?html`<div class="en-welcome"><h1>Coach <em>only.</em></h1><p>Please hand the iPad back to your coach.</p><button class="btn primary cs-big" style="max-width:360px" onClick=${()=>setLock('handback')}>Coach PIN</button></div>`
+      :step===3?html`<${EnReview} ctx=${ctx} d=${d} patch=${patch}/>`
+      :step===4?html`<${EnBilling} ctx=${ctx} d=${d} patch=${patch}/>`
+      :html`<${EnProfile} ctx=${ctx} d=${d} patch=${patch}/>`}
     </div></div>`;
 }
 
@@ -2636,6 +2687,238 @@ function PendingEnrollments({ctx,onOpen}){const list=Object.values(ctx.enrollmen
       <div style="min-width:0;flex:1"><b>${e.name||(e.intake&&e.intake.legal_name)||'New client'}</b><small>${EN_STATUS[e.status]||'Started'} · ${fmtDate((e.startedAt||'').slice(0,10),{month:'short',day:'numeric'})}</small></div>
       <button class="btn sm" onClick=${()=>onOpen(e.id)}>Resume</button>
       <${IconDel} onConfirm=${()=>{enLocal.del(e.id);ctx.api.del('enrollments',e.id)}}/></div>`)}</div>`}
+
+/* ================= Enrollment phase 3: plans, coach review, billing, profile ================= */
+const EN_FREQ=[[1,'Monthly'],[3,'Every 3 months'],[6,'Every 6 months'],[12,'Every 12 months']];
+const EN_METHODS=[['etransfer','e-Transfer'],['cash','Cash'],['card','Card'],['invoice','Invoice (Square)'],['other','Other']];
+const enIncl=k=>String(k.includes||'').split(/\s*[·\n]\s*/).map(x=>x.trim()).filter(Boolean);
+/* Price for one billing period of plan k: base, discounts, GST, total, per session */
+function enPrice(settings,k,{freq=1,discounts=[],gst=true}={}){
+  const bt=billTypeOf(k);const price=Number(k.price)||0;let sessions=0,months=0,base=0,perMonth=0;
+  if(bt==='pack'){if(Number(k.perWeek)>0){months=freq;sessions=Math.round(Number(k.perWeek)*WPM*freq);base=round2(sessions*price)}else{sessions=Number(k.qty)||1;base=round2(sessions*price)}}
+  else if(bt==='program'){base=price}
+  else{months=freq;perMonth=Number(k.perMonth)||0;sessions=perMonth*freq;base=round2(price*freq)}
+  let left=base;const lines=[];
+  (discounts||[]).forEach(d=>{const v=d.kind==='pct'?round2(base*(Number(d.amount)||0)/100):Math.min(left,round2(Number(d.amount)||0));const val=Math.min(left,v);left=round2(left-val);lines.push({...d,value:val})});
+  const sub=left;const gr=(Number(settings.gstRate)||0)/100;
+  const gstOn=!!settings.gstRegistered&&gst;const inc=!!settings.gstIncluded;
+  const tax=gstOn?(inc?round2(sub-sub/(1+gr)):round2(sub*gr)):0;const total=gstOn&&!inc?round2(sub+tax):sub;
+  const commit=bt==='program'||(bt==='pack'&&!(Number(k.perWeek)>0))?0:Number(k.commit)||0;
+  const periods=commit&&months?Math.max(1,Math.ceil(commit/months)):1;
+  return {bt,sessions,months,perMonth,base,lines,sub,tax,total,gstOn,gstIncluded:inc,perSession:sessions?round2(sub/sessions):null,commit,periods,commitTotal:round2(total*periods)}}
+const enSchedule=(first,pr)=>Array.from({length:pr.periods},(_,i)=>({due:pr.months?addMonthsYmd(first,i*pr.months):first,amount:pr.total,sessions:pr.sessions}));
+const discOk=(d,k,ctx)=>{if(d.archived)return false;if(d.expires&&d.expires<todayYmd())return false;if((d.planIds||[]).length&&!d.planIds.includes(k.id))return false;
+  if(Number(d.limit)>0){const used=Object.values(ctx.ledger||{}).filter(l=>l.kind==='charge'&&(l.discounts||[]).some(x=>x.id===d.id)).map(l=>l.clientId);if(new Set(used).size>=Number(d.limit))return false}return true};
+
+/* ---- Step 3 (client): plan cards ---- */
+function EnPlans({ctx,d,patch,onDone}){const {settings}=ctx;const plans=pkgList(settings).filter(planVisible);
+  const groups={};plans.forEach(k=>{(groups[k.group||'Plans']=groups[k.group||'Plans']||[]).push(k)});
+  const gr=(Number(settings.gstRegistered&&!settings.gstIncluded?settings.gstRate:0)||0)/100;const withG=!!settings.clientPricesWithGst;
+  const show=k=>{const p=Number(k.price)||0;return withG?round2(p*(1+gr)):p};
+  const unit=k=>{const bt=billTypeOf(k);return bt==='pack'?'per session':bt==='program'?'one-time':'per month'};
+  return html`<div class="cs-wrap en-plans">
+    <h2 class="en-h">Coaching plans</h2><p class="fhint" style="margin:0;font-size:15px">Tap the plan that interests you most. Your coach will go over it with you and confirm the details.${settings.gstRegistered&&!settings.gstIncluded?(withG?' Prices include GST.':' Prices are before GST.'):''}</p>
+    ${Object.entries(groups).map(([g,ks])=>html`<section class="en-pgroup"><h3>${g}</h3><div class="en-cards">${ks.map(k=>{const on=d.planPref===k.id;
+      return html`<button type="button" class=${'en-card'+(on?' on':'')} aria-pressed=${on} onClick=${()=>patch(s=>({...s,planPref:on?'':k.id}))}>
+        <span class="en-card-t">${k.name}</span>
+        <span class="en-price"><b class="num">${money(show(k))}</b><small>${unit(k)}</small></span>
+        <span class="en-card-m">${[Number(k.perWeek)?`${k.perWeek}× per week`:null,Number(k.perMonth)?`${k.perMonth} sessions a month`:null,k.sessionLen?`${k.sessionLen}-min sessions`:null,Number(k.commit)?`${k.commit}-month commitment`:'No long-term commitment'].filter(Boolean).join(' · ')}</span>
+        ${k.description&&html`<span class="en-card-d">${k.description}</span>`}
+        ${enIncl(k).length>0&&html`<ul>${enIncl(k).map(x=>html`<li>${x}</li>`)}</ul>`}
+        <span class="en-card-pick">${on?'✓ Selected':'Tap to choose'}</span></button>`})}</div></section>`)}
+    ${!plans.length&&html`<div class="empty">No plans are set to show yet. Your coach will go over options with you.</div>`}
+    <div class="cs-acts"><button class="btn cs-big" onClick=${()=>patch(s=>({...s,step:1}))}>Back</button><button class="btn primary cs-big" onClick=${onDone}>${d.planPref?"I'm done":'Skip, I’ll decide with my coach'}</button></div>
+  </div>`}
+
+/* ---- Step 4 (coach): review ---- */
+const enVal=(f,v)=>{if(v==null||v===''||(Array.isArray(v)&&!v.length))return null;
+  if(f.t==='yn')return v==='yes'?'Yes':'No';if(Array.isArray(v)&&f.t!=='body')return v.join(', ');
+  if(f.t==='body')return v.map(x=>`${x.area}: ${x.sev}/10${x.since?', '+x.since.toLowerCase():''}${x.worse?' · worse with '+x.worse:''}`).join('\n');
+  if(f.t==='grid'){const days=[1,2,3,4,5,6,0].filter(d=>(v[d]||[]).length).map(d=>`${DOW[d]} ${v[d].map(s=>s.toLowerCase()).join('/')}`);return days.join(' · ')||null}
+  if(f.t==='liftgrid'){const r=LIFTS.filter(([k])=>v[k]).map(([k,l])=>`${l}: ${v[k]}`);return r.join(' · ')||null}
+  if(f.t==='bestlifts'){const r=LIFTS.filter(([k])=>v[k]&&v[k].w).map(([k,l])=>`${l}: ${v[k].w} ${v[k].u||'lb'}${v[k].r?' × '+v[k].r:''}${v[k].d?' ('+fmtDateY(v[k].d)+')':''}`);return r.join(' · ')||null}
+  if(f.t==='privacy')return v?'Agreed':null;if(f.t==='date')return fmtDateY(v);return String(v)};
+function EnReview({ctx,d,patch}){const a=d.intake||{};const pk=pkgOf(ctx.settings,d.planPref);const age=enAge(a);
+  const flags=[age!=null&&age<18?`Minor (${age}) · guardian: ${a.guardian_name||'—'}`:null,a.pain_now==='yes'?`Current pain: ${(a.pain_areas||[]).map(x=>`${x.area} ${x.sev}/10`).join(', ')||'yes'}`:null,
+    a.seeing_pro==='yes'?`Seeing a professional${a.cleared?` · cleared to train: ${a.cleared}`:''}`:null,a.photo_social==='no'?'No social media photos':null].filter(Boolean);
+  const [open,setOpen]=useState(null);
+  return html`<div class="cs-wrap">
+    <div class="eyebrow">Coach only</div><h2 class="en-h">Review · ${a.preferred_name||a.legal_name||'New client'}</h2>
+    <div class="en-sumgrid">
+      <div><span class="flabel">Primary goal</span><b>${a.goal_primary||'—'}</b>${a.goals_text&&html`<small>${a.goals_text}</small>`}</div>
+      <div><span class="flabel">Experience</span><b>${[a.experience,a.training_age?a.training_age+' yrs':null].filter(Boolean).join(' · ')||'—'}</b></div>
+      <div><span class="flabel">Sport</span><b>${a.plays_sport==='yes'?[a.sport,a.sport_level].filter(Boolean).join(' · '):'None'}</b></div>
+      <div><span class="flabel">Availability</span><b>${enVal({t:'grid'},a.avail)||'—'}</b></div>
+      <div><span class="flabel">Plan they picked</span><b>${pk?pk.name:'No preference'}</b></div>
+      <div><span class="flabel">Heard about us</span><b>${[a.heard_from,a.referral_who].filter(Boolean).join(' · ')||'—'}</b></div></div>
+    ${flags.length>0&&html`<div class="callout u2"><b>Worth noting</b><ul style="margin:6px 0 0;padding-left:18px">${flags.map(x=>html`<li>${x}</li>`)}</ul></div>`}
+    <div class="panel">${IN_SECTIONS.map((s,i)=>{const rows=s.fields.filter(f=>f.k&&inShown(f,a)).map(f=>[f.l,enVal(f,a[f.k])]).filter(r=>r[1]);
+      return html`<div class="en-rv-sec" key=${s.id}><button class="en-rv-h" aria-expanded=${open===i} onClick=${()=>setOpen(open===i?null:i)}><b>${s.title}</b><span class="fhint">${rows.length} answer${rows.length===1?'':'s'}</span><span class="sp"></span>
+          <span class="linkbtn" onClick=${e=>{e.stopPropagation();patch(x=>({...x,step:1,section:i,editFromReview:true}))}}>Edit</span></button>
+        ${open===i&&html`<dl class="en-rv">${rows.map(([l,v])=>html`<dt>${l}</dt><dd>${v}</dd>`)}</dl>`}</div>`})}</div>
+    <div class="cs-acts"><button class="btn primary cs-big" onClick=${()=>patch(s=>({...s,step:4}))}>Continue to plan & billing</button></div></div>`}
+
+/* ---- Step 5 (coach): plan, discounts, billing ---- */
+function EnBilling({ctx,d,patch}){const {settings}=ctx;const a=d.intake||{};
+  const plans=pkgList(settings).filter(k=>!k.archived);const b=d.billing||{};
+  const k=pkgOf(settings,b.planId||d.planPref)||plans[0];
+  const setB=p=>patch(s=>({...s,billing:{...(s.billing||{}),planId:k&&k.id,...p}}));
+  const disc=b.discounts||[];const saved=(settings.discounts||[]).filter(x=>k&&discOk(x,k,ctx));
+  const [cust,setCust]=useState(null);
+  if(!k)return html`<div class="cs-wrap"><div class="callout u3">Add a plan in Setup → Rates & plans first.</div></div>`;
+  const bt=billTypeOf(k);const freqOk=bt!=='program'&&!(bt==='pack'&&!(Number(k.perWeek)>0));
+  const freq=freqOk?(Number(b.freq)||Number(k.commit)||1):0;
+  const pr=enPrice(settings,k,{freq,discounts:disc,gst:b.gst!==false});
+  const start=b.start||todayYmd();const first=b.firstDue||start;
+  const sched=enSchedule(first,pr);
+  const addSaved=id=>{const x=(settings.discounts||[]).find(y=>y.id===id);if(!x)return;const row={id:x.id,name:x.name,kind:x.type,amount:Number(x.amount)||0};setB({discounts:settings.discountStack?[...disc.filter(y=>y.id!==x.id),row]:[row]})};
+  const addCustom=()=>{if(!cust||!(Number(cust.amount)>0)||!cust.reason.trim()){toast('Enter an amount and a reason');return}
+    const row={id:'',custom:true,name:'Custom: '+cust.reason.trim(),reason:cust.reason.trim(),kind:cust.kind,amount:Number(cust.amount)};setB({discounts:settings.discountStack?[...disc,row]:[row]});setCust(null)};
+  const confirm=()=>{if(!b.method){toast('Pick a payment method');return}
+    patch(s=>({...s,step:5,status:['started','intake'].includes(s.status)?'plan':s.status,billing:{...(s.billing||{}),planId:k.id,freq,start,firstDue:first,method:b.method,gst:b.gst!==false,discounts:disc},price:pr,planSetAt:new Date().toISOString()}))};
+  return html`<div class="cs-wrap">
+    <div class="eyebrow">Coach only</div><h2 class="en-h">Plan & billing</h2>
+    <div class="en-bill">
+      <div class="en-bill-l">
+        <div class="fgrid">
+          <${Field} label="Plan" wide><select value=${k.id} onChange=${e=>setB({planId:e.target.value,freq:'',discounts:[]})}>${pkgOptions(settings,k.id)}</select><//>
+          ${freqOk&&html`<${Field} label="Billed"><select value=${String(freq)} onChange=${e=>setB({freq:Number(e.target.value)})}>${EN_FREQ.map(([v,l])=>html`<option value=${v}>${l}</option>`)}</select><//>`}
+          <${Field} label="Start date"><input type="date" value=${start} onChange=${e=>setB({start:e.target.value,firstDue:b.firstDue&&b.firstDue!==b.start?b.firstDue:e.target.value})}/><//>
+          <${Field} label="First payment due"><input type="date" value=${first} onChange=${e=>setB({firstDue:e.target.value})}/><//>
+          <${Field} label="Payment method"><select value=${b.method||''} onChange=${e=>setB({method:e.target.value})}><option value="">Choose…</option>${EN_METHODS.map(([v,l])=>html`<option value=${v}>${l}</option>`)}</select><//>
+        </div>
+        ${settings.gstRegistered&&!settings.gstIncluded&&html`<label class="check"><input type="checkbox" checked=${b.gst!==false} onChange=${e=>setB({gst:e.target.checked})}/>Charge GST (${settings.gstRate}%)</label>`}
+        <div class="field"><span class="flabel">Discounts${settings.discountStack?' (can stack)':' (one at a time)'}</span>
+          ${disc.map((x,i)=>html`<div class="en-disc"><b>${x.name}</b><span>${discLabel({type:x.kind,amount:x.amount})}</span><span class="sp"></span><button class="iconbtn" aria-label="Remove discount" onClick=${()=>setB({discounts:disc.filter((_,j)=>j!==i)})}><${Icon} n="x" s=${15}/></button></div>`)}
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><select style="max-width:280px" value="" onChange=${e=>e.target.value==='__c'?setCust({kind:'pct',amount:'',reason:''}):addSaved(e.target.value)}>
+            <option value="">Add a discount…</option>${saved.map(x=>html`<option value=${x.id}>${x.name} · ${discLabel(x)}</option>`)}<option value="__c">Custom discount…</option></select></div>
+          ${cust&&html`<div class="en-cust"><select value=${cust.kind} onChange=${e=>setCust({...cust,kind:e.target.value})}><option value="pct">%</option><option value="amt">$</option></select>
+            <input type="number" inputmode="decimal" min="0" placeholder="Amount" value=${cust.amount} onInput=${e=>setCust({...cust,amount:e.target.value})}/>
+            <input type="text" placeholder="Reason (required)" value=${cust.reason} onInput=${e=>setCust({...cust,reason:e.target.value})}/>
+            <button class="btn primary" onClick=${addCustom}>Add</button><button class="btn" onClick=${()=>setCust(null)}>Cancel</button></div>`}</div>
+      </div>
+      <div class="en-bill-r">
+        <div class="en-bd"><div class="eyebrow">${pr.months?`Each payment · ${pr.months} month${pr.months===1?'':'s'}`:bt==='program'?'One-time':'Each pack'}</div>
+          <div><span>Base${pr.sessions?` · ${pr.sessions} sessions`:''}</span><b class="num">${money(pr.base)}</b></div>
+          ${pr.lines.map(x=>html`<div class="en-bd-d"><span>${x.name}</span><b class="num">−${money(x.value)}</b></div>`)}
+          ${pr.lines.length>0&&html`<div><span>Subtotal</span><b class="num">${money(pr.sub)}</b></div>`}
+          ${pr.gstOn&&html`<div><span>GST ${settings.gstRate}%${pr.gstIncluded?' (included)':''}</span><b class="num">${money(pr.tax)}</b></div>`}
+          <div class="en-bd-t"><span>Total</span><b class="num">${money(pr.total)}</b></div>
+          ${pr.perSession!=null&&html`<div class="en-bd-s"><span>Price per session (before GST)</span><b class="num">${money(pr.perSession)}</b></div>`}
+          ${pr.periods>1&&html`<div class="en-bd-s"><span>${pr.commit}-month commitment · ${pr.periods} payments</span><b class="num">${money(pr.commitTotal)}</b></div>`}</div>
+        <div class="en-sched"><span class="flabel">Payment schedule</span>${sched.map((x,i)=>html`<div><span>${i===0?'First':'#'+(i+1)} · ${fmtDateY(x.due)}</span><b class="num">${money(x.amount)}</b></div>`)}
+          ${pr.periods===1&&pr.months&&!pr.commit&&html`<small class="fhint">Month to month: the next payment shows as a renewal in Payments.</small>`}</div>
+      </div>
+    </div>
+    <div class="cs-acts"><button class="btn cs-big" onClick=${()=>patch(s=>({...s,step:3}))}>Back</button><button class="btn primary cs-big" onClick=${confirm}>Confirm plan</button></div></div>`}
+
+/* ---- Step 6: create the athlete profile ---- */
+const normPhone=p=>String(p||'').replace(/\D/g,'').slice(-10);
+function enDupes(ctx,a){const nm=String(a.legal_name||'').trim().toLowerCase();const em=String(a.email||'').trim().toLowerCase();const ph=normPhone(a.phone);
+  return Object.values(ctx.clients).map(c=>{const why=[];if(nm&&String(c.name||'').trim().toLowerCase()===nm)why.push('same name');
+    if(em&&String(c.email||'').trim().toLowerCase()===em)why.push('same email');if(ph.length>=7&&normPhone(c.phone)===ph)why.push('same phone');return {c,why}}).filter(x=>x.why.length)}
+function enClientFrom(ctx,d,existing){const a=d.intake||{};const b=d.billing||{};const k=pkgOf(ctx.settings,b.planId);const pr=d.price||{};const bt=k?billTypeOf(k):'pack';
+  const now=todayYmd();const sexOf={Woman:'female',Man:'male'}[a.gender];
+  const typeFromSport=a.plays_sport==='yes'&&ATHLETE_TYPES.find(t=>t.toLowerCase()===String(a.sport||'').trim().toLowerCase());
+  const athleteType=typeFromSport||(a.goal_primary==='Powerlifting competition'?'Powerlifter':(existing&&existing.athleteType)||'General population');
+  const goals=[];if(a.goal_primary||a.goals_text)goals.push({id:uid(),text:a.goals_text||a.goal_primary,target:a.target_date||'',status:'active',
+    note:[a.goal_primary&&a.goals_text?'Primary goal: '+a.goal_primary:null,a.target_event?'Event: '+a.target_event:null,(a.goals_secondary||[]).length?'Also: '+a.goals_secondary.join(', '):null,a.success_3?'3 months: '+a.success_3:null,a.success_6?'6 months: '+a.success_6:null,a.success_12?'12 months: '+a.success_12:null].filter(Boolean).join('\n')});
+  const lims=(a.pain_now==='yes'?(a.pain_areas||[]):[]).map(x=>({id:uid(),area:x.area,text:`Pain ${x.sev}/10${x.since?' for '+x.since.toLowerCase():''}.${x.worse?' Worse with: '+x.worse+'.':''}${a.seeing_pro==='yes'?` Seeing: ${a.seeing_who||'a professional'}${a.cleared?' (cleared: '+a.cleared+')':''}.`:''}`,severity:x.sev>=7?'severe':x.sev>=4?'moderate':'mild',status:'active',date:now,avoid:a.restricted||''}));
+  if(a.past_injuries||a.surgeries)lims.push({id:uid(),area:'Past injuries & surgeries',text:[a.past_injuries,a.surgeries?'Surgeries: '+a.surgeries:null].filter(Boolean).join('\n'),severity:'mild',status:'resolved',date:now,avoid:''});
+  const prs=LIFTS.filter(([kk])=>a.best_lifts&&a.best_lifts[kk]&&Number(a.best_lifts[kk].w)>0).map(([kk,l])=>{const x=a.best_lifts[kk];return {id:uid(),lift:l==='Overhead press'?'Overhead press':l,weight:Number(x.w),reps:Number(x.r)||1,unit:x.u||'lb',date:x.d||now,note:'From intake'}});
+  const eqWhere=a.equipment?a.equipment+(a.home_equipment?'':''):'';
+  const perWeek=k?(Number(k.perWeek)||(Number(k.perMonth)>0?Math.round(Number(k.perMonth)/WPM*2)/2:0)):0;
+  const plan=k?{packageId:k.id,rate:bt==='pack'?(pr.perSession??Number(k.price)):round2((pr.sub||0)/(pr.months||1)),rateUnit:bt==='pack'?'session':'month',
+    billing:bt==='pack'&&!(Number(k.perWeek)>0)?'pack':bt==='program'?'1':String(b.freq||1),packSize:bt==='pack'&&!(Number(k.perWeek)>0)?Number(k.qty)||10:undefined,perWeek,
+    commitMonths:Number(k.commit)||0,startDate:b.start,method:b.method,noGst:b.gst===false,rateType:k.rateType||'standard',discounts:(b.discounts||[]).map(x=>({id:x.id,name:x.name,kind:x.kind,amount:x.amount})),enrollmentId:d.id}:undefined;
+  const base=existing?{...existing}:{name:'',units:'imperial',status:'active',startDate:b.start||now,sessionAdjust:0,numberOffset:0,created:Date.now()};
+  const fill=(k2,v)=>{if(v!=null&&v!==''&&(base[k2]==null||base[k2]===''))base[k2]=v};
+  base.name=a.legal_name?String(a.legal_name).trim():base.name;fill('dob',a.dob);if(sexOf)fill('sex',sexOf);
+  base.phone=a.phone||base.phone;base.email=a.email||base.email;base.status='active';
+  base.athleteType=athleteType;if(a.plays_sport==='yes')base.sport=[a.sport,a.position].filter(Boolean).join(' · ');
+  base.preferredName=a.preferred_name||base.preferredName||'';base.pronouns=a.pronouns||base.pronouns||'';
+  base.contact={...(base.contact||{}),address:a.address||'',pref:a.contact_pref||'',occupation:a.occupation||'',workType:a.work_type||'',
+    emergency:{name:a.em_name||'',relationship:a.em_rel||'',phone:a.em_phone||''},guardian:enMinor(a)?{name:a.guardian_name||'',phone:a.guardian_phone||'',email:a.guardian_email||''}:null};
+  base.consents={photoForm:a.photo_form==='yes',photoSocial:a.photo_social==='yes',textReminders:a.comm_text==='yes',emailReminders:a.comm_email==='yes',privacyAgreed:!!a.privacy,at:d.intakeDoneAt||new Date().toISOString()};
+  base.leadSource=[a.heard_from,a.referral_who||a.heard_other].filter(Boolean).join(' · ');
+  base.goals=[...(base.goals||[]),...goals];base.limitations=[...(base.limitations||[]),...lims];base.prs=[...(base.prs||[]),...prs];
+  if(a.equipment||a.home_equipment){const eq=base.equipment||{have:[],custom:[],where:'',note:''};base.equipment={...eq,where:eq.where||eqWhere,note:[eq.note,a.home_equipment?'Home gym: '+a.home_equipment:null].filter(Boolean).join('\n')}}
+  const notes=[['Training',[a.days_week?`Trains ${a.days_week} days/week${a.session_len?' · '+a.session_len:''}`:null,(a.styles||[]).length?'Style: '+a.styles.join(', '):null,enVal({t:'liftgrid'},a.lift_comfort),a.competed==='yes'?`Competed: ${[a.comp_fed,a.comp_class,a.comp_total].filter(Boolean).join(' · ')}`:null,a.prev_worked?'Coaching that worked: '+a.prev_worked:null,a.prev_didnt?"Didn't work: "+a.prev_didnt:null]],
+    ['Lifestyle',[a.sleep_hours?`Sleep ${a.sleep_hours}${a.sleep_quality?' · quality '+a.sleep_quality+'/5':''}`:null,a.stress?`Stress ${a.stress}/5${(a.stressors||[]).length?' ('+a.stressors.join(', ')+')':''}`:null,a.activity?'Activity: '+a.activity+(a.steps?` · ~${a.steps} steps`:''):null]],
+    ['Nutrition',[a.eating,a.meals?a.meals+' meals/day':null,a.diet?'Diet: '+a.diet:null,a.allergies?'Allergies/intolerances: '+a.allergies:null,a.supplements?'Supplements: '+a.supplements:null,a.alcohol?'Alcohol: '+a.alcohol:null,a.caffeine?'Caffeine: '+a.caffeine:null,a.hydration?'Water: '+a.hydration:null,a.nutrition_interest?'Nutrition coaching: '+a.nutrition_interest:null]],
+    ['Availability',[enVal({t:'grid'},a.avail),(a.pref_time||[]).length?'Prefers: '+a.pref_time.join(', '):null,a.format?'Format: '+a.format:null,a.coach_style?'Coaching style: '+a.coach_style:null,(a.barriers||[]).length?'Barriers: '+a.barriers.join(', ')+(a.barriers_text?' — '+a.barriers_text:''):null]],
+    ['Sport',a.plays_sport==='yes'?[a.sport_level,a.season_in?'In-season: '+a.season_in:null,a.season_off?'Off-season: '+a.season_off:null,a.sport_events?'Upcoming: '+a.sport_events:null,a.practices_week?a.practices_week+' practices/week':null,a.games_week?a.games_week+' games/week':null]:[]]]
+    .map(([h,ls])=>[h,ls.filter(Boolean)]).filter(([,ls])=>ls.length).map(([h,ls])=>`${h}: ${ls.join(' · ')}`).join('\n\n');
+  base.notes=[...(base.notes||[]),...(notes?[{id:uid(),date:now,type:'Assessment',text:'Intake summary\n\n'+notes}]:[])];
+  if(plan)base.plan=plan;base.enrolledAt=new Date().toISOString();return base}
+
+/* Intake PDF (jsPDF) */
+async function buildIntakePdf(d,version){const lib=await loadJsPdf();const doc=new lib.jsPDF({unit:'pt',format:'letter',compress:true});const a=d.intake||{};
+  const PW=612,PH=792,M=48,CW=PW-M*2;let y=M;
+  const need=h=>{if(y+h>PH-46){doc.addPage();y=M}};
+  const txt=(t,{size=10,bold=false,color=[0,0,0],x=M,w=CW,gap=3}={})=>{doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);doc.setTextColor(...color);const L=doc.splitTextToSize(String(t).replace(/[  ]/g,' '),w);need(L.length*size*1.3);L.forEach(l=>{doc.text(l,x,y+size);y+=size*1.3});y+=gap;doc.setTextColor(0)};
+  doc.setFillColor(226,30,40);doc.rect(M,y,26,26,'F');doc.setTextColor(255);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('SBD',M+13,y+17,{align:'center'});doc.setTextColor(0);
+  doc.setFontSize(16);doc.text('STRENGTH BY DESIGN · NEW CLIENT INTAKE',M+36,y+18);y+=40;
+  txt(`${a.legal_name||''}${a.preferred_name?` ("${a.preferred_name}")`:''}`,{size:13,bold:true});
+  txt(`Submitted ${new Date(d.intakeDoneAt||Date.now()).toLocaleString('en-CA')} · Version ${version} · Enrollment ${d.id}`,{size:8.5,color:[90,90,90],gap:10});
+  IN_SECTIONS.forEach(s=>{const rows=s.fields.filter(f=>f.k&&inShown(f,a)&&f.t!=='privacy').map(f=>[f.l,enVal(f,a[f.k])]).filter(r=>r[1]);if(!rows.length)return;
+    need(40);y+=4;doc.setDrawColor(20);doc.setLineWidth(1.2);doc.line(M,y,PW-M,y);y+=6;txt(s.title.toUpperCase(),{size:11,bold:true,gap:4});
+    rows.forEach(([l,v])=>{doc.setFont('helvetica','bold');doc.setFontSize(8.5);const L1=doc.splitTextToSize(l,170);doc.setFont('helvetica','normal');doc.setFontSize(9.5);const L2=doc.splitTextToSize(String(v),CW-180);
+      const h=Math.max(L1.length*11,L2.length*12.3)+4;need(h);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(90);doc.text(L1,M,y+9);doc.setTextColor(0);doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.text(L2,M+180,y+9.5);y+=h});});
+  need(90);y+=8;doc.setDrawColor(20);doc.line(M,y,PW-M,y);y+=6;txt('PRIVACY',{size:11,bold:true,gap:4});txt(EN_PRIVACY,{size:9});txt(a.privacy?'[X] Agreed by the client when submitting this form.':'[  ] Not agreed.',{size:9.5,bold:true});
+  const n=doc.getNumberOfPages();for(let p=1;p<=n;p++){doc.setPage(p);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(110);doc.text(`${a.legal_name||''} · intake v${version}`,M,PH-26);doc.text(`${p} / ${n}`,PW-M,PH-26,{align:'right'});doc.setTextColor(0)}
+  return doc.output('blob')}
+
+function EnProfile({ctx,d,patch}){const a=d.intake||{};const [busy,setBusy]=useState(false);const [choice,setChoice]=useState(d.linkTo||null);
+  const dup=d.clientId?[]:enDupes(ctx,a);const pk=pkgOf(ctx.settings,(d.billing||{}).planId);const pr=d.price||{};
+  const create=async mode=>{if(busy)return;setBusy(true);
+    try{const existing=mode&&mode!=='new'?ctx.clients[mode]:null;const id=existing?existing.id:uid();
+      const c=enClientFrom(ctx,d,existing);await ctx.api.put('clients',id,c);
+      const b=d.billing||{};const k=pkgOf(ctx.settings,b.planId);let chargeId=null;
+      if(k){chargeId=uid();const pdesc=pr.months?`${k.name} · ${fmtDate(b.start,{month:'short',year:'numeric'})}${pr.months>1?` (${pr.months} months)`:''}`:`${k.name}${pr.sessions?' · '+pr.sessions+' sessions':''}`;
+        await ctx.api.put('ledger',chargeId,{clientId:id,kind:'charge',date:b.start||todayYmd(),dueDate:b.firstDue||b.start||todayYmd(),amount:pr.total,base:pr.sub,gst:!!pr.gstOn,sessions:pr.sessions||0,months:pr.months||0,
+          periodStart:b.start||todayYmd(),desc:pdesc,method:b.method,perMonth:pr.perMonth||0,discounts:(pr.lines||[]).map(x=>({id:x.id||'',name:x.name,kind:x.kind,amount:x.amount,value:x.value,reason:x.reason||''})),enrollmentId:d.id});
+        (pr.lines||[]).forEach(x=>ctx.api.logDiscountUse({client_id:id,enrollment_id:d.id,discount_id:x.id||null,name:x.name,kind:x.kind,amount:x.amount,value_applied:x.value,reason:x.reason||null,plan_id:k.id,charge_id:chargeId}))}
+      const prior=Object.values(ctx.intakes||{}).filter(x=>x.clientId===id).length;const ver=prior+1;const subId=uid();
+      let pdf=null;try{pdf=await buildIntakePdf(d,ver)}catch(_){}
+      const sub={id:subId,clientId:id,enrollmentId:d.id,version:ver,answers:d.intake,submittedAt:d.intakeDoneAt||new Date().toISOString()};
+      await ctx.api.intakeSave(sub,pdf);
+      patch(s=>({...s,clientId:id,chargeId,intakeId:subId,status:['started','intake','plan'].includes(s.status)?'profile':s.status,profileAt:new Date().toISOString(),linked:!!existing}));
+      toast(existing?'Linked to the existing athlete':'Athlete profile created')}
+    catch(e){toast('Could not create the profile: '+String(e&&e.message||e).slice(0,100))}
+    setBusy(false)};
+  if(d.clientId){const c=ctx.clients[d.clientId];return html`<div class="cs-wrap"><div class="cs-done" style="margin-top:4vh"><div class="cs-ok">✓</div><h2>${d.linked?'Profile updated':'Profile created'}</h2>
+    <p>${c?c.name:''} is in Athletes with their goals, injuries, PRs, contact details and an intake summary note. ${pr.total?`First payment of ${money(pr.total)} is in Payments, due ${fmtDateY((d.billing||{}).firstDue)}.`:''} The intake PDF is saved on their Intake tab.</p></div>
+    <div class="callout">Next in the following update: PAR-Q+ and the contract right here in Client Mode. For now, finish those from the athlete's profile.</div></div>`}
+  return html`<div class="cs-wrap">
+    <div class="eyebrow">Coach only</div><h2 class="en-h">Create athlete profile</h2>
+    <div class="en-sumgrid"><div><span class="flabel">Name</span><b>${a.legal_name}</b></div><div><span class="flabel">Plan</span><b>${pk?pk.name:'—'}</b></div>
+      <div><span class="flabel">First payment</span><b>${money(pr.total||0)} · ${fmtDateY((d.billing||{}).firstDue)}</b></div><div><span class="flabel">Discounts</span><b>${(pr.lines||[]).map(x=>x.name).join(', ')||'None'}</b></div></div>
+    ${dup.length?html`<div class="callout u2"><b>Possible duplicate${dup.length>1?'s':''} found</b><p style="margin:4px 0 8px">Choose what to do:</p>
+        ${dup.map(x=>html`<label class="en-dup"><input type="radio" name="dup" checked=${choice===x.c.id} onChange=${()=>setChoice(x.c.id)}/><span><b>Link to ${x.c.name}</b><small>${x.why.join(', ')} · ${x.c.status||'active'}${x.c.email?' · '+x.c.email:''}. Keeps their history and adds this intake as a new version.</small></span></label>`)}
+        <label class="en-dup"><input type="radio" name="dup" checked=${choice==='new'} onChange=${()=>setChoice('new')}/><span><b>Create a new athlete anyway</b><small>They're a different person.</small></span></label>
+        <div class="cs-acts" style="margin-top:10px"><button class="btn cs-big" onClick=${()=>patch(s=>({...s,step:4}))}>Cancel</button><button class="btn primary cs-big" disabled=${!choice||busy} onClick=${()=>create(choice)}>${busy?'Creating…':'Continue'}</button></div></div>`
+      :html`<p class="fhint" style="margin:0;font-size:15px">No existing athlete matches this name, email or phone.</p>
+        <div class="cs-acts"><button class="btn cs-big" onClick=${()=>patch(s=>({...s,step:4}))}>Back</button><button class="btn primary cs-big" disabled=${busy} onClick=${()=>create('new')}>${busy?'Creating…':'Create athlete profile'}</button></div>`}
+  </div>`}
+
+/* ---- Intake tab on the athlete profile ---- */
+function IntakeTab({ctx,c}){const subs=Object.values(ctx.intakes||{}).filter(x=>x.clientId===c.id).sort((a,b)=>(b.version||0)-(a.version||0));const [open,setOpen]=useState(subs[0]&&subs[0].id);
+  const ct=c.contact||{};const cons=c.consents;
+  const dl=async x=>{try{const b=await ctx.api.intakePdf(x);await saveBlob(b,`Intake ${c.name} v${x.version} ${String(x.submittedAt||'').slice(0,10)}.pdf`)}catch(e){if(e&&e.code!=='declined')toast('Could not load the intake PDF')}};
+  return html`<div style="display:flex;flex-direction:column;gap:14px">
+    <div class="panel" style="box-shadow:none"><div class="panel-h"><h3>Contact & consent</h3></div><div class="panel-b"><dl class="en-rv">
+      ${[['Preferred name',c.preferredName],['Pronouns',c.pronouns],['Address',ct.address],['Contact by',ct.pref],['Occupation',[ct.occupation,ct.workType].filter(Boolean).join(' · ')],
+        ['Emergency contact',ct.emergency&&ct.emergency.name?`${ct.emergency.name} (${ct.emergency.relationship}) · ${ct.emergency.phone}`:''],['Parent / guardian',ct.guardian&&ct.guardian.name?`${ct.guardian.name} · ${ct.guardian.phone} · ${ct.guardian.email}`:''],
+        ['Heard about us',c.leadSource],['Photos for form checks',cons?(cons.photoForm?'Yes':'No'):''],['Photos on social media',cons?(cons.photoSocial?'Yes':'No'):''],['Reminders',cons?[cons.textReminders?'Text':null,cons.emailReminders?'Email':null].filter(Boolean).join(', ')||'None':''],
+        ['Privacy notice',cons&&cons.privacyAgreed?`Agreed ${fmtDateY(String(cons.at||'').slice(0,10))}`:'']].filter(r=>r[1]).map(([l,v])=>html`<dt>${l}</dt><dd>${v}</dd>`)}</dl>
+      ${!ct.emergency&&!cons&&html`<div class="fhint">No intake on file. Use Athletes → Enroll for new clients.</div>`}</div></div>
+    <div class="panel" style="box-shadow:none"><div class="panel-h"><h3>Intake history</h3><span class="sp"></span><span class="fhint">${subs.length} version${subs.length===1?'':'s'}</span></div>
+      ${subs.length?subs.map(x=>html`<div class="en-rv-sec" key=${x.id}><div class="en-rv-h"><button class="pq-hbtn" onClick=${()=>setOpen(open===x.id?null:x.id)}><b>Version ${x.version} · ${fmtDateY(String(x.submittedAt||'').slice(0,10))}</b><small>${open===x.id?'Hide answers':'Show answers'}</small></button>
+          <button class="btn sm" onClick=${()=>dl(x)}><${Icon} n="download" s=${14}/>PDF</button></div>
+        ${open===x.id&&html`<div style="padding:0 14px 12px">${IN_SECTIONS.map(s=>{const a=x.answers||{};const rows=s.fields.filter(f=>f.k&&inShown(f,a)).map(f=>[f.l,enVal(f,a[f.k])]).filter(r=>r[1]);
+          return rows.length?html`<h4 class="en-rv-t">${s.title}</h4><dl class="en-rv">${rows.map(([l,v])=>html`<dt>${l}</dt><dd>${v}</dd>`)}</dl>`:null})}</div>`}</div>`)
+        :html`<div class="empty">No intake forms yet.</div>`}</div></div>`}
 
 function AthletesPage({ctx,selId,setSelId}){
   const {clients,derived}=ctx;
@@ -2709,7 +2992,7 @@ function Profile({ctx,c,onBack}){
   const [tab,setTab]=useState('overview');const [modal,setModal]=useState(null);
   const s=derived.cs[c.id]||{};
   const upd=patch=>api.put('clients',c.id,{...c,...patch});
-  const TABS=[['overview','Overview'],['sessions','Sessions'],['chart','Chart notes'],['prs','PRs'],['goals','Goals'],['limits','Limitations'],['health','Health'],['parq','PAR-Q+'],['contracts','Contracts'],['equipment','Equipment'],['macros','Macros'],['plan','Plan & billing']];
+  const TABS=[['overview','Overview'],['intake','Intake'],['sessions','Sessions'],['chart','Chart notes'],['prs','PRs'],['goals','Goals'],['limits','Limitations'],['health','Health'],['parq','PAR-Q+'],['contracts','Contracts'],['equipment','Equipment'],['macros','Macros'],['plan','Plan & billing']];
   const type=c.athleteType==='Custom'?(c.athleteCustom||'Custom'):c.athleteType;
   return html`<div class="panel">
     <div class="prof-h">
@@ -2734,6 +3017,7 @@ function Profile({ctx,c,onBack}){
       ${tab==='limits'&&html`<${LimitsTab} c=${c} upd=${upd}/>`}
       ${tab==='health'&&html`<${HealthTab} c=${c} upd=${upd}/>`}
       ${tab==='parq'&&html`<${ParqTab} ctx=${ctx} c=${c}/>`}
+      ${tab==='intake'&&html`<${IntakeTab} ctx=${ctx} c=${c}/>`}
       ${tab==='contracts'&&html`<${ContractsTab} ctx=${ctx} c=${c}/>`}
       ${tab==='equipment'&&html`<${EquipTab} c=${c} upd=${upd}/>`}
       ${tab==='macros'&&html`<${MacrosTab} c=${c} upd=${upd}/>`}
