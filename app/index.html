@@ -274,6 +274,15 @@ table.ct-parties td{vertical-align:top;padding:1px 6px}table.ct-parties td:last-
 @media (max-width:760px){.en-form{grid-template-columns:minmax(0,1fr)}.en-best-row{grid-template-columns:1fr 1fr}.en-best-row b{grid-column:1/-1}.en-prog small{display:none}.en-prog span{min-width:20px}}
 /* Enrollment phase 3 */
 .en-agr{display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.en-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px;padding:16px 14px}
+.en-stat-grid h4{margin:0 0 8px;font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:14px;color:var(--muted)}
+.en-bars{display:flex;flex-direction:column;gap:7px}
+.en-bar{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13.5px}
+.en-bar small{grid-column:2/-1;margin-top:-4px;color:var(--muted);font-size:12px}
+.en-bar-l{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.en-bar-t{height:10px;border-radius:5px;background:var(--surface-2);overflow:hidden}.en-bar-t i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.en-recent{display:flex;flex-direction:column;gap:6px}.en-recent b{display:block;font-size:14px}.en-recent small{color:var(--muted);font-size:12.5px}
+@media (max-width:1100px){.en-stat-grid{grid-template-columns:minmax(0,1fr)}}
 .en-pgroup h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:18px;margin:6px 0 8px}
 .en-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .en-card{display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:inherit;font:inherit;cursor:pointer;touch-action:manipulation}
@@ -3000,15 +3009,53 @@ function EnDone({ctx,d,onFinish,onOpenProfile}){const c=ctx.clients[d.clientId];
     <div class="cs-acts"><button class="btn cs-big" onClick=${onOpenProfile}>Finish & open profile</button><button class="btn primary cs-big" onClick=${onFinish}>Finish</button></div>
     <p class="fhint" style="margin:0">Finishing clears this screen so the next person can't see these answers.</p></div>`}
 
+/* ================= Enrollment stats ================= */
+const EN_PERIODS=[['month','This month'],['3m','Last 3 months'],['year','This year'],['all','All time']];
+function enPeriodStart(p){const t=appNow();if(p==='month')return ymd(new Date(t.getFullYear(),t.getMonth(),1));if(p==='3m')return ymd(addDays(t,-91));if(p==='year')return `${t.getFullYear()}-01-01`;return '0000-01-01'}
+function EnBars({rows,fmt=v=>v}){const max=Math.max(1,...rows.map(r=>r[1]));
+  return rows.length?html`<div class="en-bars">${rows.map(([l,v,sub])=>html`<div class="en-bar"><span class="en-bar-l">${l}</span><span class="en-bar-t"><i style=${`width:${Math.max(4,Math.round(v/max*100))}%`}></i></span><b class="num">${fmt(v)}</b>${sub?html`<small>${sub}</small>`:null}</div>`)}</div>`
+    :html`<div class="fhint">Nothing yet for this period.</div>`}
+function EnrollStats({ctx}){const [per,setPer]=useState(()=>ls.get('enStatsPer','month'));const setP=v=>{setPer(v);ls.set('enStatsPer',v)};
+  const from=enPeriodStart(per);const all=Object.values(ctx.enrollments||{});
+  const inP=e=>String(e.completedAt||e.profileAt||e.startedAt||'').slice(0,10)>=from;
+  const done=all.filter(e=>e.status==='active'&&String(e.completedAt||'').slice(0,10)>=from);
+  const started=all.filter(e=>String(e.startedAt||'').slice(0,10)>=from);
+  const pending=all.filter(e=>e.status!=='active');
+  const count=(arr,key)=>{const m={};arr.forEach(x=>{const k=key(x);if(k)m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1])};
+  const leads=count(started.filter(e=>e.intake&&e.intake.heard_from),e=>e.intake.heard_from);
+  const refs=count(started.filter(e=>e.intake&&e.intake.heard_from==='Referral'&&e.intake.referral_who),e=>e.intake.referral_who.trim());
+  const plans=count(all.filter(e=>e.billing&&e.billing.planId&&['plan','profile','parq','contract','active'].includes(e.status)&&inP(e)),e=>{const k=pkgOf(ctx.settings,e.billing.planId);return k?k.name:'(removed plan)'});
+  const charges=Object.values(ctx.ledger||{}).filter(l=>l.kind==='charge'&&(l.discounts||[]).length&&String(l.date||'')>=from);
+  const dm={};charges.forEach(l=>(l.discounts||[]).forEach(x=>{const k=x.name||'Discount';dm[k]=dm[k]||{n:0,v:0};dm[k].n++;dm[k].v=round2(dm[k].v+(Number(x.value)||0))}));
+  const discs=Object.entries(dm).sort((a,b)=>b[1].n-a[1].n);const discTotal=round2(sum(Object.values(dm),x=>x.v));
+  const firstPay=round2(sum(done,e=>(e.price&&e.price.total)||0));
+  const byStatus=count(pending,e=>EN_STATUS[e.status]||'Started');
+  const recent=done.slice().sort((a,b)=>String(b.completedAt).localeCompare(String(a.completedAt))).slice(0,5);
+  return html`<div class="panel en-stats"><div class="panel-h" style="flex-wrap:wrap"><h3>Enrollment</h3><span class="sp"></span>
+      <div class="seg" role="group" aria-label="Period">${EN_PERIODS.map(([k,l])=>html`<button aria-pressed=${per===k} onClick=${()=>setP(k)}>${l}</button>`)}</div></div>
+    <div class="stats" style="margin:14px;margin-bottom:0">
+      <div class="stat"><span class="l">New clients</span><span class="v">${done.length}</span><span class="s">Enrollments finished</span></div>
+      <div class="stat"><span class="l">Started</span><span class="v">${started.length}</span><span class="s">${started.length?Math.round(done.filter(e=>String(e.startedAt||'').slice(0,10)>=from).length/started.length*100)+'% finished':'—'}</span></div>
+      <div class="stat"><span class="l">Pending now</span><span class="v">${pending.length}</span><span class="s">${byStatus.map(([k,v])=>`${v} ${k.toLowerCase()}`).join(' · ')||'None'}</span></div>
+      <div class="stat"><span class="l">First payments</span><span class="v num" style="font-size:22px">${money0(firstPay)}</span><span class="s">From new clients</span></div>
+    </div>
+    <div class="en-stat-grid">
+      <section><h4>Lead sources</h4><${EnBars} rows=${leads}/>${refs.length>0&&html`<div class="fhint" style="margin-top:6px">Referred by: ${refs.map(([k,v])=>`${k}${v>1?' ('+v+')':''}`).join(', ')}</div>`}</section>
+      <section><h4>Most-used plans</h4><${EnBars} rows=${plans}/></section>
+      <section><h4>Discounts used</h4><${EnBars} rows=${discs.map(([k,x])=>[k,x.n,money(x.v)])}/>${discs.length>0&&html`<div class="fhint" style="margin-top:6px">${money(discTotal)} given in total</div>`}</section>
+      <section><h4>Recently enrolled</h4>${recent.length?html`<div class="en-recent">${recent.map(e=>{const c=ctx.clients[e.clientId];const k=e.billing&&pkgOf(ctx.settings,e.billing.planId);
+        return html`<div><b>${c?c.name:e.name||'—'}</b><small>${[k?k.name:null,fmtDate(String(e.completedAt).slice(0,10),{month:'short',day:'numeric'})].filter(Boolean).join(' · ')}</small></div>`})}</div>`:html`<div class="fhint">Nothing yet for this period.</div>`}</section>
+    </div></div>`}
+
 function AthletesPage({ctx,selId,setSelId}){
   const {clients,derived}=ctx;
   const [q,setQ]=useState('');const [filter,setFilter]=useState('active');const [modal,setModal]=useState(null);
   const list=Object.values(clients).filter(c=>(filter==='all'||(c.status||'active')===filter)&&(!q||c.name.toLowerCase().includes(q.toLowerCase())))
     .sort((a,b)=>a.name.localeCompare(b.name));
   const sel=selId&&clients[selId];const [enrolling,setEnrolling]=useState(null);
-  return html`${enrolling&&ctx.enrollments[enrolling]&&html`<${EnrollMode} key=${enrolling} ctx=${ctx} enrollId=${enrolling} onClose=${cid=>{setEnrolling(null);if(cid)setSelId(cid)}}/>`}<div class=${'ath'+(sel?' has-sel':'')}>
+  return html`${modal&&modal.type==='enstats'&&html`<${Modal} title="Enrollment stats" wide onClose=${()=>setModal(null)}><${EnrollStats} ctx=${ctx}/><//>`}${enrolling&&ctx.enrollments[enrolling]&&html`<${EnrollMode} key=${enrolling} ctx=${ctx} enrollId=${enrolling} onClose=${cid=>{setEnrolling(null);if(cid)setSelId(cid)}}/>`}<div class=${'ath'+(sel?' has-sel':'')}>
     <div class="panel ath-list">
-      <div class="panel-h" style="flex-wrap:wrap"><h3>Athletes</h3><span class="sp"></span><${EnrollButton} ctx=${ctx} onOpen=${setEnrolling}/><button class="btn primary sm" onClick=${()=>setModal({type:'new'})}><${Icon} n="plus" s=${14}/>Add</button>
+      <div class="panel-h" style="flex-wrap:wrap"><h3>Athletes</h3><span class="sp"></span><button class="iconbtn" aria-label="Enrollment stats" title="Enrollment stats" onClick=${()=>setModal({type:'enstats'})}><${Icon} n="chart" s=${17}/></button><${EnrollButton} ctx=${ctx} onOpen=${setEnrolling}/><button class="btn primary sm" onClick=${()=>setModal({type:'new'})}><${Icon} n="plus" s=${14}/>Add</button>
         <div style="display:flex;gap:6px;width:100%"><input type="text" placeholder="Search" value=${q} onInput=${e=>setQ(e.target.value)} aria-label="Search athletes"/>
           <select style="width:auto" value=${filter} onChange=${e=>setFilter(e.target.value)} aria-label="Filter"><option value="active">Active</option><option value="paused">Paused</option><option value="former">Former</option><option value="all">All</option></select></div></div>
       <div class="scroll"><${PendingEnrollments} ctx=${ctx} onOpen=${setEnrolling}/>${list.length?list.map(c=>{const s=derived.cs[c.id]||{};return html`<button class="arow" aria-current=${selId===c.id} onClick=${()=>{setSelId(c.id);try{scrollTo(0,0)}catch(_){}}}>
@@ -3016,8 +3063,8 @@ function AthletesPage({ctx,selId,setSelId}){
         <span style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><span class="num" style="font-size:13px;font-weight:600">${s.remaining??0} left</span>${s.active&&s.urg>0?html`<span title=${s.reason}><${Pill} u=${s.urg}>${s.reason}<//></span>`:null}</span></button>`})
         :html`<div class="empty">${Object.keys(clients).length?'No athletes match.':'No athletes yet. Add your first one to start tracking sessions.'}</div>`}</div>
     </div>
-    <div class="ath-prof">${sel?html`<${Profile} key=${sel.id} ctx=${ctx} c=${sel} onBack=${()=>setSelId(null)}/>`:html`<div class="panel empty" style="padding:60px 20px">Pick an athlete to open their hub.</div>`}</div>
-    ${modal&&html`<${ClientEditor} ctx=${ctx} c=${null} onClose=${()=>setModal(null)} onSaved=${id=>setSelId(id)}/>`}
+    <div class="ath-prof">${sel?html`<${Profile} key=${sel.id} ctx=${ctx} c=${sel} onBack=${()=>setSelId(null)}/>`:html`<div style="display:flex;flex-direction:column;gap:16px"><${EnrollStats} ctx=${ctx}/><div class="panel empty" style="padding:40px 20px">Pick an athlete to open their hub.</div></div>`}</div>
+    ${modal&&modal.type==='new'&&html`<${ClientEditor} ctx=${ctx} c=${null} onClose=${()=>setModal(null)} onSaved=${id=>setSelId(id)}/>`}
   </div>`;
 }
 
