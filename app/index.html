@@ -213,6 +213,65 @@ table.ct-parties td{vertical-align:top;padding:1px 6px}table.ct-parties td:last-
 .bl-slot.wo-slot{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,.9fr) minmax(0,1.6fr) auto auto}
 .is-m .bl-slot.wo-slot{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto}.is-m .wo-slot input[aria-label=Workout]{grid-column:1/-1;order:5}
 @media (max-width:700px){.bl-slot.wo-slot{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto}.wo-slot input[aria-label=Workout]{grid-column:1/-1;order:5}}
+/* Rates & plans, discounts, PIN */
+.rp-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.rp-row{border-bottom:1px solid var(--line-2)}.rp-row:last-child{border-bottom:0}.rp-arch{opacity:.6}
+.rp-head{display:flex;align-items:center;gap:8px;padding:6px 10px}
+.rp-move{display:flex;flex-direction:column}.rp-move .iconbtn{width:28px;height:20px;font-size:10px;color:var(--muted)}.rp-move .iconbtn:disabled{opacity:.25}
+.rp-sum{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:none;border:0;padding:6px 0;color:inherit;font:inherit;cursor:pointer}
+.rp-sum b{font-size:14.5px}.rp-sum small{color:var(--muted);font-size:12.5px}
+.rp-edit{padding:4px 12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--surface-2)}
+.rp-foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chip-t{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:600}
+.chip-t.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.pin-box{display:flex;flex-direction:column;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.pinpad{display:flex;flex-direction:column;align-items:center;gap:14px}
+.pin-dots{display:flex;gap:12px}.pin-dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--fg)}.pin-dots i.on{background:var(--fg)}
+.pin-keys{display:grid;grid-template-columns:repeat(3,72px);gap:10px}
+.pin-key{height:64px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:24px;font-weight:600;touch-action:manipulation}
+.pin-key:active{background:var(--surface-2)}.pin-go{min-width:236px;justify-content:center;min-height:48px}
+/* Enrollment Client Mode */
+.cs-bar .sp{flex:1}
+.en-prog{display:flex;gap:2px;padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));background:var(--surface);border-bottom:1px solid var(--line);overflow-x:auto}
+.en-prog span{flex:1;min-width:58px;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.en-prog i{display:block;height:5px;width:100%;border-radius:3px;background:var(--surface-2)}
+.en-prog .done i{background:var(--fg)}.en-prog .on i{background:var(--accent)}
+.en-prog small{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--muted);white-space:nowrap}.en-prog .on small{color:var(--fg)}
+.en-welcome{max-width:640px;margin:6vh auto 0;display:flex;flex-direction:column;gap:14px}
+.en-welcome h1{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(40px,7vw,60px);line-height:.95;margin:0}.en-welcome h1 em{font-style:normal;color:var(--accent)}
+.en-welcome p{margin:0;color:var(--muted);font-size:17px}
+.en-today{margin:0;padding:0;list-style:none;counter-reset:t;display:flex;flex-direction:column;gap:10px}
+.en-today li{counter-increment:t;display:grid;grid-template-columns:40px 1fr;column-gap:12px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.en-today li::before{content:counter(t);grid-row:span 2;width:34px;height:34px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-weight:800}
+.en-today b{font-size:16px}.en-today span{color:var(--muted);font-size:14.5px}
+.en-sec-bar{display:flex;gap:12px;align-items:center;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.en-sec-bar .meter{flex:1}.en-sec-bar .meter i{background:var(--accent)}
+.en-h{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:30px;margin:0;letter-spacing:.02em}
+.en-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 18px}
+.en-f.wide,.en-sub{grid-column:1/-1}.en-sub{display:flex;flex-direction:column;gap:2px;padding-top:8px;border-top:1px solid var(--line-2)}.en-sub b{font-family:var(--f-display);font-size:18px;text-transform:uppercase;letter-spacing:.05em}
+.en input:not([type=checkbox]):not([type=radio]):not([type=range]),.en select,.en textarea{font-size:16px;min-height:46px}
+.en .flabel{font-size:12.5px}.req{color:var(--accent)}
+.en-chips{display:flex;flex-wrap:wrap;gap:8px}
+.en-chip{min-height:46px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:15px;touch-action:manipulation}
+.en-chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.en-yn .en-chip{min-width:96px}
+.en-slider input{width:100%;height:36px}.en-sl-l{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}.en-sl-l b{font-size:22px;color:var(--fg)}
+.en-lg{display:flex;flex-direction:column;gap:10px}.en-lg-row{display:flex;flex-direction:column;gap:6px}
+.en-best{display:flex;flex-direction:column;gap:8px}.en-best-row{display:grid;grid-template-columns:120px minmax(0,1fr) 76px 80px minmax(0,1.2fr);gap:8px;align-items:center}
+.en-pain{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-top:10px}
+.en-grid-wrap{overflow-x:auto}.en-grid{border-collapse:separate;border-spacing:6px}
+.en-grid th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left}
+.en-cell{width:56px;height:48px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:800;font-size:18px;touch-action:manipulation}.en-cell.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.en-privacy{display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.en-privacy p{margin:0;font-size:15px;line-height:1.55}
+.en-agree{display:flex;gap:12px;align-items:flex-start;font-weight:600;font-size:16px}.en-agree input{width:26px;height:26px;flex:none;accent-color:var(--accent)}
+.pin-gate{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg);padding:20px}
+.pin-card{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;max-width:420px}
+.pin-card h2{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:32px;margin:0}.pin-card p{margin:0;color:var(--muted);font-size:16px}
+.pin-err{color:var(--r);font-weight:700}
+.en-coach-acts{display:flex;flex-direction:column;gap:10px;width:min(360px,80vw)}
+.en-pending{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--y-bg) 50%,transparent)}
+.en-pend-h{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;padding:10px 12px;color:inherit;font:inherit;cursor:pointer}
+.en-pend-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid var(--line-2)}.en-pend-row b{display:block;font-size:14px}.en-pend-row small{color:var(--muted);font-size:12px}
+@media (max-width:760px){.en-form{grid-template-columns:minmax(0,1fr)}.en-best-row{grid-template-columns:1fr 1fr}.en-best-row b{grid-column:1/-1}.en-prog small{display:none}.en-prog span{min-width:20px}}
 .tz-now{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
 .tag{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--surface-2);color:var(--muted)}
 .tag.ex{background:transparent;border:1px dashed var(--muted)}
@@ -804,7 +863,7 @@ const DEFAULT_CALENDARS=[
   {id:'personal',name:'Personal',color:'#2E9E5B',icon:'heart',order:3}];
 
 /* ================= Store (private per-user cloud storage) ================= */
-const COLS=['calendars','clients','events','ledger','travel','parq','contracts'];
+const COLS=['calendars','clients','events','ledger','travel','parq','contracts','enrollments'];
 let toastFn=()=>{};
 const toast=m=>toastFn(m);
 const errMsg=e=>{const c=e&&e.code;if(c==='quota_exceeded')return 'Storage is full. Remove old data, then try again.';if(c==='invalid_argument')return 'That change could not be saved.';if(c==='revoked')return 'Saving was switched off for this view.';return 'Could not save. Check your connection and try again.'};
@@ -841,7 +900,7 @@ const ctFile=path=>{if(!sbClient)return Promise.reject(new Error('offline'));ret
 const dataUrlToBlob=async u=>(await fetch(u)).blob();
 const pqMissingTable=e=>/PGRST205|42P01|parq_forms|schema cache|does not exist/i.test(String((e&&(e.code+' '+e.message))||e));
 function useStore(){
-  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{}});
+  const [st,setSt]=useState({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{},enrollments:{}});
   const R=useRef({mode:'loading',root:null,q:{},uid:null,recent:{}});
   const [authTick,setAuthTick]=useState(0);
   useEffect(()=>{
@@ -890,12 +949,18 @@ function useStore(){
       try{const {data,error}=await sb.from(PQ_TABLE).select('*');if(error)throw error;
         (data||[]).forEach(r=>{all.parq[r.id]=pqFromRow(r);if(r.status==='signed')R.current.pqSigned[r.id]=true})}
       catch(e){parqOk=false}
+      let enrollOk=true;
+      try{const {data,error}=await sb.from('enrollments').select('*');if(error)throw error;(data||[]).forEach(r=>{all.enrollments[r.id]={...(r.data||{}),id:r.id,status:r.status}})}catch(e){enrollOk=false}
+      if(enrollOk){const ech=sb.channel('sbd-en-'+uidv).on('postgres_changes',{event:'*',schema:'public',table:'enrollments',filter:`user_id=eq.${uidv}`},p=>{
+          const row=p.eventType==='DELETE'?p.old:p.new;if(!row||!row.id)return;const t=R.current.recent['enrollments/'+row.id];if(t&&Date.now()-t<4000)return;
+          setSt(s=>{const m={...s.enrollments};if(p.eventType==='DELETE')delete m[row.id];else m[row.id]={...(row.data||{}),id:row.id,status:row.status};return {...s,enrollments:m}})}).subscribe();
+        unsubs.push(()=>{try{sb.removeChannel(ech)}catch(_){}})}
       let contractsOk=true;R.current.ctLocked={};
       try{const {data,error}=await sb.from(CT_TABLE).select('*');if(error)throw error;
         (data||[]).forEach(r=>{all.contracts[r.id]=ctFromRow(r);if(r.status!=='draft')R.current.ctLocked[r.id]=true})}
       catch(e){contractsOk=false}
       if(dead)return;
-      setSt(s=>({...s,...all,parqOk,contractsOk,ready:true}));
+      setSt(s=>({...s,...all,parqOk,contractsOk,enrollOk,ready:true}));
       if(contractsOk){const cch=sb.channel('sbd-ct-'+uidv).on('postgres_changes',{event:'*',schema:'public',table:CT_TABLE,filter:`user_id=eq.${uidv}`},p=>{
           const row=p.eventType==='DELETE'?p.old:p.new;if(!row||!row.id)return;const t=R.current.recent['contracts/'+row.id];if(t&&Date.now()-t<4000)return;
           if(p.eventType!=='DELETE'&&row.status!=='draft')R.current.ctLocked[row.id]=true;
@@ -958,10 +1023,13 @@ function useStore(){
         try{if(m==='supabase')sbClient.from(CT_EVENTS).insert({...row,user_id:R.current.uid}).then(()=>{},()=>{});else if(m==='cloud')R.current.root.collection('cevents').doc(uid()).set(row).catch(()=>{})}catch(_){}},
       put(col,id,data){const body=strip(data);setSt(s=>({...s,[col]:{...s[col],[id]:{...body,id}}}));const m=R.current.mode;
         if(m==='supabase'&&col==='contracts')return queue('contracts/'+id,ctPut(id,body));
+        if(m==='supabase'&&col==='enrollments')return queue('enrollments/'+id,()=>{R.current.recent['enrollments/'+id]=Date.now();const {id:_i,...data}=body;
+          return sbClient.from('enrollments').upsert({id,user_id:R.current.uid,status:body.status||'started',client_id:body.clientId||null,data,updated_at:new Date().toISOString()},{onConflict:'id'}).then(({error})=>{if(error)throw error})});
         if(m==='supabase'&&col==='parq')return queue('parq/'+id,pqPut(id,body));
         if(m==='supabase')return queue(col+'/'+id,sbPut(col,id,body));
         if(m!=='cloud')return Promise.resolve();return queue(col+'/'+id,()=>R.current.root.collection(col).doc(id).set(body))},
       del(col,id){setSt(s=>{const m={...s[col]};delete m[id];return {...s,[col]:m}});const m=R.current.mode;
+        if(m==='supabase'&&col==='enrollments')return queue('enrollments/'+id,()=>{R.current.recent['enrollments/'+id]=Date.now();return sbClient.from('enrollments').delete().eq('id',id).then(({error})=>{if(error)throw error})});
         if(m==='supabase'&&col==='contracts')return queue('contracts/'+id,()=>{R.current.recent['contracts/'+id]=Date.now();return sbClient.from(CT_TABLE).delete().eq('id',id).then(({error})=>{if(error)throw error})});
         if(m==='supabase'&&col==='parq')return queue('parq/'+id,()=>{R.current.recent['parq/'+id]=Date.now();return sbClient.from(PQ_TABLE).delete().eq('id',id).then(({error})=>{if(error)throw error})});
         if(m==='supabase')return queue(col+'/'+id,sbDel(col,id));
@@ -969,11 +1037,12 @@ function useStore(){
       setSettings(next){const body=JSON.parse(JSON.stringify(next));setSt(s=>({...s,settings:body}));const m=R.current.mode;
         if(m==='supabase')return queue('settings',sbPut('settings','main',body));
         if(m!=='cloud')return Promise.resolve();return queue('settings',()=>R.current.root.set(body))},
+      async verifyPassword(password){if(!sbClient)throw new Error('offline');const {data}=await sbClient.auth.getUser();const email=data&&data.user&&data.user.email;const {error}=await sbClient.auth.signInWithPassword({email,password});if(error)throw error},
       async signIn(email,password){if(!sbClient)throw new Error('Can\u2019t reach the server. Open this file in Chrome, Edge or Safari (not a preview window) and check your internet.');
         const t=new Promise((_,rej)=>setTimeout(()=>rej(new Error('No answer from the server after 15 seconds. Check your internet, and make sure you opened this file in a normal browser window.')),15000));
         const {error}=await Promise.race([sbClient.auth.signInWithPassword({email,password}),t]);if(error)throw error},
       async resetPassword(email){const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:location.href.split('#')[0]});if(error)throw error},
-      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{}});setAuthTick(t=>t+1)}
+      async signOut(){if(sbClient)await sbClient.auth.signOut();setSt({ready:false,mode:'loading',auth:null,user:null,settings:null,calendars:{},clients:{},events:{},ledger:{},travel:{},parq:{},contracts:{},enrollments:{}});setAuthTick(t=>t+1)}
     };
   },[]);
   return {...st,api};
@@ -2147,7 +2216,12 @@ function HoldButton({label,onDone,ms=1400}){const [p,setP]=useState(0);const t=u
   const stop=()=>{clearInterval(t.current);setP(0)};useEffect(()=>stop,[]);
   return html`<button type="button" class="btn sm cs-hold" onPointerDown=${start} onPointerUp=${stop} onPointerLeave=${stop} onPointerCancel=${stop} onContextMenu=${e=>e.preventDefault()}>
     <span class="cs-hold-bar" style=${`transform:scaleX(${p})`}></span><span style="position:relative">${label}</span></button>`}
-function ClientSigning({ctx,doc,onExit}){const D=useCtDraft(ctx,doc);const d=D.d;const [step,setStep]=useState(doc.status==='signed'?'done':'fill');const [err,setErr]=useState([]);const [busy,setBusy]=useState(false);
+function ClientSigning({ctx,doc,onExit}){const [lock,setLock]=useState(null);useIdle(ctx.settings.lockMinutes||5,()=>setLock(l=>l||'idle'),!lock);
+  const hasPin=!!(ctx.settings.pin&&ctx.settings.pin.hash);
+  if(lock)return html`<div class="cs"><${PinGate} settings=${ctx.settings} title=${lock==='idle'?'Locked':'Coach PIN'} sub=${lock==='idle'?'Locked after no activity. Nothing was lost.':'Enter your PIN to leave signing mode.'}
+    onOk=${()=>{if(lock==='exit')onExit();else setLock(null)}} onCancel=${lock==='exit'?()=>setLock(null):null}/></div>`;
+  return html`<${ClientSigningInner} ctx=${ctx} doc=${doc} onExit=${onExit} askExit=${()=>hasPin?setLock('exit'):onExit()} hasPin=${hasPin}/>`}
+function ClientSigningInner({ctx,doc,onExit,askExit,hasPin}){const D=useCtDraft(ctx,doc);const d=D.d;const [step,setStep]=useState(doc.status==='signed'?'done':'fill');const [err,setErr]=useState([]);const [busy,setBusy]=useState(false);
   const ref=useRef(null);
   useEffect(()=>{window.__sbdSigning=true;const b=document.body.style.overflow;document.body.style.overflow='hidden';ctx.api.logEvent(doc.id,'signing_mode_entered');
     return()=>{window.__sbdSigning=false;document.body.style.overflow=b;ctx.api.logEvent(doc.id,'signing_mode_exited')}},[]);
@@ -2157,9 +2231,9 @@ function ClientSigning({ctx,doc,onExit}){const D=useCtDraft(ctx,doc);const d=D.d
   return html`<div class="cs" role="dialog" aria-modal="true" aria-label="Client signing">
     <div class="cs-bar"><span class="mark-sq">SBD</span><b class="cs-title">Personal Training Agreement</b><span class="sp"></span>
       <span class="cs-steps">${[['fill','1 Fill in & sign'],['review','2 Review'],['done','3 Done']].map(([k,l])=>html`<span class=${step===k?'on':''}>${l}</span>`)}</span>
-      <${HoldButton} label="Hold to exit" onDone=${onExit}/></div>
+      ${hasPin?html`<button class="btn sm cs-hold" onClick=${askExit}><${Icon} n="lock" s=${14}/> Coach</button>`:html`<${HoldButton} label="Hold to exit" onDone=${onExit}/>`}</div>
     <div class="cs-body" ref=${ref}>
-      ${step==='done'?html`<div class="cs-done"><div class="cs-ok">✓</div><h2>Signed. Thank you!</h2><p>Your agreement is saved. Please hand the iPad back to Tony.</p></div>`:html`
+      ${step==='done'?html`<div class="cs-done"><div class="cs-ok">✓</div><h2>Signed. Thank you!</h2><p>Your agreement is saved. Please hand the iPad back to your coach.</p></div>`:html`
       <div class="cs-wrap">
         ${step==='fill'?html`<div class="callout">Please read the agreement, check your details in the yellow boxes, and sign at the bottom.</div>`:html`<div class="callout"><b>Review.</b> This is the full agreement exactly as it will be saved. Tap <b>Back</b> to change anything.</div>`}
         <${CtDoc} d=${d} edit=${step==='fill'?'client':null} set=${D.set} setSig=${D.setSig} setTerm=${()=>{}}/>
@@ -2315,18 +2389,266 @@ async function sha256Hex(blob){const buf=new Uint8Array(await blob.arrayBuffer()
     H=H.map((x,i)=>(x+[a,b,c,d,e,f,g,h][i])>>>0)}
   return H.map(x=>x.toString(16).padStart(8,'0')).join('')}
 
+/* ================= Enrollment: Client Mode + intake ================= */
+const EN_STEPS=['Welcome','Intake','Plans','Coach review','Plan & billing','Profile','PAR-Q+','Contract','Done'];
+const EN_STATUS={started:'Started',intake:'Intake complete',plan:'Plan set',profile:'Profile created',parq:'PAR-Q complete',contract:'Contract signed',active:'Active'};
+const EN_STATUS_U={started:'un',intake:'u1',plan:'u1',profile:'u2',parq:'u2',contract:'u0',active:'u0'};
+const LIFTS=[['squat','Squat'],['bench','Bench press'],['deadlift','Deadlift'],['ohp','Overhead press']];
+const BODY=['Neck','Left shoulder','Right shoulder','Elbow','Wrist / hand','Upper back','Lower back','Left hip','Right hip','Left knee','Right knee','Ankle / foot','Other'];
+const enAge=a=>ageFrom(a.dob);
+const enMinor=a=>{const g=enAge(a);return g!=null&&g<18};
+/* Each section: fields shown in order. t = type. req = required. show(a) = only when true. */
+const IN_SECTIONS=[
+  {id:'personal',title:'Personal & contact',fields:[
+    {k:'legal_name',t:'text',l:'Full legal name',req:1,ac:'off'},
+    {k:'preferred_name',t:'text',l:'Preferred name',ph:'What should we call you?'},
+    {k:'pronouns',t:'select',l:'Pronouns',o:['She/her','He/him','They/them','Other','Prefer not to say']},
+    {k:'dob',t:'date',l:'Date of birth',req:1},
+    {k:'gender',t:'select',l:'Gender',o:['Woman','Man','Non-binary','Self-describe','Prefer not to say']},
+    {k:'gender_self',t:'text',l:'Gender (self-described)',show:a=>a.gender==='Self-describe'},
+    {k:'phone',t:'tel',l:'Phone',req:1},
+    {k:'email',t:'email',l:'Email',req:1},
+    {k:'address',t:'text',l:'Address',wide:1},
+    {k:'contact_pref',t:'chips1',l:'Preferred contact method',o:['Text','Call','Email']},
+    {h:'Emergency contact'},
+    {k:'em_name',t:'text',l:'Name',req:1},
+    {k:'em_rel',t:'text',l:'Relationship',req:1,ph:'e.g. Mother, partner'},
+    {k:'em_phone',t:'tel',l:'Phone',req:1},
+    {h:'Parent / guardian',show:enMinor,note:'Needed because you are under 18.'},
+    {k:'guardian_name',t:'text',l:'Parent/guardian name',req:1,show:enMinor},
+    {k:'guardian_phone',t:'tel',l:'Parent/guardian phone',req:1,show:enMinor},
+    {k:'guardian_email',t:'email',l:'Parent/guardian email',req:1,show:enMinor},
+    {h:'Work & how you found us'},
+    {k:'occupation',t:'text',l:'Occupation'},
+    {k:'work_type',t:'chips1',l:'Typical work day',o:['Desk','Active / on my feet','Shift work','Student','Other']},
+    {k:'heard_from',t:'chips1',l:'How did you hear about Strength By Design?',req:1,o:['Instagram','Referral','Google','Gym','Event','Other']},
+    {k:'referral_who',t:'text',l:'Who referred you?',show:a=>a.heard_from==='Referral'},
+    {k:'heard_other',t:'text',l:'Where did you hear about us?',show:a=>a.heard_from==='Other'}]},
+  {id:'goals',title:'Goals',fields:[
+    {k:'goal_primary',t:'chips1',l:'Primary goal',req:1,o:['Strength','Powerlifting competition','Muscle gain','Fat loss','Sport performance','General fitness / health','Injury return','Other']},
+    {k:'goals_secondary',t:'chips',l:'Secondary goals (pick any)',o:['Strength','Powerlifting competition','Muscle gain','Fat loss','Sport performance','General fitness / health','Injury return','Mobility','Confidence in the gym']},
+    {k:'goals_text',t:'textarea',l:'Your goals in your own words',wide:1},
+    {k:'target_event',t:'text',l:'Target event',ph:'e.g. meet, season, wedding'},
+    {k:'target_date',t:'date',l:'Target date'},
+    {k:'why_now',t:'textarea',l:'Why now?',wide:1},
+    {k:'success_3',t:'textarea',l:'What does success look like in 3 months?',wide:1},
+    {k:'success_6',t:'textarea',l:'In 6 months?',wide:1},
+    {k:'success_12',t:'textarea',l:'In 12 months?',wide:1},
+    {k:'goal_priority',t:'slider',l:'How much of a priority is this right now?',min:1,max:10,lo:'Low',hi:'Top priority'},
+    {k:'motivation',t:'slider',l:'Motivation level',min:1,max:10,lo:'Low',hi:'Very high'}]},
+  {id:'training',title:'Training background',fields:[
+    {k:'training_age',t:'chips1',l:'Years of consistent training',req:1,o:['None','Less than 1','1–2','3–5','5–10','10+']},
+    {k:'experience',t:'chips1',l:'Experience level',o:['Beginner','Intermediate','Advanced']},
+    {k:'days_week',t:'chips1',l:'Days per week you train now',o:['0','1','2','3','4','5','6','7']},
+    {k:'session_len',t:'chips1',l:'Typical session length',o:['Under 45 min','45–60 min','60–90 min','90+ min'],show:a=>a.days_week&&a.days_week!=='0'},
+    {k:'styles',t:'chips',l:'Current training style',o:['Powerlifting','Bodybuilding','CrossFit','Sport','Classes','Running / cardio','None','Other']},
+    {k:'prev_coached',t:'yn',l:'Have you worked with a coach before?'},
+    {k:'prev_worked',t:'textarea',l:'What worked?',show:a=>a.prev_coached==='yes'},
+    {k:'prev_didnt',t:'textarea',l:"What didn't work?",show:a=>a.prev_coached==='yes'},
+    {k:'lift_comfort',t:'liftgrid',l:'Comfort with the main lifts',wide:1},
+    {k:'best_lifts',t:'bestlifts',l:'Best lifts or estimated 1RMs (optional)',wide:1},
+    {k:'competed',t:'yn',l:'Have you competed in powerlifting or strength sports?'},
+    {k:'comp_fed',t:'text',l:'Federation',show:a=>a.competed==='yes'},
+    {k:'comp_class',t:'text',l:'Weight class',show:a=>a.competed==='yes'},
+    {k:'comp_total',t:'text',l:'Best total',show:a=>a.competed==='yes'},
+    {k:'equipment',t:'chips1',l:'Where do you train?',o:['Commercial gym','Home gym','Both']},
+    {k:'home_equipment',t:'textarea',l:'Home gym equipment',ph:'e.g. rack, barbell, plates, dumbbells to 50 lb',show:a=>a.equipment==='Home gym'||a.equipment==='Both',wide:1}]},
+  {id:'sport',title:'Sport',fields:[
+    {k:'plays_sport',t:'yn',l:'Do you play a sport?',req:1},
+    {k:'sport',t:'text',l:'Sport',req:1,show:a=>a.plays_sport==='yes'},
+    {k:'position',t:'text',l:'Position',show:a=>a.plays_sport==='yes'},
+    {k:'sport_level',t:'chips1',l:'Level',o:['Recreational','High school','University','Junior','Pro','Other'],show:a=>a.plays_sport==='yes'},
+    {k:'season_in',t:'text',l:'In-season dates',ph:'e.g. Sept – March',show:a=>a.plays_sport==='yes'},
+    {k:'season_off',t:'text',l:'Off-season dates',show:a=>a.plays_sport==='yes'},
+    {k:'sport_events',t:'text',l:'Upcoming tryouts or events',show:a=>a.plays_sport==='yes',wide:1},
+    {k:'practices_week',t:'chips1',l:'Practices per week',o:['0','1','2','3','4','5','6+'],show:a=>a.plays_sport==='yes'},
+    {k:'games_week',t:'chips1',l:'Games per week',o:['0','1','2','3','4+'],show:a=>a.plays_sport==='yes'}]},
+  {id:'injury',title:'Injury & movement history',fields:[
+    {k:'pain_now',t:'yn',l:'Do you have any pain or injuries right now?',req:1},
+    {k:'pain_areas',t:'body',l:'Tap each area that hurts',wide:1,show:a=>a.pain_now==='yes'},
+    {k:'past_injuries',t:'textarea',l:'Past injuries (with dates)',wide:1},
+    {k:'surgeries',t:'textarea',l:'Surgeries (with dates)',wide:1},
+    {k:'restricted',t:'textarea',l:'Movements that cause pain or that you avoid',wide:1},
+    {k:'seeing_pro',t:'yn',l:'Are you seeing a physio, chiro or doctor for anything right now?'},
+    {k:'seeing_who',t:'text',l:'Who and for what?',show:a=>a.seeing_pro==='yes',wide:1},
+    {k:'cleared',t:'chips1',l:'Have they cleared you to train?',o:['Yes','No','Not sure'],show:a=>a.seeing_pro==='yes'}]},
+  {id:'lifestyle',title:'Lifestyle & recovery',fields:[
+    {k:'sleep_hours',t:'chips1',l:'Average sleep per night',o:['Under 5 h','5–6 h','6–7 h','7–8 h','8–9 h','9 h+']},
+    {k:'sleep_quality',t:'slider',l:'Sleep quality',min:1,max:5,lo:'Poor',hi:'Great'},
+    {k:'stress',t:'slider',l:'Stress level',min:1,max:5,lo:'Low',hi:'Very high'},
+    {k:'stressors',t:'chips',l:'Main stressors',o:['Work','School','Family','Finances','Health','Relationships','Other']},
+    {k:'activity',t:'chips1',l:'Daily activity outside training',o:['Mostly sitting','Lightly active','Active','Very active']},
+    {k:'steps',t:'text',l:'Average daily steps (if you know)',inputmode:'numeric'},
+    {h:'Nutrition'},
+    {k:'eating',t:'textarea',l:'How do you eat right now?',ph:'A typical day',wide:1},
+    {k:'meals',t:'chips1',l:'Meals per day',o:['1','2','3','4','5','6+']},
+    {k:'diet',t:'chips1',l:'Diet type',o:['No specific diet','Vegetarian','Vegan','Keto / low carb','Halal','Kosher','Gluten-free','Other']},
+    {k:'allergies',t:'text',l:'Food allergies or intolerances',wide:1},
+    {k:'supplements',t:'text',l:'Supplements',wide:1},
+    {k:'alcohol',t:'chips1',l:'Alcohol',o:['None','1–3 drinks/week','4–7 drinks/week','8+ drinks/week']},
+    {k:'caffeine',t:'chips1',l:'Caffeine',o:['None','1 a day','2–3 a day','4+ a day']},
+    {k:'hydration',t:'chips1',l:'Water per day',o:['Under 1 L','1–2 L','2–3 L','3 L+']},
+    {k:'nutrition_interest',t:'chips1',l:'Interested in nutrition coaching?',o:['Yes','No','Maybe']}]},
+  {id:'availability',title:'Availability & preferences',fields:[
+    {k:'avail',t:'grid',l:'When can you train? Tap every time that works',wide:1,req:1},
+    {k:'pref_time',t:'chips',l:'Preferred time of day',o:['Morning','Afternoon','Evening']},
+    {k:'format',t:'chips1',l:'Training format',o:['In-person','Online','Hybrid']},
+    {k:'coach_style',t:'chips1',l:'Coaching style you prefer',o:['Very hands-on','Balanced','Independent']},
+    {k:'barriers',t:'chips',l:'Anything that could get in the way?',o:['Schedule','Travel','Budget','Motivation','Other']},
+    {k:'barriers_text',t:'text',l:'Tell us more',wide:1,show:a=>(a.barriers||[]).length>0}]},
+  {id:'consent',title:'Consent',fields:[
+    {k:'photo_form',t:'yn',l:'May we take photos or video of your training for form checks?',req:1},
+    {k:'photo_social',t:'yn',l:'May we share photos or video of you on social media?',req:1},
+    {k:'comm_text',t:'yn',l:'May we send you text reminders?',req:1},
+    {k:'comm_email',t:'yn',l:'May we send you email reminders?',req:1},
+    {k:'privacy',t:'privacy',l:'Privacy',req:1,wide:1}]}];
+const EN_PRIVACY='Strength By Design keeps the information on this form, your health questionnaire and your agreement private. It is stored securely in your coach’s signed-in account, is seen only by your coach, and is used only to plan safe, effective training for you and to run your coaching (scheduling, billing and records). It is never sold or shared without your permission, except where the law requires it. You can ask to see or correct your information at any time.';
+const IN_ALL=IN_SECTIONS.flatMap(s=>s.fields.filter(f=>f.k));
+const inShown=(f,a)=>!f.show||f.show(a);
+const inEmpty=(f,v)=>{if(f.t==='chips'||f.t==='body')return !(v&&v.length);if(f.t==='grid')return !(v&&Object.values(v).some(x=>x&&x.length));if(f.t==='privacy')return !v;return v==null||String(v).trim()===''};
+const inMissing=(sec,a)=>sec.fields.filter(f=>f.k&&f.req&&inShown(f,a)&&inEmpty(f,a[f.k])).map(f=>f.l);
+
+function InField({f,a,set}){const v=a[f.k];const id='in-'+f.k;
+  const lab=html`<span class="flabel">${f.l}${f.req?html` <span class="req" aria-label="required">*</span>`:''}</span>`;
+  const chip=(o,on,fn)=>html`<button type="button" key=${o} class=${'en-chip'+(on?' on':'')} aria-pressed=${on} onClick=${fn}>${o}</button>`;
+  let ctl;
+  switch(f.t){
+    case 'textarea':ctl=html`<textarea id=${id} rows="3" placeholder=${f.ph||''} value=${v||''} onInput=${e=>set(f.k,e.target.value)}></textarea>`;break;
+    case 'select':ctl=html`<select id=${id} value=${v||''} onChange=${e=>set(f.k,e.target.value)}><option value="">Choose…</option>${f.o.map(o=>html`<option value=${o}>${o}</option>`)}</select>`;break;
+    case 'chips1':ctl=html`<div class="en-chips" role="radiogroup">${f.o.map(o=>chip(o,v===o,()=>set(f.k,v===o?'':o)))}</div>`;break;
+    case 'chips':{const arr=v||[];ctl=html`<div class="en-chips">${f.o.map(o=>chip(o,arr.includes(o),()=>set(f.k,arr.includes(o)?arr.filter(x=>x!==o):[...arr,o])))}</div>`;break}
+    case 'yn':ctl=html`<div class="en-chips en-yn" role="radiogroup">${[['yes','Yes'],['no','No']].map(([k,l])=>chip(l,v===k,()=>set(f.k,k)))}</div>`;break;
+    case 'slider':{const n=v==null?null:Number(v);ctl=html`<div class="en-slider"><input id=${id} type="range" min=${f.min} max=${f.max} step="1" value=${n??Math.round((f.min+f.max)/2)} onInput=${e=>set(f.k,Number(e.target.value))}/>
+      <div class="en-sl-l"><span>${f.min} · ${f.lo}</span><b class="num">${n??'–'}</b><span>${f.hi} · ${f.max}</span></div></div>`;break}
+    case 'liftgrid':{const g=v||{};const lv=['Never done','Beginner','Confident','Advanced'];
+      ctl=html`<div class="en-lg">${LIFTS.map(([k,l])=>html`<div class="en-lg-row" key=${k}><b>${l}</b><div class="en-chips">${lv.map(o=>chip(o,g[k]===o,()=>set(f.k,{...g,[k]:g[k]===o?'':o})))}</div></div>`)}</div>`;break}
+    case 'bestlifts':{const g=v||{};const up=(k,p)=>set(f.k,{...g,[k]:{...(g[k]||{}),...p}});
+      ctl=html`<div class="en-best">${LIFTS.map(([k,l])=>{const x=g[k]||{};return html`<div class="en-best-row" key=${k}><b>${l}</b>
+        <input type="text" inputmode="decimal" placeholder="Weight" aria-label=${l+' weight'} value=${x.w||''} onInput=${e=>up(k,{w:e.target.value})}/>
+        <select aria-label=${l+' unit'} value=${x.u||'lb'} onChange=${e=>up(k,{u:e.target.value})}><option value="lb">lb</option><option value="kg">kg</option></select>
+        <input type="text" inputmode="numeric" placeholder="Reps" aria-label=${l+' reps'} value=${x.r||''} onInput=${e=>up(k,{r:e.target.value})}/>
+        <input type="date" aria-label=${l+' date'} value=${x.d||''} onChange=${e=>up(k,{d:e.target.value})}/></div>`})}</div>`;break}
+    case 'body':{const arr=v||[];const has=n=>arr.find(x=>x.area===n);
+      const tog=n=>set(f.k,has(n)?arr.filter(x=>x.area!==n):[...arr,{area:n,sev:5,since:'',worse:''}]);
+      const up=(n,p)=>set(f.k,arr.map(x=>x.area===n?{...x,...p}:x));
+      ctl=html`<div class="en-body"><div class="en-chips">${BODY.map(n=>chip(n,!!has(n),()=>tog(n)))}</div>
+        ${arr.map(x=>html`<div class="en-pain" key=${x.area}><b>${x.area}</b>
+          <label class="field"><span class="flabel">Pain level · ${x.sev}/10</span><input type="range" min="1" max="10" value=${x.sev} onInput=${e=>up(x.area,{sev:Number(e.target.value)})}/></label>
+          <div class="field"><span class="flabel">How long?</span><div class="en-chips">${['Days','Weeks','Months','Over a year'].map(o=>chip(o,x.since===o,()=>up(x.area,{since:o})))}</div></div>
+          <label class="field"><span class="flabel">What makes it worse?</span><input type="text" value=${x.worse||''} onInput=${e=>up(x.area,{worse:e.target.value})}/></label></div>`)}</div>`;break}
+    case 'grid':{const g=v||{};const slots=['Morning','Afternoon','Evening'];const days=[1,2,3,4,5,6,0];
+      const tg=(d,sl)=>{const cur=g[d]||[];set(f.k,{...g,[d]:cur.includes(sl)?cur.filter(x=>x!==sl):[...cur,sl]})};
+      ctl=html`<div class="en-grid-wrap"><table class="en-grid"><thead><tr><th></th>${days.map(d=>html`<th>${DOW[d]}</th>`)}</tr></thead>
+        <tbody>${slots.map(sl=>html`<tr><th>${sl}</th>${days.map(d=>{const on=(g[d]||[]).includes(sl);return html`<td><button type="button" class=${'en-cell'+(on?' on':'')} aria-pressed=${on} aria-label=${DOWL[d]+' '+sl} onClick=${()=>tg(d,sl)}>${on?'✓':''}</button></td>`})}</tr>`)}</tbody></table></div>`;break}
+    case 'privacy':ctl=html`<div class="en-privacy"><p>${EN_PRIVACY}</p><label class="en-agree"><input type="checkbox" checked=${!!v} onChange=${e=>set(f.k,e.target.checked)}/><span>I have read this and agree to how my information is stored and used.</span></label></div>`;break;
+    default:ctl=html`<input id=${id} type=${f.t==='tel'?'tel':f.t==='email'?'email':f.t==='date'?'date':'text'} inputmode=${f.inputmode||null} autocomplete="off" placeholder=${f.ph||''} value=${v||''} onInput=${e=>set(f.k,e.target.value)}/>`;
+  }
+  const extra=f.k==='dob'&&v?html`<span class="fhint">Age ${enAge(a)}</span>`:null;
+  return html`<div class=${'field en-f'+(f.wide||['chips','chips1','yn','slider','grid','body','liftgrid','bestlifts','privacy','textarea'].includes(f.t)?' wide':'')}>${f.t==='privacy'?null:html`<label for=${id}>${lab}</label>`}${ctl}${extra}</div>`;
+}
+
+/* ---- PIN screen ---- */
+function PinGate({settings,title,sub,onOk,onCancel}){const [v,setV]=useState('');const [err,setErr]=useState('');const tries=useRef({n:0,until:0});
+  const go=async()=>{const t=tries.current;if(Date.now()<t.until){setErr(`Too many tries. Wait ${Math.ceil((t.until-Date.now())/1000)} s.`);return}
+    if(await pinCheck(settings,v)){t.n=0;setErr('');onOk()}else{t.n++;setV('');if(t.n>=5){t.until=Date.now()+30000;t.n=0;setErr('Too many tries. Wait 30 s.')}else setErr('That PIN is not right.')}};
+  useEffect(()=>{if(v.length>=4&&settings.pin&&v.length===(settings.pin.len||4))go()},[v]);
+  return html`<div class="pin-gate" role="dialog" aria-modal="true" aria-label=${title}>
+    <div class="pin-card"><span class="mark-sq">SBD</span><h2>${title}</h2>${sub&&html`<p>${sub}</p>`}
+      <${PinPad} value=${v} onChange=${x=>{setErr('');setV(x)}} onEnter=${go}/>${err&&html`<div class="pin-err">${err}</div>`}
+      ${onCancel&&html`<button class="btn ghost" onClick=${onCancel}>Back</button>`}</div></div>`}
+/* Idle timer: calls onIdle after N minutes with no touch/keys. */
+function useIdle(minutes,onIdle,active=true){useEffect(()=>{if(!active)return;let t;const ms=Math.max(1,Number(minutes)||5)*60000;
+  const reset=()=>{clearTimeout(t);t=setTimeout(onIdle,ms)};const ev=['pointerdown','keydown','touchstart','wheel','input'];
+  ev.forEach(e=>document.addEventListener(e,reset,{passive:true,capture:true}));reset();
+  return()=>{clearTimeout(t);ev.forEach(e=>document.removeEventListener(e,reset,{capture:true}))}},[minutes,active])}
+
+/* ---- Client Mode ---- */
+const enLocal={get(id){return ls.get('enroll:'+id,null)},set(id,d){ls.set('enroll:'+id,d)},del(id){try{localStorage.removeItem('sbd:enroll:'+id)}catch(_){}}};
+function EnrollMode({ctx,enrollId,onClose}){
+  const {api,settings}=ctx;const src=ctx.enrollments[enrollId];
+  const [d,setD]=useState(()=>{const l=enLocal.get(enrollId);return l&&src&&(l.updated||0)>(src.updated||0)?l:src});
+  const [lock,setLock]=useState(null); // null | 'coach' | 'idle' | 'handback'
+  const [sec,setSec]=useState(()=>Math.min((src&&src.section)||0,IN_SECTIONS.length-1));const [err,setErr]=useState([]);
+  const body=useRef(null);const tmr=useRef(null);
+  const save=n=>{enLocal.set(n.id,n);clearTimeout(tmr.current);tmr.current=setTimeout(()=>api.put('enrollments',n.id,n),500)};
+  const patch=fn=>setD(s=>{const n={...fn(s),updated:Date.now()};save(n);return n});
+  const flush=()=>{clearTimeout(tmr.current);setD(s=>{api.put('enrollments',s.id,s);return s})};
+  useEffect(()=>{window.__sbdSigning=true;const b=document.body.style.overflow;document.body.style.overflow='hidden';
+    return()=>{window.__sbdSigning=false;document.body.style.overflow=b;clearTimeout(tmr.current)}},[]);
+  useIdle(settings.lockMinutes||5,()=>setLock(l=>l||'idle'),!lock);
+  const top=()=>{try{body.current.scrollTop=0}catch(_){}};
+  const a=(d&&d.intake)||{};
+  const set=(k,v)=>{if(err.length)setErr([]);patch(s=>({...s,intake:{...(s.intake||{}),[k]:v},name:k==='preferred_name'||k==='legal_name'?((k==='preferred_name'?v:(s.intake||{}).preferred_name)||(k==='legal_name'?v:(s.intake||{}).legal_name)||''):s.name}))};
+  const goStep=st=>{patch(s=>({...s,step:st}));top()};
+  const next=()=>{const m=inMissing(IN_SECTIONS[sec],a);setErr(m);if(m.length){toast('Please fill in the items marked *');return}
+    if(sec<IN_SECTIONS.length-1){const n=sec+1;setSec(n);patch(s=>({...s,section:n}));top();return}
+    patch(s=>({...s,status:s.status==='started'?'intake':s.status,step:2,section:sec,intakeDoneAt:s.intakeDoneAt||new Date().toISOString()}));setLock('handback');top()};
+  const back=()=>{setErr([]);if(sec>0){setSec(sec-1);top()}else goStep(0)};
+  // finishing or leaving clears everything from this screen
+  const exit=()=>{flush();enLocal.del(enrollId);setD(null);onClose()};
+  if(!d)return null;
+  const first=(a.preferred_name||a.legal_name||'').trim().split(/\s+/)[0];
+  const step=d.step||0;const S=IN_SECTIONS[sec];
+  if(lock)return html`<div class="cs en">${lock==='coach-menu'?html`<div class="pin-gate"><div class="pin-card"><span class="mark-sq">SBD</span><h2>Coach</h2>
+        <p>${first?first+' · ':''}${EN_STATUS[d.status]||'Started'}. Progress is saved.</p>
+        <div class="en-coach-acts"><button class="btn primary cs-big" onClick=${()=>setLock(null)}>Back to ${first||'client'}</button>
+          <button class="btn cs-big" onClick=${exit}>Pause & exit Client Mode</button></div></div></div>`
+      :html`<${PinGate} settings=${settings} title=${lock==='handback'?'Thank you!':lock==='idle'?'Locked':'Coach PIN'}
+        sub=${lock==='handback'?'Your answers are saved. Please hand the iPad back to your coach.':lock==='idle'?'Locked after no activity. Your progress is saved.':'Enter your PIN to open the coach menu.'}
+        onOk=${()=>setLock(lock==='handback'?'coach-menu':'coach-menu')} onCancel=${lock==='coach'?()=>setLock(null):null}/>`}</div>`;
+  return html`<div class="cs en" role="dialog" aria-modal="true" aria-label="Enrollment">
+    <div class="cs-bar"><span class="mark-sq">SBD</span><b class="cs-title">Strength By Design</b><span class="sp"></span>
+      <button class="btn sm cs-hold" onClick=${()=>setLock('coach')}><${Icon} n="lock" s=${14}/> Coach</button></div>
+    <div class="en-prog" aria-label="Enrollment progress">${EN_STEPS.map((l,i)=>html`<span class=${i<step?'done':i===step?'on':''} title=${l}><i></i><small>${l}</small></span>`)}</div>
+    <div class="cs-body" ref=${body}>
+      ${step===0?html`<div class="en-welcome">
+          <div class="eyebrow">Welcome${first?', '+first:''}</div><h1>Let's build your <em>plan.</em></h1>
+          <p>This takes about 10 minutes. Here's what we'll do today:</p>
+          <ol class="en-today"><li><b>Tell us about you</b><span>Goals, training background, injuries, lifestyle and when you can train.</span></li>
+            <li><b>Look at the options</b><span>See the coaching plans and pick the one you like.</span></li>
+            <li><b>Health questionnaire</b><span>The PAR-Q+ makes sure training is safe for you.</span></li>
+            <li><b>Sign your agreement</b><span>Review and sign your personal training agreement.</span></li></ol>
+          <p class="fhint">Everything you share is private. Fields marked <span class="req">*</span> are required.</p>
+          <button class="btn primary cs-big" style="max-width:360px" onClick=${()=>goStep(1)}>Start</button></div>`
+      :step===1?html`<div class="cs-wrap">
+          <div class="en-sec-bar"><span>Section ${sec+1} of ${IN_SECTIONS.length}</span><div class="meter"><i style=${`width:${Math.round((sec+1)/IN_SECTIONS.length*100)}%`}></i></div></div>
+          <h2 class="en-h">${S.title}</h2>
+          <div class="en-form">${S.fields.map((f,i)=>!inShown(f,a)?null:f.h?html`<div class="en-sub" key=${'h'+i}><b>${f.h}</b>${f.note&&html`<span class="fhint">${f.note}</span>`}</div>`:html`<${InField} key=${f.k} f=${f} a=${a} set=${set}/>`)}</div>
+          ${err.length?html`<div class="callout u3">Still needed: ${err.join(', ')}</div>`:null}
+          <div class="cs-acts"><button class="btn cs-big" onClick=${back}>Back</button><button class="btn primary cs-big" onClick=${next}>${sec<IN_SECTIONS.length-1?'Next':'Finish intake'}</button></div></div>`
+      :html`<div class="en-welcome"><h1>Intake <em>complete.</em></h1><p>The next steps (plans, coach review, PAR-Q+ and agreement) are coming in the next update.</p>
+          <button class="btn primary cs-big" style="max-width:360px" onClick=${()=>setLock('handback')}>Hand back to coach</button></div>`}
+    </div></div>`;
+}
+
+/* ---- Business view: start / resume ---- */
+function EnrollButton({ctx,onOpen}){const has=!!(ctx.settings.pin&&ctx.settings.pin.hash);
+  const start=()=>{if(!has){toast('Set your PIN in Setup → Client Mode & PIN first');location.hash='setup';return}
+    const id=uid();const d={id,status:'started',step:0,section:0,intake:{},name:'',startedAt:new Date().toISOString(),created:Date.now(),updated:Date.now(),source:'ipad'};
+    ctx.api.put('enrollments',id,d);onOpen(id)};
+  return html`<button class="btn sm" onClick=${start} title="Opens full-screen Client Mode"><${Icon} n="user" s=${14}/>Enroll</button>`}
+function PendingEnrollments({ctx,onOpen}){const list=Object.values(ctx.enrollments||{}).filter(e=>e.status!=='active').sort((a,b)=>(b.updated||0)-(a.updated||0));
+  const [open,setOpen]=useState(true);
+  if(ctx.enrollOk===false)return html`<div class="callout u2" style="margin:8px">Enrollment needs a one-time database setup. Run enrollment-setup.sql in Supabase, then restart.</div>`;
+  if(!list.length)return null;
+  return html`<div class="en-pending"><button class="en-pend-h" aria-expanded=${open} onClick=${()=>setOpen(!open)}><b>Pending enrollments</b><span class="pill u1">${list.length}</span><span class="sp"></span><span aria-hidden="true">${open?'▾':'▸'}</span></button>
+    ${open&&list.map(e=>html`<div class="en-pend-row" key=${e.id}>
+      <div style="min-width:0;flex:1"><b>${e.name||(e.intake&&e.intake.legal_name)||'New client'}</b><small>${EN_STATUS[e.status]||'Started'} · ${fmtDate((e.startedAt||'').slice(0,10),{month:'short',day:'numeric'})}</small></div>
+      <button class="btn sm" onClick=${()=>onOpen(e.id)}>Resume</button>
+      <${IconDel} onConfirm=${()=>{enLocal.del(e.id);ctx.api.del('enrollments',e.id)}}/></div>`)}</div>`}
+
 function AthletesPage({ctx,selId,setSelId}){
   const {clients,derived}=ctx;
   const [q,setQ]=useState('');const [filter,setFilter]=useState('active');const [modal,setModal]=useState(null);
   const list=Object.values(clients).filter(c=>(filter==='all'||(c.status||'active')===filter)&&(!q||c.name.toLowerCase().includes(q.toLowerCase())))
     .sort((a,b)=>a.name.localeCompare(b.name));
-  const sel=selId&&clients[selId];
-  return html`<div class=${'ath'+(sel?' has-sel':'')}>
+  const sel=selId&&clients[selId];const [enrolling,setEnrolling]=useState(null);
+  return html`${enrolling&&ctx.enrollments[enrolling]&&html`<${EnrollMode} key=${enrolling} ctx=${ctx} enrollId=${enrolling} onClose=${()=>setEnrolling(null)}/>`}<div class=${'ath'+(sel?' has-sel':'')}>
     <div class="panel ath-list">
-      <div class="panel-h" style="flex-wrap:wrap"><h3>Athletes</h3><span class="sp"></span><button class="btn primary sm" onClick=${()=>setModal({type:'new'})}><${Icon} n="plus" s=${14}/>Add</button>
+      <div class="panel-h" style="flex-wrap:wrap"><h3>Athletes</h3><span class="sp"></span><${EnrollButton} ctx=${ctx} onOpen=${setEnrolling}/><button class="btn primary sm" onClick=${()=>setModal({type:'new'})}><${Icon} n="plus" s=${14}/>Add</button>
         <div style="display:flex;gap:6px;width:100%"><input type="text" placeholder="Search" value=${q} onInput=${e=>setQ(e.target.value)} aria-label="Search athletes"/>
           <select style="width:auto" value=${filter} onChange=${e=>setFilter(e.target.value)} aria-label="Filter"><option value="active">Active</option><option value="paused">Paused</option><option value="former">Former</option><option value="all">All</option></select></div></div>
-      <div class="scroll">${list.length?list.map(c=>{const s=derived.cs[c.id]||{};return html`<button class="arow" aria-current=${selId===c.id} onClick=${()=>{setSelId(c.id);try{scrollTo(0,0)}catch(_){}}}>
+      <div class="scroll"><${PendingEnrollments} ctx=${ctx} onOpen=${setEnrolling}/>${list.length?list.map(c=>{const s=derived.cs[c.id]||{};return html`<button class="arow" aria-current=${selId===c.id} onClick=${()=>{setSelId(c.id);try{scrollTo(0,0)}catch(_){}}}>
         <span class="av">${initials(c.name)}</span><span class="who"><b>${c.name}</b><small>${c.athleteType==='Custom'?(c.athleteCustom||'Custom'):(c.athleteType||'—')}${c.example?' · example':''}</small>${(()=>{const q=parqStatus(ctx.parq,c.id);const showQ=q.state!=='complete'||q.flag;const cb=html`<${CtBadge} ctx=${ctx} cid=${c.id}/>`;return html`<span class="pq-mini">${showQ&&html`<${ParqBadge} st=${q}/>`} ${cb}</span>`})()}</span>
         <span style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><span class="num" style="font-size:13px;font-weight:600">${s.remaining??0} left</span>${s.active&&s.urg>0?html`<span title=${s.reason}><${Pill} u=${s.urg}>${s.reason}<//></span>`:null}</span></button>`})
         :html`<div class="empty">${Object.keys(clients).length?'No athletes match.':'No athletes yet. Add your first one to start tracking sessions.'}</div>`}</div>
@@ -3145,7 +3467,7 @@ function PlanTab({ctx,c,s,upd,openCharge,openPay}){
       commitMonths:k.commit!=null?Number(k.commit):p.commitMonths,rateType:k.rateType||'standard'}});
     toast(`${k.name} applied. Change the rate here for custom pricing.`)};
   return html`<div class="panel"><div class="panel-h"><h3>Training plan</h3></div><div class="panel-b"><div class="fgrid">
-      <${Field} label="Program" wide hint="Fills in the rate and billing. Change the rate below for legacy or custom pricing; purchases will use it."><select value=${p.packageId||''} onChange=${e=>applyPkg(e.target.value)}><option value="">Custom</option>${pkgOptions(ctx.settings)}</select><//>
+      <${Field} label="Program" wide hint="Fills in the rate and billing. Change the rate below for legacy or custom pricing; purchases will use it."><select value=${p.packageId||''} onChange=${e=>applyPkg(e.target.value)}><option value="">Custom</option>${pkgOptions(ctx.settings,p.packageId)}</select><//>
       <${Field} label="Commitment (months)"><input type="number" min="0" value=${p.commitMonths??''} onChange=${e=>setP('commitMonths',num(e.target.value))}/><//>
       <${Field} label="Sessions per week"><input type="number" min="0" step="0.5" value=${p.perWeek??''} onChange=${e=>setP('perWeek',num(e.target.value))}/><//>
       <${Field} label="Plan start"><input type="date" value=${p.startDate||''} onChange=${e=>setP('startDate',e.target.value)}/><//>
@@ -3183,8 +3505,8 @@ function PlanTab({ctx,c,s,upd,openCharge,openPay}){
 /* ================= Payments ================= */
 const pkgList=settings=>(settings&&settings.packages)||[];
 const pkgOf=(settings,id)=>id?pkgList(settings).find(p=>p.id===id)||null:null;
-const pkgPriceLabel=k=>`${money(k.price)}/${k.kind==='pack'?'session':'month'}`;
-const pkgOptions=settings=>{const groups={};pkgList(settings).forEach(k=>{(groups[k.group||'Other']=groups[k.group||'Other']||[]).push(k)});
+const pkgPriceLabel=k=>`${money(k.price)}${k.billType==='program'?' one-time':'/'+(k.kind==='pack'?'session':'month')}`;
+const pkgOptions=(settings,keep)=>{const groups={};pkgList(settings).filter(k=>!k.archived||k.id===keep).forEach(k=>{(groups[k.group||'Other']=groups[k.group||'Other']||[]).push(k)});
   return Object.entries(groups).map(([g,ks])=>html`<optgroup label=${g}>${ks.map(k=>html`<option value=${k.id}>${k.name} · ${pkgPriceLabel(k)}</option>`)}</optgroup>`)};
 const pkgHint=k=>(k.includes?k.includes+'. ':'')+(k.kind==='pack'?'Sessions carry over until they are used.':Number(k.perMonth)>0?`${k.perMonth} sessions each month. Unused sessions don't carry over.`:'Flat monthly fee. No sessions to track.');
 
@@ -3237,7 +3559,7 @@ function ChargeModal({ctx,clientId,onClose,edit}){
   return html`<${Modal} title=${edit?'Edit purchase':'Record purchase'} onClose=${onClose} footer=${html`<span class="sp"></span><button class="btn" onClick=${onClose}>Cancel</button><button class="btn primary" onClick=${save}>${edit?'Save changes':'Save'} · ${money(total)}</button>`}>
     ${edit&&html`<div class="callout">${c?c.name:''}${edit.packageId&&pkgOf(settings,edit.packageId)?` · ${pkgOf(settings,edit.packageId).name}`:''}. Changes here update their session balance and what they owe. Payments already logged stay as they are.</div>`}
     ${!clientId&&html`<${Field} label="Athlete"><select value=${cid} onChange=${e=>setCid(e.target.value)}><option value="">Choose…</option>${Object.values(clients).sort((a,b)=>a.name.localeCompare(b.name)).map(x=>html`<option value=${x.id}>${x.name}</option>`)}</select><//>`}
-    ${!edit&&html`<${Field} label="Program" hint=${pk?pkgHint(pk):'Enter the sessions, months and amount yourself.'}><select value=${f.pkgId} onChange=${e=>choosePkg(e.target.value)}>${pkgOptions(settings)}<option value="">Custom purchase</option></select><//>`}
+    ${!edit&&html`<${Field} label="Program" hint=${pk?pkgHint(pk):'Enter the sessions, months and amount yourself.'}><select value=${f.pkgId} onChange=${e=>choosePkg(e.target.value)}>${pkgOptions(settings,f.pkgId)}<option value="">Custom purchase</option></select><//>`}
     ${pk&&!(Number(f.unit)>0)&&html`<div class="callout u2">No price set for ${pk.name}. Type it below, or set it once in Setup under Programs.</div>`}
     ${pk?html`<div class="fgrid">
         ${pk.kind==='pack'
@@ -3268,23 +3590,129 @@ function ChargeModal({ctx,clientId,onClose,edit}){
   <//>`;
 }
 
+/* ================= Rates & Plans, Discounts, Client Mode settings ================= */
+const BILL_TYPES=[['pack','Per session / session pack'],['monthly','Monthly'],['online','Online coaching (monthly)'],['program','Program only (one-time)']];
+const planVisible=k=>!k.archived&&(k.visible!=null?!!k.visible:k.rateType!=='legacy');
+const billTypeOf=k=>k.billType||(k.kind==='pack'?'pack':/online/i.test(k.group||'')?'online':'monthly');
+const COMMITS=[[0,'No commitment (month to month)'],[3,'3 months'],[6,'6 months'],[12,'12 months']];
 function ProgramsPanel({settings,set}){
-  const list=pkgList(settings);
-  const upd=(i,patch)=>{const a=list.slice();a[i]={...a[i],...patch};set('packages',a)};
-  return html`<div class="panel"><div class="panel-h"><h3>Programs & pricing</h3><span class="sp"></span><span class="fhint">Prices before GST. Pick these when you record a purchase.</span></div>
-    <div class="panel-b" style="display:flex;flex-direction:column;gap:4px">
-      <div class="fgrid" style="padding-bottom:6px;border-bottom:1px solid var(--line-2)"><${Field} label="Count a month as" hint="Used for plan totals and monthly session counts. 4 weeks: 2×/week = 8 sessions a month, 24 over 3 months. 52 ÷ 12: 26 over 3 months."><select value=${String(settings.weeksPerMonth||4)} onChange=${e=>set('weeksPerMonth',Number(e.target.value))}><option value="4">4 weeks</option><option value=${String(52/12)}>52 weeks ÷ 12 (≈4.33)</option></select><//></div>
-      ${list.map((k,i)=>html`<div class="pkg-row" key=${k.id}>
-        <${Field} label="Name"><input type="text" value=${k.name} onChange=${e=>upd(i,{name:e.target.value})}/><//>
-        <${Field} label="Billed"><select value=${k.kind} onChange=${e=>upd(i,{kind:e.target.value})}><option value="pack">Per session</option><option value="monthly">Flat monthly rate</option></select><//>
-        <${Field} label=${k.kind==='pack'?'Price / session':'Price / month'}><input type="number" inputmode="decimal" min="0" step="0.01" value=${k.price} onChange=${e=>upd(i,{price:Number(e.target.value)||0})}/><//>
-        ${k.kind==='pack'
-          ?html`<${Field} label="Sessions per purchase"><input type="number" inputmode="numeric" min="1" value=${k.qty} onChange=${e=>upd(i,{qty:Number(e.target.value)||1})}/><//>`
-          :html`<${Field} label="Sessions / month" hint="0 = not tracked"><input type="number" inputmode="numeric" min="0" value=${k.perMonth} onChange=${e=>upd(i,{perMonth:Number(e.target.value)||0})}/><//>`}
-        <div class="pkg-del"><${IconDel} onConfirm=${()=>set('packages',list.filter(x=>x.id!==k.id))}/></div>
-        <label class="field pkg-hint"><span class="flabel">${k.group||'Other'} · What's included</span><input type="text" value=${k.includes||''} placeholder="Optional" onChange=${e=>upd(i,{includes:e.target.value})}/></label>
-      </div>`)}
-      <div style="padding-top:8px"><button class="btn sm" onClick=${()=>set('packages',[...list,{id:uid(),name:'New program',group:'Other',kind:'monthly',price:0,qty:10,perMonth:4}])}><${Icon} n="plus" s=${13}/>Add program</button></div>
+  const list=pkgList(settings);const [open,setOpen]=useState(null);const [showArch,setShowArch]=useState(false);
+  const upd=(id,patch)=>set('packages',list.map(k=>k.id===id?{...k,...patch}:k));
+  const move=(id,d)=>{const a=list.slice();const i=a.findIndex(k=>k.id===id);const j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];set('packages',a)};
+  const setBill=(k,bt)=>upd(k.id,{billType:bt,kind:bt==='pack'?'pack':'monthly',...(bt==='program'?{perMonth:0}:{})});
+  const shown=list.filter(k=>showArch||!k.archived);const nArch=list.filter(k=>k.archived).length;
+  const add=()=>{const id=uid();set('packages',[...list,{id,name:'New plan',group:'Personal training',kind:'pack',billType:'pack',price:0,qty:4,perWeek:1,perMonth:0,commit:0,sessionLen:60,includes:'',description:'',visible:true}]);setOpen(id)};
+  const gr=(Number(settings.gstRate)||0)/100;const withG=k=>settings.gstRegistered&&!settings.gstIncluded?round2(Number(k.price)*(1+gr)):Number(k.price);
+  return html`<div class="panel"><div class="panel-h"><h3>Rates & plans</h3><span class="sp"></span><span class="fhint">Prices before GST. Used for purchases, plans and enrollment.</span></div>
+    <div class="panel-b" style="display:flex;flex-direction:column;gap:10px">
+      <div class="fgrid">
+        <${Field} label="Count a month as" hint="Used for plan totals and monthly session counts. 4 weeks: 2×/week = 8 sessions a month, 24 over 3 months. 52 ÷ 12: 26 over 3 months."><select value=${String(settings.weeksPerMonth||4)} onChange=${e=>set('weeksPerMonth',Number(e.target.value))}><option value="4">4 weeks</option><option value=${String(52/12)}>52 weeks ÷ 12 (≈4.33)</option></select><//>
+        ${settings.gstRegistered&&!settings.gstIncluded&&html`<${Field} label="Prices clients see" hint="On the pricing cards in Client Mode"><select value=${settings.clientPricesWithGst?'with':'before'} onChange=${e=>set('clientPricesWithGst',e.target.value==='with')}><option value="before">Before GST (+ GST shown)</option><option value="with">Including GST</option></select><//>`}
+      </div>
+      <div class="rp-list">
+      ${shown.map((k,i)=>{const bt=billTypeOf(k);const isOpen=open===k.id;const vis=planVisible(k);
+        return html`<div class=${'rp-row'+(k.archived?' rp-arch':'')} key=${k.id}>
+          <div class="rp-head">
+            <span class="rp-move"><button class="iconbtn" aria-label="Move up" onClick=${()=>move(k.id,-1)} disabled=${list[0]&&list[0].id===k.id}>▲</button><button class="iconbtn" aria-label="Move down" onClick=${()=>move(k.id,1)} disabled=${list[list.length-1].id===k.id}>▼</button></span>
+            <button class="rp-sum" aria-expanded=${isOpen} onClick=${()=>setOpen(isOpen?null:k.id)}>
+              <b>${k.name}</b><small>${[(BILL_TYPES.find(b=>b[0]===bt)||[])[1],pkgPriceLabel(k),Number(k.commit)?`${k.commit}-month commitment`:null,Number(k.perWeek)?`${k.perWeek}×/week`:null].filter(Boolean).join(' · ')}</small></button>
+            ${k.archived?html`<span class="pill un">Archived</span>`:html`<span class=${'pill '+(vis?'u0':'un')}>${vis?'Shown to clients':'Hidden'}</span>`}
+          </div>
+          ${isOpen&&html`<div class="rp-edit">
+            <div class="fgrid">
+              <${Field} label="Name"><input type="text" value=${k.name} onChange=${e=>upd(k.id,{name:e.target.value})}/><//>
+              <${Field} label="Category" hint="Groups plans in lists"><input type="text" value=${k.group||''} onChange=${e=>upd(k.id,{group:e.target.value})}/><//>
+              <${Field} label="Billing type"><select value=${bt} onChange=${e=>setBill(k,e.target.value)}>${BILL_TYPES.map(([v,l])=>html`<option value=${v}>${l}</option>`)}</select><//>
+              <${Field} label=${bt==='pack'?'Price per session':bt==='program'?'Price (one-time)':'Price per month'} hint="Before GST"><input type="number" inputmode="decimal" min="0" step="0.01" value=${k.price} onChange=${e=>upd(k.id,{price:Number(e.target.value)||0})}/><//>
+              ${bt==='pack'&&html`<${Field} label="Sessions per week" hint="0 = not set"><input type="number" inputmode="numeric" min="0" value=${k.perWeek||0} onChange=${e=>upd(k.id,{perWeek:Number(e.target.value)||0})}/><//>`}
+              ${bt==='pack'&&html`<${Field} label="Sessions per purchase" hint="Used when sessions/week is 0"><input type="number" inputmode="numeric" min="1" value=${k.qty} onChange=${e=>upd(k.id,{qty:Number(e.target.value)||1})}/><//>`}
+              ${(bt==='monthly'||bt==='online')&&html`<${Field} label="Sessions per month" hint="0 = not tracked"><input type="number" inputmode="numeric" min="0" value=${k.perMonth||0} onChange=${e=>upd(k.id,{perMonth:Number(e.target.value)||0})}/><//>`}
+              <${Field} label="Session length"><select value=${String(k.sessionLen||60)} onChange=${e=>upd(k.id,{sessionLen:Number(e.target.value)})}>${[30,45,60,75,90,120].map(m=>html`<option value=${m}>${m} min</option>`)}</select><//>
+              ${bt!=='program'&&html`<${Field} label="Minimum commitment"><select value=${String(k.commit||0)} onChange=${e=>upd(k.id,{commit:Number(e.target.value)})}>${COMMITS.map(([v,l])=>html`<option value=${v}>${l}</option>`)}</select><//>`}
+            </div>
+            <${Field} label="Description" hint="Shown on the client's pricing card"><textarea rows="2" value=${k.description||''} onChange=${e=>upd(k.id,{description:e.target.value})}></textarea><//>
+            <${Field} label="What's included" hint="Separate items with · or new lines"><textarea rows="2" value=${k.includes||''} onChange=${e=>upd(k.id,{includes:e.target.value})}></textarea><//>
+            <div class="rp-foot">
+              <label class="check"><input type="checkbox" checked=${planVisible(k)} disabled=${k.archived} onChange=${e=>upd(k.id,{visible:e.target.checked})}/>Show to clients during enrollment</label>
+              <span class="sp"></span>
+              ${settings.gstRegistered&&!settings.gstIncluded&&html`<span class="fhint">With GST: ${money(withG(k))}</span>`}
+              <button class="btn sm" onClick=${()=>upd(k.id,{archived:!k.archived})}>${k.archived?'Restore':'Archive'}</button></div>
+          </div>`}
+        </div>`})}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn sm" onClick=${add}><${Icon} n="plus" s=${13}/>Add plan</button>
+        ${nArch>0&&html`<label class="check" style="margin-left:auto"><input type="checkbox" checked=${showArch} onChange=${e=>setShowArch(e.target.checked)}/>Show ${nArch} archived</label>`}</div>
+      <p class="fhint" style="margin:0">Archived plans stay on athletes who already have them, but aren't offered for new purchases or enrollments.</p>
+    </div></div>`;
+}
+const discLabel=d=>d.type==='pct'?`${Number(d.amount)||0}% off`:`${money(d.amount)} off`;
+function DiscountsPanel({settings,set}){
+  const list=settings.discounts||[];const [open,setOpen]=useState(null);const [showArch,setShowArch]=useState(false);
+  const plans=pkgList(settings).filter(k=>!k.archived);
+  const upd=(id,p)=>set('discounts',list.map(d=>d.id===id?{...d,...p}:d));
+  const add=()=>{const id=uid();set('discounts',[...list,{id,name:'New discount',type:'pct',amount:10,planIds:[],expires:'',limit:0,notes:''}]);setOpen(id)};
+  const today=todayYmd();const shown=list.filter(d=>showArch||!d.archived);const nArch=list.filter(d=>d.archived).length;
+  return html`<div class="panel"><div class="panel-h"><h3>Discounts</h3><span class="sp"></span><span class="fhint">Coach only · picked in enrollment step 5</span></div>
+    <div class="panel-b" style="display:flex;flex-direction:column;gap:10px">
+      <label class="check"><input type="checkbox" checked=${!!settings.discountStack} onChange=${e=>set('discountStack',e.target.checked)}/>Allow more than one discount on the same plan</label>
+      <div class="rp-list">
+      ${shown.length?shown.map(d=>{const isOpen=open===d.id;const expired=d.expires&&d.expires<today;const pl=(d.planIds||[]);
+        return html`<div class=${'rp-row'+(d.archived?' rp-arch':'')} key=${d.id}>
+          <div class="rp-head"><button class="rp-sum" aria-expanded=${isOpen} onClick=${()=>setOpen(isOpen?null:d.id)}><b>${d.name}</b>
+            <small>${[discLabel(d),pl.length?`${pl.length} plan${pl.length===1?'':'s'}`:'All plans',d.expires?`until ${fmtDateY(d.expires)}`:null,Number(d.limit)?`limit ${d.limit} uses`:null].filter(Boolean).join(' · ')}</small></button>
+            ${d.archived?html`<span class="pill un">Archived</span>`:expired?html`<span class="pill u3">Expired</span>`:html`<span class="pill u0">Active</span>`}</div>
+          ${isOpen&&html`<div class="rp-edit">
+            <div class="fgrid">
+              <${Field} label="Name"><input type="text" value=${d.name} placeholder="e.g. Student" onChange=${e=>upd(d.id,{name:e.target.value})}/><//>
+              <${Field} label="Type"><select value=${d.type} onChange=${e=>upd(d.id,{type:e.target.value})}><option value="pct">Percent (%)</option><option value="amt">Fixed amount ($)</option></select><//>
+              <${Field} label=${d.type==='pct'?'Percent off':'Dollars off'} hint=${d.type==='amt'?'Taken off each charge':''}><input type="number" inputmode="decimal" min="0" step=${d.type==='pct'?'1':'0.01'} value=${d.amount} onChange=${e=>upd(d.id,{amount:Number(e.target.value)||0})}/><//>
+              <${Field} label="Expires (optional)"><input type="date" value=${d.expires||''} onChange=${e=>upd(d.id,{expires:e.target.value})}/><//>
+              <${Field} label="Usage limit" hint="0 = no limit"><input type="number" inputmode="numeric" min="0" value=${d.limit||0} onChange=${e=>upd(d.id,{limit:Number(e.target.value)||0})}/><//>
+            </div>
+            <div class="field"><span class="flabel">Applies to</span>
+              <div class="chips"><button type="button" class=${'chip-t'+(!pl.length?' on':'')} aria-pressed=${!pl.length} onClick=${()=>upd(d.id,{planIds:[]})}>All plans</button>
+                ${plans.map(k=>html`<button type="button" class=${'chip-t'+(pl.includes(k.id)?' on':'')} aria-pressed=${pl.includes(k.id)} onClick=${()=>upd(d.id,{planIds:pl.includes(k.id)?pl.filter(x=>x!==k.id):[...pl,k.id]})}>${k.name}</button>`)}</div></div>
+            <${Field} label="Notes"><input type="text" value=${d.notes||''} placeholder="e.g. Valid student ID required" onChange=${e=>upd(d.id,{notes:e.target.value})}/><//>
+            <div class="rp-foot"><span class="sp"></span><button class="btn sm" onClick=${()=>upd(d.id,{archived:!d.archived})}>${d.archived?'Restore':'Archive'}</button></div>
+          </div>`}
+        </div>`}):html`<div class="empty">No saved discounts yet. Common ones: Student, Family/Couples, Referral, Prepay 3 months, Military/First responder, Returning client.</div>`}
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" onClick=${add}><${Icon} n="plus" s=${13}/>Add discount</button>
+        ${nArch>0&&html`<label class="check" style="margin-left:auto"><input type="checkbox" checked=${showArch} onChange=${e=>setShowArch(e.target.checked)}/>Show ${nArch} archived</label>`}</div>
+      <p class="fhint" style="margin:0">Your plan rates already include your multi-session pricing. These are extras you choose per client. A custom discount can also be entered during enrollment.</p>
+    </div></div>`;
+}
+const pinHash=async(pin,salt)=>sha256Hex(new Blob(['sbd-pin:'+salt+':'+pin]));
+async function pinCheck(settings,pin){const p=settings&&settings.pin;if(!p||!p.hash)return false;return (await pinHash(String(pin),p.salt))===p.hash}
+function PinPad({value,onChange,onEnter,label}){const add=d=>onChange((value+d).slice(0,8));
+  return html`<div class="pinpad"><div class="pin-dots" aria-label=${label||'PIN'}>${Array.from({length:Math.max(4,value.length)},(_,i)=>html`<i class=${i<value.length?'on':''}></i>`)}</div>
+    <div class="pin-keys">${['1','2','3','4','5','6','7','8','9','','0','⌫'].map(k=>k===''?html`<span></span>`:html`<button type="button" class="pin-key" onClick=${()=>k==='⌫'?onChange(value.slice(0,-1)):add(k)}>${k}</button>`)}</div>
+    ${onEnter&&html`<button type="button" class="btn primary pin-go" disabled=${value.length<4} onClick=${onEnter}>Unlock</button>`}</div>`}
+function ClientModePanel({settings,set,api}){
+  const has=!!(settings.pin&&settings.pin.hash);const [step,setStep]=useState(null);const [cur,setCur]=useState('');const [n1,setN1]=useState('');const [n2,setN2]=useState('');const [err,setErr]=useState('');const [pw,setPw]=useState('');
+  const reset=()=>{setStep(null);setCur('');setN1('');setN2('');setErr('');setPw('')};
+  const save=async()=>{if(!/^\d{4,8}$/.test(n1)){setErr('Use 4 to 8 digits.');return}if(n1!==n2){setErr("The two PINs don't match.");return}
+    const salt=uid()+uid();set('pin',{salt,hash:await pinHash(n1,salt),len:n1.length,changed:new Date().toISOString()});toast(has?'PIN changed':'PIN set');reset()};
+  const checkCur=async()=>{if(await pinCheck(settings,cur)){setErr('');setStep('new')}else setErr('That PIN is not right.')};
+  const forgot=async()=>{if(inClaude()||!api.verifyPassword){setErr('');setStep('new');return}try{await api.verifyPassword(pw);setErr('');setStep('new')}catch(_){setErr('Wrong password.')}};
+  const mins=Number(settings.lockMinutes)||5;
+  return html`<div class="panel"><div class="panel-h"><h3>Client Mode & PIN</h3><span class="sp"></span><span class="fhint">Enrollment and contract signing</span></div>
+    <div class="panel-b" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class=${'pill '+(has?'u0':'u2')}>${has?'PIN set':'No PIN yet'}</span>
+        <span class="fhint">${has?`Last changed ${settings.pin.changed?fmtDateY(settings.pin.changed.slice(0,10)):''}. Stored scrambled, never as the digits.`:'Set your PIN before using Client Mode.'}</span><span class="sp"></span>
+        ${!step&&html`<button class="btn sm" onClick=${()=>setStep(has?'cur':'new')}>${has?'Change PIN':'Set PIN'}</button>`}</div>
+      ${step==='cur'&&html`<div class="pin-box"><b>Enter your current PIN</b><${PinPad} value=${cur} onChange=${setCur} onEnter=${checkCur}/>
+        <button class="linkbtn" onClick=${()=>{setErr('');setStep('forgot')}}>Forgot PIN?</button></div>`}
+      ${step==='forgot'&&html`<div class="pin-box"><b>Confirm it's you</b>${inClaude()?html`<p class="fhint" style="margin:0">Only you can open this app, so you can set a new PIN.</p>`:html`<label class="field"><span class="flabel">Your account password</span><input type="password" value=${pw} onInput=${e=>setPw(e.target.value)}/></label>`}
+        <button class="btn sm primary" onClick=${forgot}>Continue</button></div>`}
+      ${step==='new'&&html`<div class="pin-box"><div class="fgrid">
+          <label class="field"><span class="flabel">New PIN (4–8 digits)</span><input type="password" inputmode="numeric" autocomplete="new-password" value=${n1} onInput=${e=>setN1(e.target.value.replace(/\D/g,''))}/></label>
+          <label class="field"><span class="flabel">Type it again</span><input type="password" inputmode="numeric" autocomplete="new-password" value=${n2} onInput=${e=>setN2(e.target.value.replace(/\D/g,''))}/></label></div>
+        <div style="display:flex;gap:8px"><button class="btn primary sm" onClick=${save}>Save PIN</button><button class="btn sm" onClick=${reset}>Cancel</button></div></div>`}
+      ${err&&html`<div class="callout u3">${err}</div>`}
+      <div class="fgrid">
+        <${Field} label="Auto-lock Client Mode after" hint="No touches for this long locks the screen"><select value=${String(mins)} onChange=${e=>set('lockMinutes',Number(e.target.value))}>${[1,2,3,5,10,15,20,30].map(m=>html`<option value=${m}>${m} minute${m===1?'':'s'}</option>`)}</select><//>
+      </div>
     </div></div>`;
 }
 
@@ -3585,6 +4013,8 @@ function SetupPage({ctx}){
       <${Field} label="Warn when a pack has" hint="sessions left or fewer"><input type="number" min="0" value=${S.packThreshold} onChange=${e=>set('packThreshold',Number(e.target.value)||0)}/><//>
     </div></div></div>
     <${ProgramsPanel} settings=${S} set=${set}/>
+    <${DiscountsPanel} settings=${S} set=${set}/>
+    <${ClientModePanel} settings=${S} set=${set} api=${api}/>
     <div class="panel"><div class="panel-h"><h3>Tax & GST</h3></div><div class="panel-b" style="display:flex;flex-direction:column;gap:12px">
       <label class="check"><input type="checkbox" checked=${!!S.gstRegistered} onChange=${e=>set('gstRegistered',e.target.checked)}/>I'm registered for GST and charge it</label>
       ${S.gstRegistered&&html`<label class="check"><input type="checkbox" checked=${!!S.gstIncluded} onChange=${e=>set('gstIncluded',e.target.checked)}/>My rates already include GST</label>`}
