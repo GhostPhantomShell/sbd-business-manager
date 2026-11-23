@@ -598,7 +598,7 @@ button.pcard:hover{background:var(--surface-2)}
 .is-m .mark-t small{display:none}
 .is-m .sync{white-space:nowrap}
 .is-m .sync{margin-left:auto}
-.is-m .bottomnav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;max-width:600px;margin-inline:auto;z-index:50;background:var(--band);
+.is-m .bottomnav{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;max-width:600px;margin-inline:auto;z-index:50;background:var(--band);
   padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);border-top:1px solid rgba(255,255,255,.08)}
 .bottomnav a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px 7px;color:var(--band-muted);text-decoration:none;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-top:3px solid transparent;min-width:0}
 .bottomnav a span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
@@ -803,6 +803,62 @@ input[type=range]{accent-color:var(--accent);width:100%}
 .sn-final{background:var(--y)!important;color:#1a1300!important;display:inline-flex;align-items:center;gap:2px}
 .final-star{flex:none}
 .final-tag{color:var(--y)}
+/* ---- Today ---- */
+.td-stats{display:flex;gap:8px;flex-wrap:wrap}
+.td-stats>span{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;min-width:108px;font-size:13px;color:var(--muted)}
+.td-stats>span b{font-family:var(--f-display);font-size:26px;line-height:1;color:var(--fg);font-weight:800}
+.td-stats>span small{font-size:11.5px}
+.td-stats>span.warn b{color:var(--r)}
+.td-away{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);margin-bottom:14px;background-color:var(--surface)}
+.td-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
+.td-side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.td-sess{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;padding:12px 14px;border-bottom:1px solid var(--line-2)}
+.td-sess.live{background:color-mix(in srgb,var(--accent) 7%,var(--surface));box-shadow:inset 3px 0 0 var(--accent)}
+.td-time{display:flex;flex-direction:column;gap:1px}
+.td-time b{font-size:16px}.td-time small{color:var(--muted);font-size:12px}
+.td-now{align-self:flex-start;margin-top:4px;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent);border-radius:4px;padding:1px 6px}
+.td-people{display:flex;flex-direction:column;gap:12px;min-width:0}
+.td-person{display:flex;flex-direction:column;gap:7px;min-width:0}
+.td-who{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+.td-name{background:none;border:0;padding:0;color:var(--fg);font:inherit;font-weight:700;font-size:16px;cursor:pointer;text-align:left}
+.td-name:hover{text-decoration:underline}
+.td-meta{font-size:13px;color:var(--muted)}
+.td-quick button{padding:7px 12px;font-size:13.5px}
+.td-quick button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.td-quick .td-more{padding:7px 10px}
+.td-note{font-size:13px;color:var(--muted);border-left:2px solid var(--line);padding-left:8px}
+.td-other{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line-2)}
+.td-hint{margin:0;padding:10px 14px}
+.td-chips{display:flex;flex-wrap:wrap;gap:6px}
+.td-chip{display:inline-flex;flex-direction:column;align-items:flex-start;gap:1px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:8px;padding:6px 10px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;text-align:left}
+.td-other .td-chip{flex-direction:row;gap:6px;align-items:baseline}
+.td-chip small{font-weight:400;font-size:11.5px;color:var(--muted)}
+.td-more-chip{justify-content:center;color:var(--muted)}
+.td-grp{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line-2)}
+.td-grp:last-child{border-bottom:0}
+.td-grp-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.td-grp-h small{color:var(--muted);font-size:12.5px;flex-basis:100%;margin-left:0}
+.td-row{cursor:pointer}
+.td-amt{font-weight:700}.td-amt.over{color:var(--r)}
+.td-week{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line-2)}
+.td-week>div{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.td-week b{font-family:var(--f-display);font-size:24px;font-weight:800;line-height:1}
+.td-week span{font-size:12px;color:var(--muted)}
+.td-awaylist{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-top:1px solid var(--line-2)}
+.td-awayrow{display:flex;align-items:center;gap:8px;font-size:13.5px;flex-wrap:wrap}
+.td-sw{width:22px;height:14px;border-radius:3px;border:1px solid var(--line);background-color:var(--surface)}
+.td-clear{display:flex;gap:12px;align-items:flex-start;padding:16px}
+.td-clear-i{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ok-bg);color:var(--ok);flex:none}
+.td-clear p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+@media (max-width:1180px){.nav a{padding:8px 9px;gap:5px;letter-spacing:.04em;font-size:14px}}
+@media (max-width:980px){.td-grid{grid-template-columns:minmax(0,1fr)}}
+.is-m .td-grid{grid-template-columns:minmax(0,1fr)}
+.is-m .td-stats{width:100%}.is-m .td-stats>span{flex:1;min-width:0;padding:8px 10px}
+.is-m .td-sess{grid-template-columns:52px minmax(0,1fr);gap:10px}
+.is-m .td-quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:5px}
+.is-m .td-quick button{padding:9px 4px;justify-content:center;font-size:13px}
+.is-m .td-quick button svg{display:none}
+.is-m .td-quick .td-more svg{display:inline}.is-m .td-quick .td-more{padding:9px 10px}
 </style>
 
 <div id="app"><div class="wrap" style="padding-block:40px;color:#888">Loading Strength By Design…</div></div>
@@ -4482,12 +4538,21 @@ function TimeZonePanel({S,set}){
     <span class="fhint">BC, Alberta and Manitoba stopped changing clocks on November 1, 2026 (Saskatchewan and Yukon already had). Automatic reads your device's region and applies these rules itself, so the calendar is right even if the computer's built-in time data is out of date. If the app time doesn't match your clock, pick your province above.${z&&z.verify?' Northwestern Ontario’s change was announced in October 2026; double-check your local clock.':''}</span>
   </div></div>`;
 }
+const APP_VERSION='1.9.0';
+const appWhere=()=>/Electron/i.test(navigator.userAgent||'')?'desktop':inClaude()?'claude':'web';
+function AppVersionPanel(){const where=appWhere();const v=APP_VERSION.startsWith('__')?null:APP_VERSION;const prev=/\/previous\//.test(location.pathname);
+  return html`<div class="panel"><div class="panel-h"><h3>App version</h3><span class="sp"></span>${v&&html`<span class="pill u0 num">${prev?'Previous · ':''}${v}</span>`}</div><div class="panel-b" style="display:flex;flex-direction:column;gap:8px">
+    ${where==='desktop'&&html`<span>Updates install by themselves when you open the app. If an update causes a problem, choose <b>File → Go back to a previous version</b>. The app keeps the last 3 versions, and if a new one fails to start it goes back to the last one that worked and tells you.</span>`}
+    ${where==='web'&&!prev&&html`<span>This page always runs the newest version. If an update causes a problem, open the previous version until it's fixed. It uses the same account and the same data.</span><a class="btn" style="align-self:flex-start" href="previous/">Open the previous version</a>`}
+    ${where==='web'&&prev&&html`<span>You're on the <b>previous version</b>. Your data is the same. When the fix is out, go back to the current version.</span><a class="btn primary" style="align-self:flex-start" href="../">Back to the current version</a>`}
+    ${where==='claude'&&html`<span>This is the preview copy inside Claude. The desktop and iPad apps show their version number here.</span>`}
+    <span class="fhint">Your athletes, sessions and payments live in your account, not in the app, so switching versions never changes your data.</span></div></div>`}
 function SetupPage({ctx}){
   const {settings,api}=ctx;
   const S=settings;const set=(k,v)=>api.setSettings({...S,[k]:v});
   const th=S.trainingHours||{};
   const setDay=(d,arr)=>set('trainingHours',{...th,[String(d)]:arr});
-  const [busy,setBusy]=useState(false);
+  const [busy,setBusy]=useState(false);const [startPref,setStartPref]=useState(()=>ls.get('startPage','auto'));
   const order=Array.from({length:7},(_,i)=>(Number(S.weekStart)+i)%7);
   const exportData=async()=>{try{const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
     if(!dl&&!inClaude()){const data={exported:new Date().toISOString(),settings:S,calendars:ctx.calendars,clients:ctx.clients,events:ctx.events,ledger:ctx.ledger,travel:ctx.travel,parq:ctx.parq,contracts:ctx.contracts};
@@ -4505,7 +4570,11 @@ function SetupPage({ctx}){
       <${ThemePicker} pref=${ctx.theme.pref} setPref=${ctx.theme.setPref}/></div></div>
     <div class="panel"><div class="panel-h"><h3>Layout on this device</h3></div><div class="panel-b" style="display:flex;flex-direction:column;gap:10px">
       <div class="seg" role="group" aria-label="Layout" style="align-self:flex-start">${[['auto','Automatic'],['phone','Phone'],['desktop','Desktop']].map(([k,l])=>html`<button aria-pressed=${ctx.layout.pref===k} onClick=${()=>ctx.layout.setPref(k)}>${l}</button>`)}</div>
-      <span class="fhint">Automatic uses the phone layout on screens narrower than 760px and the desktop layout everywhere else. This choice is saved on this device only. Now showing: ${ctx.isM?'phone':'desktop'} layout.</span></div></div>
+      <span class="fhint">Automatic uses the phone layout on screens narrower than 760px and the desktop layout everywhere else. This choice is saved on this device only. Now showing: ${ctx.isM?'phone':'desktop'} layout.</span>
+      <b style="margin-top:6px">Opens on</b>
+      <div class="seg" role="group" aria-label="Opens on" style="align-self:flex-start">${[['auto','Automatic'],['today','Today'],['calendar','Calendar']].map(([k,l])=>html`<button aria-pressed=${startPref===k} onClick=${()=>{ls.set('startPage',k);setStartPref(k)}}>${l}</button>`)}</div>
+      <span class="fhint">Automatic opens on Today on an iPad or phone and on the Calendar on a computer.</span></div></div>
+    <${AppVersionPanel}/>
     <div class="panel"><div class="panel-h"><h3>Training hours</h3><span class="sp"></span><span class="fhint">Time outside these windows is grayed out on the calendar.</span></div>
       <div class="panel-b" style="display:flex;flex-direction:column;gap:8px">${order.map(d=>{const arr=th[String(d)]||[];return html`<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line-2);padding-bottom:8px">
         <b style="width:96px">${DOWL[d]}</b>
@@ -4609,7 +4678,102 @@ function Onboarding({api,mode}){
 }
 
 /* ================= App shell ================= */
-const ROUTES=[['calendar','Calendar','cal'],['athletes','Athletes','users'],['payments','Payments','wallet'],['finances','Finances','chart'],['guides','Guides','book'],['setup','Setup','gear']];
+/* ================= Today (home screen) ================= */
+const TD_QUICK=[['completed','Done','check'],['late','Late','alert'],['noshow','No-show','ghost'],['sick','Sick','sick']];
+function todayData(ctx){
+  const {clients,events,derived,settings,parq,contracts,enrollments,calendars}=ctx;const today=todayYmd();const now=nowMs();
+  const active=Object.values(clients).filter(c=>(c.status||'active')==='active');
+  const evs=Object.values(events).filter(e=>e.date===today).sort(cmpEv);
+  const sessions=evs.filter(e=>evCids(e).length),other=evs.filter(e=>!evCids(e).length);
+  // Money: anything overdue or due within a week, and renewals coming up this week
+  const money=active.map(c=>({c,s:derived.cs[c.id]})).filter(x=>x.s&&x.s.urg>=2).map(x=>{const s=x.s;
+    const owed=round2(sum(s.unpaid||[],ch=>(Number(ch.amount)||0)-ch.paid));
+    const over=(s.unpaid||[]).some(ch=>(ch.dueDate||ch.date)<today);
+    return {...x,owed,over,kind:owed>0?(over?'overdue':'due'):'renew'}}).sort((a,b)=>({overdue:0,due:1,renew:2}[a.kind]-{overdue:0,due:1,renew:2}[b.kind])||b.s.urg-a.s.urg||b.owed-a.owed);
+  const owedTotal=round2(sum(money,m=>m.owed));
+  // Needs attention
+  const pq=active.map(c=>({c,st:parqStatus(parq,c.id)}));
+  const ct=active.map(c=>({c,r:ctForClient(contracts,c.id)}));
+  const groups=[
+    {k:'clear',u:'u3',t:'Needs doctor clearance',sub:'A PAR-Q+ follow-up was answered YES',list:pq.filter(x=>x.st.flag).map(x=>({c:x.c}))},
+    {k:'pqexp',u:'u3',t:'PAR-Q+ expired',sub:'Have them redo it at their next session',list:pq.filter(x=>x.st.state==='expired').map(x=>({c:x.c,note:'Expired '+fmtDate(x.st.last.expiresOn,{month:'short',day:'numeric'})}))},
+    {k:'pqmiss',u:'un',t:'No PAR-Q+ on file',sub:'',list:pq.filter(x=>x.st.state==='missing').map(x=>({c:x.c,note:x.st.draft?'Started, not signed':''}))},
+    {k:'ctend',u:'u2',t:'Contract ending or expired',sub:'',list:ct.filter(x=>x.r.cur&&['renew','expired'].includes(x.r.st.k)).map(x=>({c:x.c,note:x.r.st.l}))},
+    {k:'ctmiss',u:'un',t:'No signed contract',sub:'',list:ct.filter(x=>!x.r.cur).map(x=>({c:x.c,note:x.r.draft?'Draft started':''}))},
+  ].filter(g=>g.list.length);
+  const pending=Object.values(enrollments||{}).filter(e=>e.status!=='active').sort((a,b)=>(b.updated||0)-(a.updated||0));
+  // This week (today to the end of the calendar week)
+  const start=parseYmd(today);const end=addDays(start,6);
+  const days=[];for(let d=start;d<=end;d=addDays(d,1))days.push(d);
+  const woCal=woDefaultCal(settings,calendars);
+  let booked=0,open=0,workouts=0,woDone=0;
+  days.forEach(d=>{const k=ymd(d);const dayEvs=Object.values(events).filter(e=>e.date===k&&!FREED.has(e.status||'scheduled'));
+    dayEvs.forEach(e=>{if(evCids(e).length)booked++;else if(e.fromWorkout||(woCal&&e.calendarId===woCal.id)){workouts++;if(effStatus(e,now)==='completed'||e.status==='completed'||evStartMs(e)+(e.dur||60)*6e4<now)woDone++}});
+    if(vacFor(settings,k))return;
+    const wins=(settings.trainingHours||{})[String(d.getDay())]||[];const busy=dayEvs.map(e=>[e.start,e.start+(e.dur||60)]).sort((a,b)=>a[0]-b[0]);
+    const fromMin=k===today?appNow().getHours()*60+appNow().getMinutes():0;
+    wins.forEach(w=>{const ws0=Math.max(w.s,fromMin);if(w.e<=ws0)return;let used=0,cur=null;busy.forEach(([s0,e0])=>{const a=Math.max(ws0,s0),b=Math.min(w.e,e0);if(b<=a)return;if(cur&&a<=cur[1])cur[1]=Math.max(cur[1],b);else{if(cur)used+=cur[1]-cur[0];cur=[a,b]}});if(cur)used+=cur[1]-cur[0];open+=Math.max(0,w.e-ws0-used)})});
+  const soon=ymd(addDays(start,30));const away=vacList(settings).filter(v=>v.to>=today&&v.from<=soon);
+  const awayNow=vacFor(settings,today);
+  return {today,sessions,other,money,owedTotal,groups,pending,booked,openH:Math.floor(open/60),workouts,woDone,away,awayNow,endOfWeek:ymd(end),
+    attention:groups.reduce((n,g)=>n+g.list.length,0)+pending.length}}
+
+function TodaySession({ctx,e,openAthlete,onOpen}){const {derived,api,clients,events}=ctx;const now=nowMs();const ids=evCids(e);const grp=ids.length>1;
+  const gst=effStatus(e,now);const past=evStartMs(e)+(e.dur||60)*6e4<now;const live=!past&&evStartMs(e)<=now;
+  const setSt=(cid,st)=>{const ev=events[e.id];if(!ev)return;
+    if(grp){const sb={...(ev.statusBy||{})};if(sb[cid]===st||(!sb[cid]&&ev.status===st))delete sb[cid];else sb[cid]=st;api.put('events',e.id,{...ev,statusBy:sb})}
+    else{const cur=ev.status||'scheduled';api.put('events',e.id,{...ev,status:cur===st?'scheduled':st})}
+    toast(st==='completed'?'Marked done':STATUS_LABEL[st]||'Updated')};
+  return html`<div class=${'td-sess'+(live?' live':'')+(past?' past':'')}>
+    <div class="td-time num"><b>${fmtTime(e.start)}</b><small>${fmtTime(e.start+(e.dur||60))}</small>${live&&html`<span class="td-now">Now</span>`}</div>
+    <div class="td-people">${ids.map(cid=>{const c=clients[cid];if(!c)return null;const p=((derived.evInfo[e.id]||{}).per||{})[cid]||{};const st=(e.statusBy||{})[cid]||gst;const s=derived.cs[cid]||{};
+      const owed=round2(sum(s.unpaid||[],ch=>(Number(ch.amount)||0)-ch.paid));const pq=parqStatus(ctx.parq,cid);
+      const on=k=>st===k||(k==='sick'&&st==='sickused');
+      return html`<div class="td-person" key=${cid}>
+        <div class="td-who"><button class="td-name" onClick=${()=>openAthlete(cid)}>${c.name}</button>
+          <span class="td-meta num">${p.n?html`${p.final&&!p.over?'★ ':''}#${p.n}${p.of?'/'+p.of:''} · <span style=${p.over?'color:var(--r);font-weight:700':''}>${p.over?'not paid for':p.left+(p.mo?' left this month':' left')}</span>`:'—'}</span>
+          ${owed>0&&html`<span class="pill u3">${money(owed)} owing</span>`}${pq.flag&&html`<span class="pill u2">Needs clearance</span>`}${pq.state!=='complete'&&html`<span class="pill un">PAR-Q+ ${pq.state}</span>`}</div>
+        <div class="statusrow td-quick" role="group" aria-label=${'Status for '+c.name}>${TD_QUICK.map(([k,l,ic])=>html`<button type="button" aria-pressed=${on(k)} onClick=${()=>setSt(cid,k)}><${Icon} n=${ic} s=${13}/>${l}</button>`)}
+          <button type="button" class="td-more" aria-label="More options" title="Open session" onClick=${()=>onOpen(e)}><${Icon} n="edit" s=${13}/></button></div>
+        ${e.note&&html`<div class="td-note">${e.note}</div>`}</div>`})}</div></div>`}
+
+function TodayPage({ctx,openAthlete,go}){const {settings}=ctx;const D=useMemo(()=>todayData(ctx),[ctx.clients,ctx.events,ctx.ledger,ctx.parq,ctx.contracts,ctx.enrollments,ctx.settings,ctx.derived]);
+  const [edit,setEdit]=useState(null);const [enrolling,setEnrolling]=useState(null);const [openG,setOpenG]=useState({});
+  const t=appNow();const h=t.getHours();const hello=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  const allClear=!D.money.length&&!D.attention;
+  const left=D.sessions.filter(e=>evStartMs(e)+(e.dur||60)*6e4>nowMs()).length;
+  const fmtShort=s=>fmtDate(s,{month:'short',day:'numeric'});
+  const chip=(c,note)=>html`<button class="td-chip" onClick=${()=>openAthlete(c.id)}>${c.name}${note&&html`<small>${note}</small>`}</button>`;
+  return html`${edit&&html`<${EventModal} ctx=${ctx} init=${edit} onClose=${()=>setEdit(null)}/>`}
+    ${enrolling&&ctx.enrollments[enrolling]&&html`<${EnrollMode} key=${enrolling} ctx=${ctx} enrollId=${enrolling} onClose=${cid=>{setEnrolling(null);if(cid)openAthlete(cid)}}/>`}
+    <div class="page-h"><div><div class="eyebrow">${hello} · ${fmtDate(D.today,{weekday:'long',month:'long',day:'numeric'})}</div><h1>Today</h1></div><span class="sp"></span>
+      <div class="td-stats"><span><b class="num">${D.sessions.length}</b> session${D.sessions.length===1?'':'s'}${D.sessions.length?html`<small>${left} still to go</small>`:''}</span>
+        <span class=${D.owedTotal>0?'warn':''}><b class="num">${money0(D.owedTotal)}</b> owing<small>${D.money.filter(m=>m.kind==='overdue').length} overdue</small></span>
+        <span class=${D.attention?'warn':''}><b class="num">${D.attention}</b> to check<small>Forms & contracts</small></span></div></div>
+    ${D.awayNow&&html`<div class=${'td-away '+awayA(settings,D.awayNow).pat} style=${awayA(settings,D.awayNow).style}><${Icon} n="sun" s=${16}/><b>${awayA(settings,D.awayNow).label}</b> ${vacRange(D.awayNow)}${D.awayNow.label?' · '+D.awayNow.label:''}</div>`}
+    <div class="td-grid">
+      <section class="panel td-main"><div class="panel-h"><h3>Today's sessions</h3><span class="sp"></span><button class="btn sm" onClick=${()=>go('calendar')}><${Icon} n="cal" s=${14}/>Calendar</button></div>
+        ${D.sessions.length?D.sessions.map(e=>html`<${TodaySession} key=${e.id} ctx=${ctx} e=${e} openAthlete=${openAthlete} onOpen=${setEdit}/>`)
+          :html`<div class="empty">No athlete sessions today.${D.openH>0?` ${D.openH} open hour${D.openH===1?'':'s'} left this week.`:''}</div>`}
+        ${D.other.length>0&&html`<div class="td-other"><span class="eyebrow">Also today</span>${D.other.map(e=>html`<button class="td-chip" onClick=${()=>setEdit(e)}><b class="num">${fmtTime(e.start)}</b> ${e.title||'Event'}</button>`)}</div>`}
+        <p class="fhint td-hint">Tap a status to mark it, tap it again to undo. Sessions mark themselves done once they're over unless you change them.</p></section>
+      <div class="td-side">
+        ${allClear&&html`<section class="panel td-clear"><span class="td-clear-i"><${Icon} n="check" s=${22} w=${2.6}/></span><div><b>All clear</b><p>Nobody owes you money this week, and every active athlete has a current PAR-Q+ and contract.</p></div></section>`}
+        ${D.money.length>0&&html`<section class="panel"><div class="panel-h"><h3>Money</h3><span class="sp"></span><button class="btn sm" onClick=${()=>go('payments')}><${Icon} n="wallet" s=${14}/>Payments</button></div>
+          ${D.money.map(m=>html`<button class="pcard td-row" key=${m.c.id} onClick=${()=>openAthlete(m.c.id)}><div class="pc-top"><b>${m.c.name}</b>${m.owed>0?html`<span class=${'num td-amt'+(m.over?' over':'')}>${money(m.owed)}</span>`:html`<span class="pill u2">Renewal</span>`}</div>
+            <span class="pc-sub">${m.s.reason}</span></button>`)}</section>`}
+        ${D.attention>0&&html`<section class="panel"><div class="panel-h"><h3>Needs attention</h3></div>
+          ${D.pending.length>0&&html`<div class="td-grp"><div class="td-grp-h"><span class="pill u1">${D.pending.length}</span><b>Unfinished enrollment${D.pending.length===1?'':'s'}</b></div>
+            <div class="td-chips">${D.pending.map(e=>html`<button class="td-chip" onClick=${()=>setEnrolling(e.id)}>${e.name||(e.intake&&e.intake.legal_name)||'New client'}<small>${EN_STATUS[e.status]||'Started'} · ${fmtShort((e.startedAt||'').slice(0,10))}</small></button>`)}</div></div>`}
+          ${D.groups.map(g=>{const many=g.list.length>4&&!openG[g.k];return html`<div class="td-grp" key=${g.k}><div class="td-grp-h"><span class=${'pill '+g.u}>${g.list.length}</span><b>${g.t}</b>${g.sub&&html`<small>${g.sub}</small>`}</div>
+            <div class="td-chips">${(many?g.list.slice(0,4):g.list).map(x=>chip(x.c,x.note))}${many&&html`<button class="td-chip td-more-chip" onClick=${()=>setOpenG(o=>({...o,[g.k]:true}))}>+${g.list.length-4} more</button>`}</div></div>`})}</section>`}
+        <section class="panel"><div class="panel-h"><h3>Next 7 days</h3><span class="sp"></span><small class="muted">to ${fmtDate(D.endOfWeek,{weekday:'short',month:'short',day:'numeric'})}</small></div>
+          <div class="td-week"><div><b class="num">${D.booked}</b><span>Sessions booked</span></div><div><b class="num">${D.openH}</b><span>Open hours</span></div><div><b class="num">${D.woDone}/${D.workouts}</b><span>My workouts</span></div></div>
+          ${D.away.length>0&&html`<div class="td-awaylist">${D.away.map(v=>{const a=awayA(settings,v);return html`<div class="td-awayrow"><span class=${'td-sw '+a.pat} style=${a.style}></span><b>${a.label}</b><span class="muted">${vacRange(v)}${v.label?' · '+v.label:''}</span></div>`})}</div>`}</section>
+      </div></div>`}
+
+const ROUTES=[['today','Today','home'],['calendar','Calendar','cal'],['athletes','Athletes','users'],['payments','Payments','wallet'],['finances','Finances','chart'],['guides','Guides','book'],['setup','Setup','gear']];
+const startRoute=()=>{const p=ls.get('startPage','auto');if(p==='today'||p==='calendar')return p;let touch=false;try{touch=matchMedia('(pointer: coarse)').matches||matchMedia('(max-width: 760px)').matches}catch(_){}return touch?'today':'calendar'};
 function useLayout(){
   const mq=useMemo(()=>{try{return matchMedia('(max-width: 760px)')}catch(e){return null}},[]);
   const [pref,setPrefS]=useState(()=>ls.get('layout','auto'));
@@ -4625,7 +4789,7 @@ function App(){
   const store=useStore();
   const layout=useLayout();
   const theme=useTheme();const [themeOpen,setThemeOpen]=useState(false);
-  const [route,setRoute]=useState(()=>{const h=(location.hash||'').slice(1);return ROUTES.some(r=>r[0]===h)?h:'calendar'});
+  const [route,setRoute]=useState(()=>{const h=(location.hash||'').slice(1);return ROUTES.some(r=>r[0]===h)?h:startRoute()});
   const [selAth,setSelAth]=useState(null);
   const [msg,setMsg]=useState(null);
   useEffect(()=>{toastFn=m=>{setMsg(m);clearTimeout(toastFn._t);toastFn._t=setTimeout(()=>setMsg(null),3200)}},[]);
@@ -4650,6 +4814,7 @@ function App(){
   else if(store.mode==='signedout')body=html`<${SignIn} api=${store.api}/>`;
   else if(!settings)body=html`<${Onboarding} api=${store.api} mode=${store.mode}/>`;
   else body=html`<main class="wrap">
+    ${route==='today'&&html`<${TodayPage} ctx=${ctx} openAthlete=${openAthlete} go=${k=>{location.hash=k;go(k)}}/>`}
     ${route==='calendar'&&html`<${CalendarPage} ctx=${ctx}/>`}
     ${route==='athletes'&&html`<${AthletesPage} ctx=${ctx} selId=${selAth} setSelId=${setSelAth}/>`}
     ${route==='payments'&&html`<${PaymentsPage} ctx=${ctx} openAthlete=${openAthlete}/>`}
@@ -4662,7 +4827,8 @@ function App(){
     ${themeOpen&&html`<${Modal} title="Theme" wide onClose=${()=>setThemeOpen(false)} footer=${html`<span class="fhint">Saved on this device</span><span class="sp"></span><button class="btn primary" onClick=${()=>setThemeOpen(false)}>Done</button>`}><${ThemePicker} pref=${theme.pref} setPref=${theme.setPref}/><//>`}
     ${msg&&html`<div class="toast" role="status">${msg}</div>`}</div>`;
 }
-render(html`<${App}/>`,document.getElementById('app'));
+if(window.__SBD_TEST__)window.__SBD_TEST__({deriveAll,finance,enPrice,enSchedule,addMonthsYmd,daysBetween,todayData,ctStatus,parqStatus,round2,setWPM:v=>{WPM=v}});
+else render(html`<${App}/>`,document.getElementById('app'));
 
 
 });</script>

@@ -1,0 +1,21 @@
+name: Checks
+# Runs the payment and session-counting checks on every change.
+# An update is only moved to main (where the desktop and iPad apps pick it up) once this passes.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Desktop shell starts (syntax)
+        run: node --check main.js
+      - name: Version file is valid
+        run: node -e "const v=require('./app/version.json').version;if(!/^\d+\.\d+\.\d+$/.test(v))throw new Error('bad version '+v);console.log('version',v)"
+      - name: Payment and session-counting rules
+        run: node tests/logic.test.js
